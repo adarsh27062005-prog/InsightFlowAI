@@ -46,6 +46,26 @@ function SchemaViewer({
   };
 
   // =========================
+  // SELECT ALL
+  // =========================
+  const selectAllColumns =
+    () => {
+
+      setSelectedColumns(schema);
+
+    };
+
+  // =========================
+  // CLEAR ALL
+  // =========================
+  const clearAllColumns =
+    () => {
+
+      setSelectedColumns([]);
+
+    };
+
+  // =========================
   // EMPTY
   // =========================
   if (!schema.length) {
@@ -59,19 +79,50 @@ function SchemaViewer({
     <div className="bg-[#111827] p-8 rounded-2xl border border-gray-800 mt-8">
 
       {/* HEADER */}
-      <div className="mb-8">
+      <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-5 mb-8">
 
-        <h2 className="text-2xl font-bold">
+        <div>
 
-          Semantic Schema Intelligence
+          <h2 className="text-2xl font-bold">
 
-        </h2>
+            Semantic Schema Intelligence
 
-        <p className="text-gray-400 text-sm mt-1">
+          </h2>
 
-          AI automatically detected business meaning and EDI semantic metadata
+          <p className="text-gray-400 text-sm mt-1">
 
-        </p>
+            AI automatically detected business meaning and EDI semantic metadata
+
+          </p>
+
+        </div>
+
+        {/* ACTIONS */}
+        <div className="flex gap-3">
+
+          <button
+            onClick={
+              selectAllColumns
+            }
+            className="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-3 rounded-xl font-semibold transition"
+          >
+
+            Select All
+
+          </button>
+
+          <button
+            onClick={
+              clearAllColumns
+            }
+            className="bg-[#1F2937] hover:bg-red-500 border border-gray-700 hover:border-red-400 px-5 py-3 rounded-xl font-semibold transition"
+          >
+
+            Clear Selection
+
+          </button>
+
+        </div>
 
       </div>
 
@@ -155,17 +206,31 @@ function SchemaViewer({
                 }
                 className={`p-5 rounded-2xl border transition-all duration-300 text-left ${
                   active
-                    ? "bg-cyan-500 text-black border-cyan-400"
-                    : "bg-[#1F2937] border-gray-700 hover:border-cyan-500"
+                    ? "bg-cyan-500 text-black border-cyan-400 scale-[1.02]"
+                    : "bg-[#1F2937] border-gray-700 hover:border-cyan-500 hover:scale-[1.01]"
                 }`}
               >
 
                 {/* COLUMN NAME */}
-                <h3 className="font-bold text-lg break-words">
+                <div className="flex items-start justify-between gap-3">
 
-                  {column.name}
+                  <h3 className="font-bold text-lg break-words">
 
-                </h3>
+                    {column.name}
+
+                  </h3>
+
+                  {active && (
+
+                    <div className="bg-black text-cyan-400 text-xs px-2 py-1 rounded-full font-bold">
+
+                      SELECTED
+
+                    </div>
+
+                  )}
+
+                </div>
 
                 {/* TYPE */}
                 <p
@@ -176,7 +241,7 @@ function SchemaViewer({
                   }`}
                 >
 
-                  {column.type}
+                  SQL Type: {column.type}
 
                 </p>
 

@@ -1,6 +1,6 @@
 import ExecutiveSummary from "../components/ExecutiveSummary";
 import ExportCenter from "../components/ExportCenter";
-
+import EnterpriseTable from "../components/EnterpriseTable";
 function Reports({
   data = [],
   insights = [],
@@ -223,6 +223,7 @@ function Reports({
             ))}
 
           </div>
+          
 
         ) : (
 
@@ -235,8 +236,13 @@ function Reports({
         )}
 
       </div>
+      {/* DATA PREVIEW */}
+<EnterpriseTable
+  data={data}
+/>
 
     </div>
+    
   );
 }
 

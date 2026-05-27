@@ -27,6 +27,7 @@ import WorkflowQueue from "./pages/WorkflowQueue";
 
 import UploadDataset from "./components/UploadDataset";
 import DataPreprocessingPanel from "./components/DataPreprocessingPanel";
+import NotFound from "./components/NotFound";
 
 import { generateKPIs } from "./utils/generateKPIs";
 import { detectKPIs } from "./utils/detectKPIs";
@@ -34,140 +35,200 @@ import { autoInsights } from "./utils/autoInsights";
 
 function App() {
 
-  // =========================
-  // MAIN DATASET
-  // =========================
+  // =========================================
+  // MAIN DATASET STATE
+  // =========================================
   const [data, setData] =
-  useState([]);
+    useState([]);
 
-const [schema, setSchema] =
-  useState([]);
+  // =========================================
+  // SEMANTIC ENGINE STATE
+  // =========================================
+  const [schema, setSchema] =
+    useState([]);
 
-const [semanticModel, setSemanticModel] =
-  useState([]);
+  const [semanticModel, setSemanticModel] =
+    useState([]);
 
-const [processingSummary, setProcessingSummary] =
-  useState([]);
+  const [processingSummary, setProcessingSummary] =
+    useState([]);
 
-const [sourceType, setSourceType] =
-  useState("Unknown");
+  const [sourceType, setSourceType] =
+    useState("Unknown");
 
-  // =========================
-  // GLOBAL UPLOAD REF
-  // =========================
+  // =========================================
+  // GLOBAL FILE INPUT REF
+  // =========================================
   const uploadRef =
     useRef(null);
 
-  // =========================
-  // KPI ENGINE
-  // =========================
+  // =========================================
+  // AUTO KPI ENGINE
+  // =========================================
   const autoKPIs =
-    generateKPIs(data);
+    useMemo(() => {
+      return generateKPIs(data);
+    }, [data]);
 
+  // =========================================
+  // DETECTED KPI ENGINE
+  // =========================================
   const detectedKPIs =
-    detectKPIs(data);
+    useMemo(() => {
+      return detectKPIs(data);
+    }, [data]);
 
-  // =========================
-  // AI INSIGHTS
-  // =========================
-  const insights = useMemo(() => {
+  // =========================================
+  // AI INSIGHTS ENGINE
+  // =========================================
+  const insights =
+    useMemo(() => {
 
-    const generated =
-      autoInsights(data);
+      const generated =
+        autoInsights(data);
 
-    if (
-      generated.length > 0
-    ) {
+      // =========================================
+      // AUTO GENERATED INSIGHTS
+      // =========================================
+      if (
+        generated &&
+        generated.length > 0
+      ) {
 
-      return generated;
-    }
+        return generated;
 
-    if (data.length === 0) {
+      }
+
+      // =========================================
+      // EMPTY STATE
+      // =========================================
+      if (
+        data.length === 0
+      ) {
+
+        return [
+
+          "Upload healthcare datasets for AI analysis.",
+
+          "Generate semantic synthetic datasets from DDL schemas.",
+
+          "AI operational analytics activates automatically after preprocessing.",
+
+          "Enterprise conversational intelligence engine is standing by.",
+
+        ];
+
+      }
+
+      // =========================================
+      // SAFE FALLBACK INSIGHTS
+      // =========================================
+      const totalRecords =
+        data.length;
+
+      const avgAge = (
+        data.reduce(
+          (
+            sum,
+            row
+          ) => {
+
+            return (
+
+              sum +
+
+              Number(
+
+                row.Age ||
+                row.age ||
+                row.patient_age ||
+                0
+
+              )
+
+            );
+
+          },
+          0
+        ) / totalRecords
+      ).toFixed(1);
 
       return [
 
-        "Upload healthcare datasets.",
-        "Generate synthetic data from DDL schemas.",
-        "AI analytics auto-starts after preprocessing.",
+        `Total Records Processed: ${totalRecords}`,
+
+        `Average Patient Age: ${avgAge}`,
+
+        "AI Healthcare Monitoring Active",
+
+        "Enterprise semantic intelligence operational",
 
       ];
-    }
 
-    const totalPatients =
-      data.length;
-
-    const avgAge = (
-      data.reduce(
-        (sum, row) => {
-
-          return (
-
-            sum +
-            Number(
-
-              row.Age ||
-              row.age ||
-              row.patient_age ||
-              0
-
-            )
-
-          );
-
-        },
-        0
-      ) / totalPatients
-    ).toFixed(1);
-
-    return [
-
-      `Total Records Processed: ${totalPatients}`,
-
-      `Average Patient Age: ${avgAge}`,
-
-      "AI Healthcare Monitoring Active",
-
-    ];
-
-  }, [data]);
+    }, [data]);
 
   return (
 
-    <div className="flex min-h-screen bg-[#0B1120] text-white">
+    <div className="relative flex min-h-screen bg-[#0B1120] text-white overflow-hidden">
 
+      {/* ========================================= */}
+      {/* GLOBAL BACKGROUND EFFECTS */}
+      {/* ========================================= */}
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-cyan-500/5 blur-3xl rounded-full" />
+
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/5 blur-3xl rounded-full" />
+
+      {/* ========================================= */}
       {/* SIDEBAR */}
+      {/* ========================================= */}
       <Sidebar />
 
-      {/* MAIN */}
-      <main className="flex-1 p-10 overflow-auto">
+      {/* ========================================= */}
+      {/* MAIN CONTENT */}
+      {/* ========================================= */}
+      <main className="relative z-10 flex-1 p-10 overflow-auto">
 
+        {/* ========================================= */}
         {/* HEADER */}
+        {/* ========================================= */}
         <Header
           onUploadClick={() =>
             uploadRef.current?.click()
           }
         />
 
+        {/* ========================================= */}
         {/* GLOBAL DATASET UPLOAD */}
-<div className="hidden">
+        {/* ========================================= */}
+        <div className="hidden">
 
-  <UploadDataset
-    data={data}
-    setData={setData}
-    insights={insights}
-    uploadRef={uploadRef}
-  />
+          <UploadDataset
+            data={data}
+            setData={setData}
+            insights={insights}
+            uploadRef={uploadRef}
+          />
 
-</div>
+        </div>
 
-{/* PREPROCESS PANEL */}
-<DataPreprocessingPanel
-  data={data}
-  setData={setData}
-/>
+        {/* ========================================= */}
+        {/* DATA PREPROCESSING */}
+        {/* ========================================= */}
+        {data.length > 0 && (
+
+          <DataPreprocessingPanel
+            data={data}
+            setData={setData}
+          />
+
+        )}
+
+        {/* ========================================= */}
         {/* ROUTES */}
+        {/* ========================================= */}
         <Routes>
 
+          {/* DASHBOARD */}
           <Route
             path="/"
             element={
@@ -181,24 +242,26 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* ANALYTICS */}
           <Route
             path="/analytics"
             element={
               <Analytics
-  data={data}
-  setData={setData}
-  schema={schema}
-  setSchema={setSchema}
-  semanticModel={semanticModel}
-  setSemanticModel={setSemanticModel}
-  processingSummary={processingSummary}
-  setProcessingSummary={setProcessingSummary}
-  sourceType={sourceType}
-  setSourceType={setSourceType}
-/>
+                data={data}
+                setData={setData}
+                schema={schema}
+                setSchema={setSchema}
+                semanticModel={semanticModel}
+                setSemanticModel={setSemanticModel}
+                processingSummary={processingSummary}
+                setProcessingSummary={setProcessingSummary}
+                sourceType={sourceType}
+                setSourceType={setSourceType}
+              />
             }
           />
 
+          {/* REPORTS */}
           <Route
             path="/reports"
             element={
@@ -209,16 +272,19 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* AI INSIGHTS */}
           <Route
             path="/ai-insights"
             element={
               <AIInsights
                 data={data}
                 insights={insights}
+                schema={schema}
               />
             }
           />
 
+          {/* ENROLLMENT */}
           <Route
             path="/enrollment"
             element={
@@ -231,6 +297,7 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* REJECTIONS */}
           <Route
             path="/rejections"
             element={
@@ -240,6 +307,7 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* SLA */}
           <Route
             path="/sla"
             element={
@@ -249,6 +317,7 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* TURNAROUND */}
           <Route
             path="/turnaround"
             element={
@@ -258,6 +327,7 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* PROVIDERS */}
           <Route
             path="/providers"
             element={
@@ -267,6 +337,7 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* WORKLOAD */}
           <Route
             path="/workload"
             element={
@@ -276,6 +347,7 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* WORKFLOW */}
           <Route
             path="/workflow"
             element={
@@ -285,19 +357,29 @@ const [sourceType, setSourceType] =
             }
           />
 
+          {/* 404 */}
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
+
         </Routes>
 
+        {/* ========================================= */}
         {/* FOOTER */}
-        <footer className="mt-10 text-center text-gray-500 text-sm">
+        {/* ========================================= */}
+        <footer className="mt-14 text-center text-gray-500 text-sm pb-10">
 
-          InsightFlow AI • Enterprise Healthcare Analytics Platform
+          InsightFlow AI • Enterprise Healthcare Intelligence Platform
 
         </footer>
 
       </main>
 
     </div>
+
   );
+
 }
 
 export default App;

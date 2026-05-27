@@ -2,6 +2,16 @@ import { useState, useMemo } from "react";
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 
+import {
+  Upload,
+  Database,
+  FileSpreadsheet,
+  Search,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
+
 function UploadDataset({
   data,
   setData,
@@ -20,10 +30,15 @@ function UploadDataset({
 
   const [searchTerm, setSearchTerm] =
     useState("");
-  const [currentPage, setCurrentPage] =
-  useState(1);
 
-const rowsPerPage = 10;
+  const [currentPage, setCurrentPage] =
+    useState(1);
+
+  const [isUploading, setIsUploading] =
+    useState(false);
+
+  const rowsPerPage = 10;
+
   // =========================
   // DATASET INTELLIGENCE
   // =========================
@@ -45,53 +60,36 @@ const rowsPerPage = 10;
       let datasetType =
         "General Analytics Dataset";
 
-      // =========================
-      // HEALTHCARE ENROLLMENT
-      // =========================
       if (
-
         lowerColumns.some((col) =>
           col.includes("provider")
         ) &&
-
         lowerColumns.some((col) =>
           col.includes("patient")
         )
-
       ) {
 
         datasetType =
           "Healthcare Enrollment Dataset";
       }
 
-      // =========================
-      // FINANCIAL
-      // =========================
       if (
-
         lowerColumns.some((col) =>
           col.includes("payment")
         ) ||
-
         lowerColumns.some((col) =>
           col.includes("billing")
         )
-
       ) {
 
         datasetType =
           "Financial Analytics Dataset";
       }
 
-      // =========================
-      // SLA
-      // =========================
       if (
-
         lowerColumns.some((col) =>
           col.includes("sla")
         )
-
       ) {
 
         datasetType =
@@ -116,674 +114,616 @@ const rowsPerPage = 10;
     }, [data]);
 
   // =========================
-// SEARCH FILTER
-// =========================
-const filteredData = useMemo(() => {
+  // SEARCH FILTER
+  // =========================
+  const filteredData =
+    useMemo(() => {
 
-  return data.filter((row) => {
+      return data.filter((row) => {
 
-    return Object.values(row)
-      .join(" ")
-      .toLowerCase()
-      .includes(
-        searchTerm.toLowerCase()
-      );
+        return Object.values(row)
+          .join(" ")
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          );
 
-  });
+      });
 
-}, [data, searchTerm]);
-// =========================
-// PAGINATION
-// =========================
+    }, [data, searchTerm]);
 
-const totalPages =
-  Math.max(
-    1,
-    Math.ceil(
-      filteredData.length /
-      rowsPerPage
-    )
-  );
+  // =========================
+  // PAGINATION
+  // =========================
+  const totalPages =
+    Math.max(
+      1,
+      Math.ceil(
+        filteredData.length /
+          rowsPerPage
+      )
+    );
 
-const startIndex =
-  (currentPage - 1) *
-  rowsPerPage;
+  const startIndex =
+    (currentPage - 1) *
+    rowsPerPage;
 
-const paginatedData =
-  filteredData.slice(
-    startIndex,
-    startIndex + rowsPerPage
-  );
+  const paginatedData =
+    filteredData.slice(
+      startIndex,
+      startIndex + rowsPerPage
+    );
 
   // =========================
   // FILE UPLOAD HANDLER
   // =========================
-  const handleFileUpload = async (event) => {
+  const handleFileUpload =
+    async (event) => {
 
-  const file =
-    event.target.files[0];
+      const file =
+        event.target.files[0];
 
-  if (!file) return;
+      if (!file) return;
 
-  const fileName =
-    file.name.toLowerCase();
+      setIsUploading(true);
 
-  setUploadStatus(
-    "Processing file..."
-  );
-
-  setFileInfo({
-    name: file.name,
-    size: (
-      file.size / 1024
-    ).toFixed(2),
-    type: file.type,
-  });
-
-  // =========================
-  // COMMON PREPROCESS FUNCTION
-  // =========================
-  const preprocessAndSetData =
-    async (rawData) => {
-
-      try {
-
-        const response =
-          await fetch(
-
-            "https://insightflow-backend-cqbu.onrender.com/api/preprocess",
-
-            {
-
-              method: "POST",
-
-              headers: {
-
-                "Content-Type":
-                  "application/json",
-
-              },
-
-              body: JSON.stringify({
-
-                data: rawData,
-
-              }),
-
-            }
-
-          );
-
-        if (!response.ok) {
-
-  throw new Error(
-    "Server preprocessing failed"
-  );
-
-}
-
-const result =
-  await response.json();
-
-        console.log(
-          "Processed:",
-          result
-        );
-
-        setData(
-          result.data || []
-        );
-
-        setUploadStatus(
-          "Dataset uploaded successfully"
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Preprocess Error:",
-          error
-        );
-
-        setUploadStatus(
-          "Backend preprocessing failed"
-        );
-      }
-    };
-
-  // =========================
-  // CSV FILE
-  // =========================
-  if (fileName.endsWith(".csv")) {
-
-    Papa.parse(file, {
-
-      header: true,
-
-      skipEmptyLines: true,
-
-      complete: async (results) => {
-
-        await preprocessAndSetData(
-          results.data
-        );
-
-      },
-
-      error: () => {
-
-        setUploadStatus(
-          "CSV parsing failed"
-        );
-      },
-
-    });
-
-  }
-
-  // =========================
-  // EXCEL FILE
-  // =========================
-  else if (
-
-    fileName.endsWith(".xlsx") ||
-
-    fileName.endsWith(".xls")
-
-  ) {
-
-    try {
-
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        async (e) => {
-
-          const binaryStr =
-            e.target.result;
-
-          const workbook =
-            XLSX.read(binaryStr, {
-
-              type: "binary",
-
-            });
-
-          const sheetName =
-            workbook.SheetNames[0];
-
-          const worksheet =
-            workbook.Sheets[sheetName];
-
-          const jsonData =
-            XLSX.utils.sheet_to_json(
-              worksheet
-            );
-
-          await preprocessAndSetData(
-            jsonData
-          );
-
-        };
-
-      reader.readAsBinaryString(
-        file
-      );
-
-    } catch {
+      const fileName =
+        file.name.toLowerCase();
 
       setUploadStatus(
-        "Excel parsing failed"
+        "Processing dataset..."
       );
-    }
 
-  }
+      setFileInfo({
+        name: file.name,
+        size: (
+          file.size / 1024
+        ).toFixed(2),
+        type: file.type,
+      });
 
-  // =========================
-  // TXT / SQL FILE
-  // =========================
-  else if (
+      // =========================
+      // PREPROCESS
+      // =========================
+      const preprocessAndSetData =
+        async (rawData) => {
 
-    fileName.endsWith(".txt") ||
+          try {
 
-    fileName.endsWith(".sql")
+            const response =
+              await fetch(
+                "https://insightflow-backend-cqbu.onrender.com/api/preprocess",
+                {
+                  method: "POST",
 
-  ) {
+                  headers: {
+                    "Content-Type":
+                      "application/json",
+                  },
 
-    try {
-
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        async (e) => {
-
-          const text =
-            e.target.result;
-
-          const lines =
-            text.split("\n");
-
-          const extractedColumns =
-            [];
-
-          lines.forEach((line) => {
-
-            const cleanLine =
-              line.trim();
-
-            const isColumnLine =
-
-              cleanLine.includes(
-                "VARCHAR"
-              ) ||
-
-              cleanLine.includes(
-                "DATE"
-              ) ||
-
-              cleanLine.includes(
-                "DOUBLE"
-              ) ||
-
-              cleanLine.includes(
-                "TIMESTAMP"
-              ) ||
-
-              cleanLine.includes(
-                "INTEGER"
-              ) ||
-
-              cleanLine.includes(
-                "DECIMAL"
+                  body: JSON.stringify({
+                    data: rawData,
+                  }),
+                }
               );
 
-            if (isColumnLine) {
+            if (!response.ok) {
 
-              const column =
-                cleanLine
-                  .split(" ")[0]
-                  .replace(",", "")
-                  .trim();
-
-              if (
-                column &&
-                !extractedColumns.includes(
-                  column
-                )
-              ) {
-
-                extractedColumns.push(
-                  column
-                );
-              }
+              throw new Error(
+                "Server preprocessing failed"
+              );
             }
 
-          });
+            const result =
+              await response.json();
 
-          const previewData =
-            extractedColumns.map(
-              (col, index) => ({
-
-                id: index + 1,
-
-                column_name: col,
-
-              })
+            setData(
+              result.data || []
             );
 
-          await preprocessAndSetData(
-            previewData
-          );
+            setUploadStatus(
+              "Dataset uploaded successfully"
+            );
 
+          } catch (error) {
+
+            console.error(error);
+
+            setUploadStatus(
+              "Backend preprocessing failed"
+            );
+
+          } finally {
+
+            setIsUploading(false);
+
+          }
         };
 
-      reader.readAsText(file);
+      // CSV
+      if (
+        fileName.endsWith(".csv")
+      ) {
 
-    } catch {
+        Papa.parse(file, {
 
-      setUploadStatus(
-        "TXT/SQL processing failed"
-      );
-    }
+          header: true,
 
-  }
+          skipEmptyLines: true,
 
-  // =========================
-  // UNSUPPORTED FILE
-  // =========================
-  else {
+          complete: async (
+            results
+          ) => {
 
-    setUploadStatus(
-      "Unsupported file format"
-    );
+            await preprocessAndSetData(
+              results.data
+            );
 
-    alert(
-      "Unsupported file format"
-    );
-  }
+          },
 
-};
+          error: () => {
+
+            setUploadStatus(
+              "CSV parsing failed"
+            );
+
+            setIsUploading(false);
+
+          },
+
+        });
+
+      }
+
+      // EXCEL
+      else if (
+        fileName.endsWith(".xlsx") ||
+        fileName.endsWith(".xls")
+      ) {
+
+        try {
+
+          const reader =
+            new FileReader();
+
+          reader.onload =
+            async (e) => {
+
+              const binaryStr =
+                e.target.result;
+
+              const workbook =
+                XLSX.read(binaryStr, {
+                  type: "binary",
+                });
+
+              const sheetName =
+                workbook.SheetNames[0];
+
+              const worksheet =
+                workbook.Sheets[sheetName];
+
+              const jsonData =
+                XLSX.utils.sheet_to_json(
+                  worksheet
+                );
+
+              await preprocessAndSetData(
+                jsonData
+              );
+
+            };
+
+          reader.readAsBinaryString(
+            file
+          );
+
+        } catch {
+
+          setUploadStatus(
+            "Excel parsing failed"
+          );
+
+          setIsUploading(false);
+
+        }
+
+      }
+
+      // UNSUPPORTED
+      else {
+
+        setUploadStatus(
+          "Unsupported file format"
+        );
+
+        setIsUploading(false);
+
+      }
+
+    };
+
   return (
 
-    <div className="bg-[#111827] p-6 rounded-2xl border border-gray-800 mt-8 overflow-auto">
+    <div className="bg-[#111827] border border-gray-800 rounded-3xl p-8 mt-8">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mb-8">
 
         <div>
 
-          <h2 className="text-2xl font-bold">
-            Upload Dataset
+          <div className="flex items-center gap-3 mb-3">
+
+            <Database
+              size={22}
+              className="text-cyan-400"
+            />
+
+            <span className="text-cyan-400 font-semibold text-sm">
+
+              Enterprise Dataset Engine
+
+            </span>
+
+          </div>
+
+          <h2 className="text-4xl font-black">
+
+            Upload Intelligence Hub
+
           </h2>
 
-          <p className="text-gray-400 text-sm mt-1">
-            Supports CSV, Excel, TXT and SQL schema files
+          <p className="text-gray-400 mt-3 max-w-3xl leading-7">
+
+            Upload enterprise healthcare, operational,
+            enrollment, revenue, provider, workflow,
+            or SLA datasets for AI-powered analytics.
+
           </p>
 
         </div>
 
-        <label className="bg-cyan-500 hover:bg-cyan-400 px-4 py-2 rounded-lg cursor-pointer text-sm font-semibold transition">
+        <label className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-5 rounded-2xl cursor-pointer transition-all duration-300 inline-flex items-center gap-3">
 
-          Upload File
+          <Upload size={20} />
+
+          Upload Dataset
 
           <input
-  ref={uploadRef}
-  type="file"
-  accept=".csv,.xlsx,.xls,.txt,.sql"
-  className="hidden"
-  onChange={handleFileUpload}
-/>
+            ref={uploadRef}
+            type="file"
+            accept=".csv,.xlsx,.xls,.txt,.sql"
+            className="hidden"
+            onChange={handleFileUpload}
+          />
+
         </label>
 
       </div>
 
-      {/* FILE INFO */}
-      {fileInfo && (
+      {/* STATUS */}
+      {(fileInfo || uploadStatus) && (
 
-        <div className="bg-[#1F2937] p-4 rounded-xl mb-6 border border-gray-700">
+        <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6 mb-8">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
             <div>
 
-              <span className="text-cyan-400">
-                File:
-              </span>
-
-              <p>
-                {fileInfo.name}
+              <p className="text-gray-400 text-sm mb-2">
+                File
               </p>
+
+              <h3 className="font-semibold break-all">
+
+                {fileInfo?.name}
+              </h3>
 
             </div>
 
             <div>
 
-              <span className="text-cyan-400">
-                Size:
-              </span>
-
-              <p>
-                {fileInfo.size} KB
+              <p className="text-gray-400 text-sm mb-2">
+                Size
               </p>
+
+              <h3 className="font-semibold">
+
+                {fileInfo?.size} KB
+              </h3>
 
             </div>
 
             <div>
 
-              <span className="text-cyan-400">
-                Status:
-              </span>
-
-              <p>
-                {uploadStatus}
+              <p className="text-gray-400 text-sm mb-2">
+                Status
               </p>
+
+              <div className="flex items-center gap-2">
+
+                {isUploading ? (
+                  <Loader2
+                    size={18}
+                    className="animate-spin text-cyan-400"
+                  />
+                ) : uploadStatus.includes(
+                    "success"
+                  ) ? (
+                  <CheckCircle2
+                    size={18}
+                    className="text-green-400"
+                  />
+                ) : (
+                  <AlertCircle
+                    size={18}
+                    className="text-yellow-400"
+                  />
+                )}
+
+                <span>
+                  {uploadStatus}
+                </span>
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <p className="text-gray-400 text-sm mb-2">
+                Records
+              </p>
+
+              <h3 className="font-bold text-cyan-400 text-2xl">
+
+                {data.length}
+              </h3>
 
             </div>
 
           </div>
 
         </div>
+
       )}
 
-      {/* INSIGHTS */}
-      {insights.length > 0 && (
+      {/* INTELLIGENCE */}
+      {datasetIntelligence && (
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
 
-          {insights.map(
-            (item, index) => (
+          <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6">
 
-              <div
-                key={index}
-                className="bg-[#1F2937] p-4 rounded-xl border border-gray-700"
-              >
+            <p className="text-gray-400 text-sm">
+              Dataset Type
+            </p>
 
-                <p className="text-cyan-400 font-semibold">
-                  {item}
-                </p>
+            <h3 className="text-cyan-400 font-bold mt-3">
 
-              </div>
-            )
-          )}
+              {datasetIntelligence.datasetType}
+            </h3>
+
+          </div>
+
+          <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6">
+
+            <p className="text-gray-400 text-sm">
+              Rows
+            </p>
+
+            <h3 className="text-4xl font-black mt-3">
+
+              {datasetIntelligence.rows}
+            </h3>
+
+          </div>
+
+          <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6">
+
+            <p className="text-gray-400 text-sm">
+              Columns
+            </p>
+
+            <h3 className="text-4xl font-black mt-3">
+
+              {datasetIntelligence.columns}
+            </h3>
+
+          </div>
+
+          <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6">
+
+            <p className="text-gray-400 text-sm">
+              Ingestion
+            </p>
+
+            <h3 className="text-green-400 font-bold mt-3">
+
+              Successful
+            </h3>
+
+          </div>
 
         </div>
+
       )}
 
-      {/* DATASET INTELLIGENCE */}
-{datasetIntelligence && (
+      {/* SEARCH */}
+      <div className="relative mb-8">
 
-  <div className="bg-[#1F2937] border border-cyan-500/30 p-5 rounded-2xl mb-6">
-
-    <div className="flex flex-wrap gap-6">
-
-      <div>
-
-        <p className="text-gray-400 text-sm">
-          Dataset Type
-        </p>
-
-        <h3 className="text-cyan-400 font-bold text-lg">
-
-          {datasetIntelligence.datasetType}
-
-        </h3>
-
-      </div>
-
-      <div>
-
-        <p className="text-gray-400 text-sm">
-          Rows
-        </p>
-
-        <h3 className="font-bold text-lg">
-
-          {datasetIntelligence.rows}
-
-        </h3>
-
-      </div>
-
-      <div>
-
-        <p className="text-gray-400 text-sm">
-          Columns
-        </p>
-
-        <h3 className="font-bold text-lg">
-
-          {datasetIntelligence.columns}
-
-        </h3>
-
-      </div>
-
-      <div>
-
-        <p className="text-gray-400 text-sm">
-          Ingestion Status
-        </p>
-
-        <h3 className="text-green-400 font-bold text-lg">
-
-          {datasetIntelligence.ingestion}
-
-        </h3>
-
-      </div>
-
-    </div>
-
-  </div>
-
-)}
-      {/* SEARCH BAR */}
-      <div className="mb-5">
+        <Search
+          size={18}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+        />
 
         <input
           type="text"
-          placeholder="Search records..."
+          placeholder="Search uploaded dataset..."
           value={searchTerm}
           onChange={(e) => {
 
-  setSearchTerm(
-    e.target.value
-  );
+            setSearchTerm(
+              e.target.value
+            );
 
-  setCurrentPage(1);
+            setCurrentPage(1);
 
-}}
-          className="w-full bg-[#1F2937] border border-gray-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400"
+          }}
+          className="w-full bg-[#1F2937] border border-gray-700 rounded-2xl pl-12 pr-4 py-4 outline-none focus:border-cyan-400"
         />
 
       </div>
-      {/* DATASET INFO */}
-<div className="flex justify-between items-center mb-4 text-sm text-gray-400">
 
-  <p>
-    Showing{" "}
-    {paginatedData.length}
-    {" "}of{" "}
-    {filteredData.length}
-    {" "}records
-  </p>
-
-  <p>
-    Page {currentPage}
-    {" "}of{" "}
-    {totalPages || 1}
-  </p>
-
-</div>
-
-            {/* TABLE */}
+      {/* TABLE */}
       {filteredData.length > 0 ? (
 
-        <>
-          <div className="overflow-auto">
+        <div className="overflow-auto rounded-2xl border border-gray-700">
 
-            <table className="w-full text-sm text-left">
+          <table className="w-full text-sm">
 
-              <thead>
+            <thead className="bg-[#1F2937]">
 
-                <tr className="text-cyan-400 border-b border-gray-700">
+              <tr>
 
-                  {Object.keys(
-                    filteredData[0]
-                  ).map((key) => (
+                {Object.keys(
+                  filteredData[0]
+                ).map((key) => (
 
-                    <th
-                      key={key}
-                      className="p-3 whitespace-nowrap"
-                    >
+                  <th
+                    key={key}
+                    className="p-4 text-left text-cyan-400 whitespace-nowrap"
+                  >
 
-                      {key}
+                    {key}
 
-                    </th>
-                  ))}
+                  </th>
 
-                </tr>
+                ))}
 
-              </thead>
+              </tr>
 
-              <tbody>
+            </thead>
 
-                {paginatedData.map(
-                  (row, index) => (
+            <tbody>
 
-                    <tr
-                      key={index}
-                      className="border-b border-gray-800 hover:bg-[#1F2937]"
-                    >
+              {paginatedData.map(
+                (row, index) => (
 
-                      {Object.values(row).map(
-                        (value, i) => (
+                  <tr
+                    key={index}
+                    className="border-t border-gray-800 hover:bg-[#1F2937]/50 transition"
+                  >
 
-                          <td
-                            key={i}
-                            className="p-3 whitespace-nowrap"
-                          >
+                    {Object.values(row).map(
+                      (value, i) => (
 
-                            {String(value)}
+                        <td
+                          key={i}
+                          className="p-4 whitespace-nowrap"
+                        >
 
-                          </td>
-                        )
-                      )}
+                          {String(value)}
 
-                    </tr>
-                  ))}
+                        </td>
 
-              </tbody>
+                      )
+                    )}
 
-            </table>
+                  </tr>
 
-          </div>
-
-          {/* PAGINATION */}
-          <div className="flex justify-center items-center gap-4 mt-6">
-
-            <button
-              onClick={() =>
-                setCurrentPage(
-                  (prev) =>
-                    Math.max(prev - 1, 1)
                 )
-              }
-              className="bg-[#1F2937] px-4 py-2 rounded-lg border border-gray-700 hover:border-cyan-400"
-            >
-              Previous
-            </button>
+              )}
 
-            <button
-              onClick={() =>
-                setCurrentPage(
-                  (prev) =>
-                    Math.min(
-                      prev + 1,
-                      totalPages
-                    )
-                )
-              }
-              className="bg-cyan-500 px-4 py-2 rounded-lg text-black font-semibold hover:bg-cyan-400"
-            >
-              Next
-            </button>
+            </tbody>
 
-          </div>
-        </>
+          </table>
+
+        </div>
 
       ) : (
 
-        <div className="text-gray-400 text-center py-16">
+        <div className="bg-[#1F2937] border border-gray-700 rounded-3xl py-20 text-center">
 
-          Upload enterprise datasets to begin analytics
+          <FileSpreadsheet
+            size={60}
+            className="mx-auto text-cyan-400 mb-6"
+          />
+
+          <h3 className="text-2xl font-bold mb-3">
+
+            No Dataset Uploaded
+
+          </h3>
+
+          <p className="text-gray-400">
+
+            Upload enterprise datasets to begin AI analytics
+
+          </p>
 
         </div>
 
       )}
+
+      {/* PAGINATION */}
+      {filteredData.length > 0 && (
+
+        <div className="flex justify-between items-center mt-8">
+
+          <div className="text-sm text-gray-400">
+
+            Showing {paginatedData.length} of{" "}
+            {filteredData.length} records
+
+          </div>
+
+          <div className="flex items-center gap-4">
+
+            <button
+              onClick={() =>
+                setCurrentPage((prev) =>
+                  Math.max(prev - 1, 1)
+                )
+              }
+              className="bg-[#1F2937] border border-gray-700 hover:border-cyan-400 px-5 py-3 rounded-xl transition"
+            >
+
+              Previous
+
+            </button>
+
+            <div className="text-sm text-gray-400">
+
+              Page {currentPage} of{" "}
+              {totalPages}
+
+            </div>
+
+            <button
+              onClick={() =>
+                setCurrentPage((prev) =>
+                  Math.min(
+                    prev + 1,
+                    totalPages
+                  )
+                )
+              }
+              className="bg-cyan-500 hover:bg-cyan-400 text-black font-semibold px-5 py-3 rounded-xl transition"
+            >
+
+              Next
+
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
+
     </div>
+
   );
 }
 

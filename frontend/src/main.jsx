@@ -1,10 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+
 import {
   BrowserRouter,
 } from "react-router-dom";
 
+import {
+  ToastContainer,
+} from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 import App from "./App";
+
+import {
+  AppProvider,
+} from "./context/AppContext";
+
 import "./index.css";
 
 ReactDOM.createRoot(
@@ -15,9 +27,20 @@ ReactDOM.createRoot(
 
     <BrowserRouter>
 
-      <App />
+      <AppProvider>
+
+        <App />
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          theme="dark"
+        />
+
+      </AppProvider>
 
     </BrowserRouter>
 
   </React.StrictMode>
+
 );

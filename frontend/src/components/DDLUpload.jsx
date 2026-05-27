@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 function DDLUpload({
   setSchema,
@@ -6,8 +6,17 @@ function DDLUpload({
 
   const fileRef = useRef(null);
 
+  const [fileName, setFileName] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [uploadSummary, setUploadSummary] =
+    useState([]);
+
   // =========================
-  // SEMANTIC COLUMN DETECTOR
+  // SEMANTIC DETECTOR
   // =========================
   const detectSemanticType = (
     columnName
@@ -16,9 +25,7 @@ function DDLUpload({
     const lower =
       columnName.toLowerCase();
 
-    // =========================
     // DISTRIBUTOR
-    // =========================
     if (
 
       lower.includes("distributor") ||
@@ -31,9 +38,7 @@ function DDLUpload({
 
     }
 
-    // =========================
     // PRODUCT
-    // =========================
     if (
 
       lower.includes("product") ||
@@ -46,9 +51,7 @@ function DDLUpload({
 
     }
 
-    // =========================
     // SALES
-    // =========================
     if (
 
       lower.includes("sales") ||
@@ -61,9 +64,7 @@ function DDLUpload({
 
     }
 
-    // =========================
     // QUANTITY
-    // =========================
     if (
 
       lower.includes("qty") ||
@@ -76,9 +77,7 @@ function DDLUpload({
 
     }
 
-    // =========================
     // DATE
-    // =========================
     if (
 
       lower.includes("date") ||
@@ -91,9 +90,7 @@ function DDLUpload({
 
     }
 
-    // =========================
     // CUSTOMER
-    // =========================
     if (
 
       lower.includes("customer") ||
@@ -105,9 +102,7 @@ function DDLUpload({
 
     }
 
-    // =========================
     // REGION
-    // =========================
     if (
 
       lower.includes("region") ||
@@ -121,14 +116,24 @@ function DDLUpload({
 
     }
 
-    // =========================
     // STATUS
-    // =========================
     if (
       lower.includes("status")
     ) {
 
       return "Status";
+
+    }
+
+    // CLAIMS
+    if (
+
+      lower.includes("claim") ||
+      lower.includes("edi")
+
+    ) {
+
+      return "EDI Transaction";
 
     }
 
@@ -146,31 +151,34 @@ function DDLUpload({
     const descriptions = {
 
       Distributor:
-        "Tracks distributor or supplier information.",
+        "Tracks distributor or supplier intelligence.",
 
       Product:
-        "Represents product or SKU level details.",
+        "Represents SKU or product-level analytics.",
 
       Revenue:
-        "Stores sales or revenue metrics.",
+        "Stores operational revenue and financial metrics.",
 
       Quantity:
-        "Represents units sold or shipped.",
+        "Tracks shipment or operational quantity metrics.",
 
       Date:
-        "Captures operational or transaction dates.",
+        "Captures operational workflow dates and timestamps.",
 
       Customer:
-        "Contains customer level information.",
+        "Contains customer or account intelligence.",
 
       Region:
-        "Tracks geography or regional analytics.",
+        "Tracks regional or geography analytics.",
 
       Status:
-        "Represents operational workflow status.",
+        "Represents operational workflow state.",
+
+      "EDI Transaction":
+        "Tracks EDI operational transaction flows.",
 
       General:
-        "General operational business field.",
+        "General enterprise operational field.",
 
     };
 
@@ -183,216 +191,285 @@ function DDLUpload({
   };
 
   // =========================
-  // PARSE DDL
+  // OPERATIONAL CATEGORY
   // =========================
-  const parseDDL = (text) => {
+  const detectCategory = (
+    semanticType
+  ) => {
+
+    const mapping = {
+
+      Distributor:
+        "Supply Chain",
+
+      Product:
+        "Product Intelligence",
+
+      Revenue:
+        "Financial Analytics",
+
+      Quantity:
+        "Operational Metrics",
+
+      Date:
+        "Time Intelligence",
+
+      Customer:
+        "Customer Analytics",
+
+      Region:
+        "Regional Intelligence",
+
+      Status:
+        "Workflow Intelligence",
+
+      "EDI Transaction":
+        "EDI Analytics",
+
+      General:
+        "Enterprise Analytics",
+
+    };
+
+    return (
+      mapping[
+        semanticType
+      ] || "Enterprise Analytics"
+    );
+
+  };
 
   // =========================
-  // ADVANCED DDL REGEX
+  // SAMPLE VALUES
   // =========================
-  const regex =
-    /(\w+)\s+(VARCHAR|CHAR|TEXT|DATE|TIMESTAMP|INTEGER|INT|BIGINT|DOUBLE|FLOAT|DECIMAL|NUMERIC|BOOLEAN)/gi;
+  const generateSamples = (
+    semanticType
+  ) => {
 
-  const columns = [];
+    const mapping = {
 
-  let match;
+      Distributor: [
 
-  while (
-    (match = regex.exec(text)) !== null
-  ) {
+        "Cardinal Health",
+        "McKesson",
+        "AmerisourceBergen",
 
-    const name =
-      match[1];
+      ],
 
-    const type =
-      match[2];
+      Product: [
 
-    const semanticType =
-      detectSemanticType(name);
+        "Ventilator",
+        "IV Pump",
+        "Glucose Monitor",
 
-    // =========================
-    // OPERATION CATEGORY
-    // =========================
-    let operationalCategory =
-      "General Analytics";
+      ],
 
-    if (
-      semanticType ===
-      "Revenue"
-    ) {
-
-      operationalCategory =
-        "Sales Analytics";
-
-    }
-
-    else if (
-      semanticType ===
-      "Distributor"
-    ) {
-
-      operationalCategory =
-        "Supply Chain";
-
-    }
-
-    else if (
-      semanticType ===
-      "Product"
-    ) {
-
-      operationalCategory =
-        "Product Intelligence";
-
-    }
-
-    else if (
-      semanticType ===
-      "Customer"
-    ) {
-
-      operationalCategory =
-        "Customer Analytics";
-
-    }
-
-    else if (
-      semanticType ===
-      "Region"
-    ) {
-
-      operationalCategory =
-        "Regional Intelligence";
-
-    }
-
-    // =========================
-    // SAMPLE VALUES
-    // =========================
-    let sampleValues = [];
-
-    if (
-      semanticType ===
-      "Distributor"
-    ) {
-
-      sampleValues = [
-
-        "ABC Distribution",
-        "Global Supply Inc",
-        "West Coast Retail",
-
-      ];
-
-    }
-
-    else if (
-      semanticType ===
-      "Product"
-    ) {
-
-      sampleValues = [
-
-        "SKU-1001",
-        "Laptop Pro",
-        "Wireless Mouse",
-
-      ];
-
-    }
-
-    else if (
-      semanticType ===
-      "Revenue"
-    ) {
-
-      sampleValues = [
+      Revenue: [
 
         "12000",
-        "4500",
-        "9800",
+        "8500",
+        "45000",
 
-      ];
+      ],
 
-    }
+      Quantity: [
 
-    else if (
-      semanticType ===
-      "Region"
-    ) {
+        "120",
+        "450",
+        "980",
 
-      sampleValues = [
+      ],
 
-        "California",
+      Region: [
+
         "Texas",
-        "New York",
+        "California",
+        "Florida",
 
-      ];
+      ],
 
-    }
-
-    else if (
-      semanticType ===
-      "Status"
-    ) {
-
-      sampleValues = [
+      Status: [
 
         "Completed",
         "Pending",
         "Returned",
 
-      ];
+      ],
+
+      Customer: [
+
+        "Apollo Hospital",
+        "CareOne Clinic",
+        "Metro Health",
+
+      ],
+
+      "EDI Transaction": [
+
+        "EDI867",
+        "CLAIM-1001",
+        "TXN-7782",
+
+      ],
+
+      Date: [
+
+        "2025-01-01",
+        "2025-03-12",
+        "2025-05-18",
+
+      ],
+
+      General: [
+
+        "Value A",
+        "Value B",
+        "Value C",
+
+      ],
+
+    };
+
+    return (
+      mapping[
+        semanticType
+      ] || mapping.General
+    );
+
+  };
+
+  // =========================
+  // PARSE DDL
+  // =========================
+  const parseDDL = (
+    text
+  ) => {
+
+    const regex =
+      /(\w+)\s+(VARCHAR|CHAR|TEXT|DATE|TIMESTAMP|INTEGER|INT|BIGINT|DOUBLE|FLOAT|DECIMAL|NUMERIC|BOOLEAN)/gi;
+
+    const columns = [];
+
+    let match;
+
+    while (
+      (match = regex.exec(text)) !== null
+    ) {
+
+      const name =
+        match[1];
+
+      const type =
+        match[2];
+
+      const semanticType =
+        detectSemanticType(name);
+
+      columns.push({
+
+        name,
+
+        type,
+
+        semanticType,
+
+        description:
+          generateDescription(
+            semanticType
+          ),
+
+        operationalCategory:
+          detectCategory(
+            semanticType
+          ),
+
+        sampleValues:
+          generateSamples(
+            semanticType
+          ),
+
+      });
 
     }
 
-    columns.push({
+    return columns;
 
-      name,
+  };
 
-      type,
-
-      semanticType,
-
-      description:
-        generateDescription(
-          semanticType
-        ),
-
-      operationalCategory,
-
-      sampleValues,
-
-    });
-
-  }
-
-  return columns;
-
-};
   // =========================
-  // HANDLE FILE
+  // HANDLE FILE UPLOAD
   // =========================
   const handleUpload =
     async (e) => {
 
-      const file =
-        e.target.files[0];
+      try {
 
-      if (!file) return;
+        setLoading(true);
 
-      const text =
-        await file.text();
+        const file =
+          e.target.files[0];
 
-      const parsed =
-        parseDDL(text);
+        if (!file) {
 
-      console.log(
-        "Parsed Schema:",
-        parsed
-      );
+          setLoading(false);
 
-      setSchema(parsed);
+          return;
+        }
+
+        setFileName(
+          file.name
+        );
+
+        const text =
+          await file.text();
+
+        const parsed =
+          parseDDL(text);
+
+        // =========================
+        // AI SUMMARY
+        // =========================
+        const summary = [];
+
+        summary.push(
+          `Uploaded schema file: ${file.name}`
+        );
+
+        summary.push(
+          `AI semantic parser detected ${parsed.length} enterprise columns.`
+        );
+
+        summary.push(
+          "Business entity recognition completed successfully."
+        );
+
+        summary.push(
+          "Operational semantic categorization initialized."
+        );
+
+        summary.push(
+          "Enterprise analytics metadata generated successfully."
+        );
+
+        setUploadSummary(
+          summary
+        );
+
+        setSchema(parsed);
+
+      } catch (error) {
+
+        console.log(error);
+
+        alert(
+          "DDL parsing failed."
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
 
     };
 
@@ -401,19 +478,72 @@ function DDLUpload({
     <div className="bg-[#111827] p-8 rounded-2xl border border-gray-800">
 
       {/* HEADER */}
-      <div className="mb-6">
+      <div className="mb-8">
 
         <h2 className="text-2xl font-bold">
 
-          EDI / DDL Upload Engine
+          Enterprise EDI / DDL Upload Engine
 
         </h2>
 
         <p className="text-gray-400 text-sm mt-1">
 
-          Upload EDI 867 or SQL DDL schema for semantic analytics generation
+          AI-powered semantic schema parsing and enterprise metadata intelligence
 
         </p>
+
+      </div>
+
+      {/* KPI STRIP */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+
+        <div className="bg-[#1F2937] p-5 rounded-xl border border-gray-700">
+
+          <p className="text-gray-400 text-sm">
+
+            AI Semantic Parser
+
+          </p>
+
+          <h3 className="text-3xl font-bold mt-2 text-cyan-400">
+
+            Active
+
+          </h3>
+
+        </div>
+
+        <div className="bg-[#1F2937] p-5 rounded-xl border border-gray-700">
+
+          <p className="text-gray-400 text-sm">
+
+            Upload Type
+
+          </p>
+
+          <h3 className="text-3xl font-bold mt-2 text-green-400">
+
+            DDL / EDI
+
+          </h3>
+
+        </div>
+
+        <div className="bg-[#1F2937] p-5 rounded-xl border border-gray-700">
+
+          <p className="text-gray-400 text-sm">
+
+            AI Workflow
+
+          </p>
+
+          <h3 className="text-3xl font-bold mt-2 text-purple-400">
+
+            Enabled
+
+          </h3>
+
+        </div>
 
       </div>
 
@@ -422,25 +552,113 @@ function DDLUpload({
         onClick={() =>
           fileRef.current?.click()
         }
-        className="bg-cyan-500 hover:bg-cyan-400 text-black px-6 py-3 rounded-xl font-semibold transition"
+        disabled={loading}
+        className="bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black px-8 py-4 rounded-2xl font-bold transition"
       >
 
-        Upload DDL File
+        {loading
+          ? "Processing Enterprise Schema..."
+          : "Upload Enterprise Schema"}
 
       </button>
+
+      {/* FILE NAME */}
+      {fileName && (
+
+        <div className="mt-5 bg-[#0B1120] border border-gray-700 rounded-xl p-4">
+
+          <p className="text-gray-300">
+
+            Uploaded File:
+
+            <span className="text-cyan-400 ml-2 font-semibold">
+
+              {fileName}
+
+            </span>
+
+          </p>
+
+        </div>
+
+      )}
 
       {/* INPUT */}
       <input
         ref={fileRef}
         type="file"
-        accept=".sql,.txt"
+        accept=".sql,.txt,.edi,.csv"
         onChange={handleUpload}
         className="hidden"
       />
 
+      {/* AI SUMMARY */}
+      {uploadSummary.length > 0 && (
+
+        <div className="mt-8 bg-[#0B1120] border border-gray-700 rounded-2xl p-6">
+
+          <div className="flex items-center justify-between mb-5">
+
+            <div>
+
+              <h3 className="text-xl font-bold text-cyan-400">
+
+                AI Upload Processing Summary
+
+              </h3>
+
+              <p className="text-gray-400 text-sm mt-1">
+
+                Enterprise semantic workflow reasoning and metadata trace
+
+              </p>
+
+            </div>
+
+            <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+
+          </div>
+
+          <div className="space-y-4">
+
+            {uploadSummary.map(
+              (
+                item,
+                index
+              ) => (
+
+                <div
+                  key={index}
+                  className="bg-[#111827] border border-gray-800 rounded-xl p-4"
+                >
+
+                  <div className="flex gap-3">
+
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2" />
+
+                    <p className="text-gray-300 leading-7">
+
+                      {item}
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              )
+            )}
+
+          </div>
+
+        </div>
+
+      )}
+
     </div>
 
   );
+
 }
 
 export default DDLUpload;

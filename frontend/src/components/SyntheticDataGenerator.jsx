@@ -11,6 +11,12 @@ function SyntheticDataGenerator({
   const [summary, setSummary] =
     useState([]);
 
+  const [generatedRows, setGeneratedRows] =
+    useState(500);
+
+  const [datasetType, setDatasetType] =
+    useState("Healthcare");
+
   // =========================
   // GENERATE DATASET
   // =========================
@@ -24,7 +30,7 @@ function SyntheticDataGenerator({
         ) {
 
           alert(
-            "Select columns first."
+            "Select semantic columns first."
           );
 
           return;
@@ -48,25 +54,29 @@ function SyntheticDataGenerator({
           );
 
         // =========================
-        // GENERATION SUMMARY
+        // AI SUMMARY
         // =========================
         const processSummary =
           [];
 
         processSummary.push(
-          `Detected ${columnNames.length} semantic business columns from uploaded DDL schema.`
+          `AI semantic engine detected ${columnNames.length} enterprise business columns.`
         );
 
         processSummary.push(
-          "AI semantic engine mapped business entities and operational fields."
+          `Dataset domain selected: ${datasetType}.`
         );
 
         processSummary.push(
-          "Synthetic EDI-style dataset generation initiated."
+          "Semantic entity mapping initialized successfully."
+        );
+
+        processSummary.push(
+          "Synthetic operational workflow generation started."
         );
 
         // =========================
-        // GENERATE DATASET
+        // API CALL
         // =========================
         const response =
           await fetch(
@@ -89,7 +99,8 @@ function SyntheticDataGenerator({
                 columns:
                   columnNames,
 
-                rows: 500,
+                rows:
+                  generatedRows,
 
               }),
 
@@ -100,7 +111,7 @@ function SyntheticDataGenerator({
           await response.json();
 
         // =========================
-        // GENERATION FAILED
+        // FAILED
         // =========================
         if (
           !result.success
@@ -116,11 +127,15 @@ function SyntheticDataGenerator({
         }
 
         processSummary.push(
-          `Successfully generated ${result.data.length} synthetic business transaction records.`
+          `Successfully generated ${result.data.length} semantic operational records.`
+        );
+
+        processSummary.push(
+          "Synthetic business intelligence dataset created successfully."
         );
 
         // =========================
-        // AUTO PREPROCESS
+        // PREPROCESS API
         // =========================
         const preprocessResponse =
           await fetch(
@@ -152,7 +167,7 @@ function SyntheticDataGenerator({
           await preprocessResponse.json();
 
         // =========================
-        // SET CLEANED DATA
+        // PREPROCESS SUCCESS
         // =========================
         if (
           preprocessResult.success
@@ -163,15 +178,19 @@ function SyntheticDataGenerator({
           );
 
           processSummary.push(
-            "AI preprocessing engine cleaned null values and standardized operational records."
+            "AI preprocessing removed operational inconsistencies."
           );
 
           processSummary.push(
-            "Semantic normalization completed successfully."
+            "Null normalization and text standardization completed."
           );
 
           processSummary.push(
-            "Dataset is now ready for conversational analytics and semantic querying."
+            "Conversational analytics readiness confirmed."
+          );
+
+          processSummary.push(
+            "Dataset is now optimized for AI dashboards and semantic querying."
           );
 
           setSummary(
@@ -199,7 +218,7 @@ function SyntheticDataGenerator({
         console.log(error);
 
         alert(
-          "Backend connection failed."
+          "Backend AI connection failed."
         );
 
       } finally {
@@ -215,7 +234,7 @@ function SyntheticDataGenerator({
     <div className="bg-[#111827] p-8 rounded-2xl border border-gray-800 mt-8">
 
       {/* HEADER */}
-      <div className="mb-6">
+      <div className="mb-8">
 
         <h2 className="text-2xl font-bold">
 
@@ -225,14 +244,103 @@ function SyntheticDataGenerator({
 
         <p className="text-gray-400 text-sm mt-1">
 
-          AI-powered EDI semantic transaction generation and preprocessing workflow
+          Enterprise AI-powered semantic operational dataset generation workflow
 
         </p>
 
       </div>
 
-      {/* STATS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+      {/* CONFIGURATION */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+        {/* DATASET TYPE */}
+        <div>
+
+          <label className="text-sm text-gray-400 block mb-3">
+
+            Dataset Domain
+
+          </label>
+
+          <select
+            value={datasetType}
+            onChange={(e) =>
+              setDatasetType(
+                e.target.value
+              )
+            }
+            className="w-full bg-[#1F2937] border border-gray-700 rounded-xl px-4 py-4 outline-none focus:border-cyan-400"
+          >
+
+            <option>
+              Healthcare
+            </option>
+
+            <option>
+              Supply Chain
+            </option>
+
+            <option>
+              Insurance Claims
+            </option>
+
+            <option>
+              Revenue Cycle
+            </option>
+
+            <option>
+              EDI Transactions
+            </option>
+
+          </select>
+
+        </div>
+
+        {/* ROW COUNT */}
+        <div>
+
+          <label className="text-sm text-gray-400 block mb-3">
+
+            Synthetic Record Count
+
+          </label>
+
+          <select
+            value={generatedRows}
+            onChange={(e) =>
+              setGeneratedRows(
+                Number(
+                  e.target.value
+                )
+              )
+            }
+            className="w-full bg-[#1F2937] border border-gray-700 rounded-xl px-4 py-4 outline-none focus:border-cyan-400"
+          >
+
+            <option value={100}>
+              100 Records
+            </option>
+
+            <option value={500}>
+              500 Records
+            </option>
+
+            <option value={1000}>
+              1000 Records
+            </option>
+
+            <option value={5000}>
+              5000 Records
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      {/* KPI STRIP */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
 
         <div className="bg-[#1F2937] p-5 rounded-xl border border-gray-700">
 
@@ -254,13 +362,29 @@ function SyntheticDataGenerator({
 
           <p className="text-gray-400 text-sm">
 
-            Generated Records
+            Synthetic Records
 
           </p>
 
           <h3 className="text-3xl font-bold mt-2 text-green-400">
 
-            500
+            {generatedRows}
+
+          </h3>
+
+        </div>
+
+        <div className="bg-[#1F2937] p-5 rounded-xl border border-gray-700">
+
+          <p className="text-gray-400 text-sm">
+
+            Dataset Domain
+
+          </p>
+
+          <h3 className="text-2xl font-bold mt-2 text-purple-400">
+
+            {datasetType}
 
           </h3>
 
@@ -274,7 +398,7 @@ function SyntheticDataGenerator({
 
           </p>
 
-          <h3 className="text-3xl font-bold mt-2 text-purple-400">
+          <h3 className="text-2xl font-bold mt-2 text-cyan-400">
 
             Active
 
@@ -284,7 +408,7 @@ function SyntheticDataGenerator({
 
       </div>
 
-      {/* BUTTON */}
+      {/* GENERATE BUTTON */}
       <button
         onClick={
           generateDataset
@@ -294,29 +418,29 @@ function SyntheticDataGenerator({
       >
 
         {loading
-          ? "Generating Semantic Dataset..."
+          ? "Generating Enterprise Semantic Dataset..."
           : "Generate Semantic Dataset"}
 
       </button>
 
-      {/* AI SUMMARY */}
+      {/* AI PROCESSING SUMMARY */}
       {summary.length > 0 && (
 
         <div className="mt-8 bg-[#0B1120] border border-gray-700 rounded-2xl p-6">
 
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center justify-between mb-6">
 
             <div>
 
               <h3 className="text-xl font-bold text-cyan-400">
 
-                AI Processing Summary
+                AI Semantic Processing Summary
 
               </h3>
 
               <p className="text-gray-400 text-sm mt-1">
 
-                Transparent preprocessing and semantic workflow reasoning
+                Transparent enterprise workflow reasoning and preprocessing trace
 
               </p>
 

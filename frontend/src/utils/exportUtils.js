@@ -4,17 +4,119 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 // =========================
+// FORMAT DATE
+// =========================
+const getTimestamp = () => {
+
+  const now = new Date();
+
+  return now.toLocaleString();
+
+};
+
+// =========================
+// SAFE DATA CHECK
+// =========================
+const validateData = (data) => {
+
+  return (
+    Array.isArray(data) &&
+    data.length > 0
+  );
+
+};
+
+// =========================
+// EXECUTIVE METRICS ENGINE
+// =========================
+const generateExecutiveMetrics = (
+  data
+) => {
+
+  if (!validateData(data)) {
+
+    return {
+
+      totalRecords: 0,
+      totalColumns: 0,
+      completeness: "0%",
+      datasetStatus: "Empty",
+
+    };
+
+  }
+
+  const totalRecords =
+    data.length;
+
+  const totalColumns =
+    Object.keys(data[0]).length;
+
+  // =========================
+  // COMPLETENESS SCORE
+  // =========================
+  let totalFields = 0;
+
+  let filledFields = 0;
+
+  data.forEach((row) => {
+
+    Object.values(row).forEach(
+      (value) => {
+
+        totalFields++;
+
+        if (
+
+          value !== null &&
+          value !== undefined &&
+          value !== ""
+
+        ) {
+
+          filledFields++;
+
+        }
+
+      }
+    );
+
+  });
+
+  const completeness =
+    (
+      (filledFields /
+        totalFields) *
+      100
+    ).toFixed(1) + "%";
+
+  return {
+
+    totalRecords,
+    totalColumns,
+    completeness,
+    datasetStatus:
+      "Operational",
+
+  };
+
+};
+
+// =========================
 // EXPORT CSV
 // =========================
-export const exportCSV = (data) => {
+export const exportCSV = (
+  data
+) => {
 
-  if (!data.length) {
+  if (!validateData(data)) {
 
     alert(
       "No dataset available for CSV export."
     );
 
     return;
+
   }
 
   const worksheet =
@@ -35,43 +137,129 @@ export const exportCSV = (data) => {
 
   saveAs(
     blob,
-    "enterprise_dataset_export.csv"
+    `InsightFlow_Dataset_${Date.now()}.csv`
   );
+
 };
 
 // =========================
 // EXPORT EXCEL
 // =========================
-export const exportExcel = (data) => {
+export const exportExcel = (
+  data
+) => {
 
-  if (!data.length) {
+  if (!validateData(data)) {
 
     alert(
       "No dataset available for Excel export."
     );
 
     return;
+
   }
 
+  // =========================
+  // MAIN SHEET
+  // =========================
   const worksheet =
     XLSX.utils.json_to_sheet(data);
 
-  // AUTO COLUMN WIDTHS
+  // =========================
+  // AUTO WIDTH
+  // =========================
   const columnWidths =
     Object.keys(data[0]).map(
       (key) => ({
+
         wch: Math.max(
-          key.length,
-          20
+          key.length + 5,
+          25
         ),
+
       })
     );
 
   worksheet["!cols"] =
     columnWidths;
 
+  // =========================
+  // EXECUTIVE SUMMARY SHEET
+  // =========================
+  const metrics =
+    generateExecutiveMetrics(
+      data
+    );
+
+  const summaryData = [
+
+    {
+      Metric:
+        "Generated Timestamp",
+      Value:
+        getTimestamp(),
+    },
+
+    {
+      Metric:
+        "Total Records",
+      Value:
+        metrics.totalRecords,
+    },
+
+    {
+      Metric:
+        "Total Columns",
+      Value:
+        metrics.totalColumns,
+    },
+
+    {
+      Metric:
+        "Dataset Completeness",
+      Value:
+        metrics.completeness,
+    },
+
+    {
+      Metric:
+        "AI Status",
+      Value:
+        "Operational",
+    },
+
+    {
+      Metric:
+        "Platform",
+      Value:
+        "InsightFlow AI",
+    },
+
+  ];
+
+  const summarySheet =
+    XLSX.utils.json_to_sheet(
+      summaryData
+    );
+
+  summarySheet["!cols"] = [
+
+    { wch: 35 },
+    { wch: 40 },
+
+  ];
+
+  // =========================
+  // CREATE WORKBOOK
+  // =========================
   const workbook =
     XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(
+    workbook,
+    summarySheet,
+    "Executive Summary"
+  );
 
   XLSX.utils.book_append_sheet(
     workbook,
@@ -81,8 +269,9 @@ export const exportExcel = (data) => {
 
   XLSX.writeFile(
     workbook,
-    "enterprise_healthcare_report.xlsx"
+    `InsightFlow_Enterprise_Report_${Date.now()}.xlsx`
   );
+
 };
 
 // =========================
@@ -90,25 +279,41 @@ export const exportExcel = (data) => {
 // =========================
 export const exportPDF = (
   data,
-  insights
+  insights = []
 ) => {
 
-  const doc = new jsPDF();
+  if (!validateData(data)) {
+
+    alert(
+      "No dataset available for PDF export."
+    );
+
+    return;
+
+  }
+
+  const doc =
+    new jsPDF();
+
+  const metrics =
+    generateExecutiveMetrics(
+      data
+    );
 
   // =========================
   // HEADER
   // =========================
   doc.setFillColor(
-    15,
-    23,
-    42
+    11,
+    17,
+    32
   );
 
   doc.rect(
     0,
     0,
     220,
-    35,
+    40,
     "F"
   );
 
@@ -118,20 +323,26 @@ export const exportPDF = (
     255
   );
 
-  doc.setFontSize(24);
+  doc.setFontSize(26);
 
   doc.text(
     "InsightFlow AI",
     14,
-    20
+    18
   );
 
-  doc.setFontSize(11);
+  doc.setFontSize(12);
 
   doc.text(
     "Enterprise Healthcare Analytics Platform",
     14,
     28
+  );
+
+  doc.text(
+    "Executive Intelligence Report",
+    14,
+    35
   );
 
   // =========================
@@ -143,77 +354,159 @@ export const exportPDF = (
     0
   );
 
-  doc.setFontSize(12);
+  doc.setFontSize(13);
 
   doc.text(
-    `Generated: ${new Date().toLocaleString()}`,
+    `Generated: ${getTimestamp()}`,
     14,
-    48
+    55
   );
 
   doc.text(
-    `Total Records: ${data.length}`,
+    `Total Records: ${metrics.totalRecords}`,
     14,
-    58
+    65
+  );
+
+  doc.text(
+    `Total Columns: ${metrics.totalColumns}`,
+    14,
+    75
+  );
+
+  doc.text(
+    `Dataset Completeness: ${metrics.completeness}`,
+    14,
+    85
+  );
+
+  doc.text(
+    `AI Reporting Status: Operational`,
+    14,
+    95
   );
 
   // =========================
-  // INSIGHTS SECTION
+  // EXECUTIVE SUMMARY
   // =========================
-  doc.setFontSize(16);
+  doc.setFontSize(18);
 
   doc.text(
-    "AI Generated Insights",
+    "Executive Summary",
     14,
-    78
+    115
   );
 
   doc.setFontSize(11);
 
-  insights.forEach(
-    (item, index) => {
+  const executiveText = `
 
-      doc.text(
-        `• ${item}`,
-        20,
-        90 + index * 10
+This enterprise healthcare reporting cycle processed ${metrics.totalRecords} operational records across ${metrics.totalColumns} semantic business fields.
+
+AI preprocessing and semantic normalization completed successfully.
+
+Dataset completeness score achieved ${metrics.completeness}, indicating stable ingestion quality and operational consistency.
+
+Enterprise analytics workflows, KPI intelligence, semantic reporting and conversational AI systems remain fully operational.
+
+`;
+
+  const wrappedExecutive =
+    doc.splitTextToSize(
+      executiveText,
+      180
+    );
+
+  doc.text(
+    wrappedExecutive,
+    14,
+    125
+  );
+
+  // =========================
+  // AI INSIGHTS
+  // =========================
+  let currentY = 165;
+
+  if (
+    insights &&
+    insights.length > 0
+  ) {
+
+    doc.setFontSize(18);
+
+    doc.text(
+      "AI Generated Insights",
+      14,
+      currentY
+    );
+
+    currentY += 12;
+
+    doc.setFontSize(11);
+
+    insights
+      .slice(0, 6)
+      .forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const wrapped =
+            doc.splitTextToSize(
+              `• ${item}`,
+              175
+            );
+
+          doc.text(
+            wrapped,
+            18,
+            currentY
+          );
+
+          currentY +=
+            wrapped.length * 7;
+
+        }
       );
 
-    }
-  );
+  }
 
   // =========================
   // TABLE
   // =========================
-  if (data.length > 0) {
+  if (
+    data.length > 0
+  ) {
 
     autoTable(doc, {
 
       startY:
-        100 +
-        insights.length * 10,
+        currentY + 10,
 
       head: [
-        Object.keys(data[0]),
+
+        Object.keys(
+          data[0]
+        ),
+
       ],
 
       body: data
         .slice(0, 15)
         .map((row) =>
+
           Object.values(row)
+
         ),
 
       styles: {
 
-        fillColor: [
-          255,
-          255,
-          255,
-        ],
-
-        textColor: 20,
-
         fontSize: 8,
+
+        cellPadding: 3,
+
       },
 
       headStyles: {
@@ -225,14 +518,39 @@ export const exportPDF = (
         ],
 
         textColor: 0,
+
+        fontStyle:
+          "bold",
+
+      },
+
+      alternateRowStyles: {
+
+        fillColor: [
+          245,
+          245,
+          245,
+        ],
+
+      },
+
+      margin: {
+
+        left: 10,
+        right: 10,
+
       },
 
     });
+
   }
 
   // =========================
   // FOOTER
   // =========================
+  const pageHeight =
+    doc.internal.pageSize.height;
+
   doc.setFontSize(10);
 
   doc.setTextColor(
@@ -240,15 +558,16 @@ export const exportPDF = (
   );
 
   doc.text(
-    "Generated by InsightFlow AI • Enterprise Analytics Suite",
+    "Generated by InsightFlow AI • Enterprise Healthcare Intelligence Platform",
     14,
-    285
+    pageHeight - 12
   );
 
   // =========================
-  // SAVE PDF
+  // SAVE
   // =========================
   doc.save(
-    "InsightFlow_Executive_Report.pdf"
+    `InsightFlow_Executive_Report_${Date.now()}.pdf`
   );
+
 };

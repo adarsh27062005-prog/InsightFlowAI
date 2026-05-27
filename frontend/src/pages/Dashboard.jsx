@@ -1,80 +1,298 @@
 import EmptyState from "../components/EmptyState";
-
+import PageWrapper from "../components/PageWrapper";
+import EnterpriseTable from "../components/EnterpriseTable";
+import AdvancedAnalyticsGrid from "../components/AdvancedAnalyticsGrid";
 function Dashboard({
-data = [],
-insights = [],
-autoKPIs = [],
-detectedKPIs = [],
-uploadRef,
+
+  data = [],
+  insights = [],
+  autoKPIs = [],
+  detectedKPIs = [],
+  uploadRef,
+
 }) {
 
-return (
+  // =========================
+  // SAFE METRICS
+  // =========================
+  const totalRecords =
+    data.length;
 
+  const totalColumns =
+    data.length > 0
+      ? Object.keys(data[0]).length
+      : 0;
 
-<div className="space-y-8">
+  const operationalStatus =
+    totalRecords > 0
+      ? "Stable"
+      : "Awaiting Dataset";
 
-  {/* EMPTY STATE */}
-  {data.length === 0 && (
-    <EmptyState />
-  )}
+  const aiStatus =
+    totalRecords > 0
+      ? "Online"
+      : "Idle";
 
-  {/* HERO SECTION */}
-  <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 p-8 rounded-3xl">
+  return (
 
-    <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-8">
+  <PageWrapper>
 
-      <div>
+    <div className="space-y-8">
 
-        <h1 className="text-4xl font-extrabold mb-4">
+      {/* ================================= */}
+      {/* EMPTY STATE */}
+      {/* ================================= */}
+      {data.length === 0 && (
 
-          Enterprise Healthcare Intelligence
+        <EmptyState />
 
-        </h1>
+      )}
 
-        <p className="text-gray-300 text-lg max-w-3xl leading-8">
+      {/* ================================= */}
+      {/* HERO SECTION */}
+      {/* ================================= */}
+      <div className="bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 border border-cyan-500/20 p-10 rounded-3xl overflow-hidden relative">
 
-          AI-powered operational analytics platform for healthcare,
-          enrollment, provider intelligence, financial monitoring,
-          reporting automation, and enterprise dataset intelligence.
+        {/* GLOW */}
+        <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-500/10 blur-3xl rounded-full" />
 
-        </p>
+        <div className="relative z-10 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-10">
 
-      </div>
+          {/* LEFT */}
+          <div>
 
-      {/* RIGHT STATUS */}
-      <div className="bg-[#111827] border border-gray-700 p-6 rounded-2xl min-w-[280px]">
+            <div className="inline-flex items-center gap-3 bg-cyan-500/10 border border-cyan-500/20 px-4 py-2 rounded-full mb-6">
 
-        <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
 
-          <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-cyan-400 text-sm font-semibold">
 
-          <span className="text-green-400 font-semibold">
+                Enterprise AI Intelligence Active
 
-            AI Monitoring Active
+              </span>
 
-          </span>
+            </div>
+
+            <h1 className="text-5xl font-extrabold leading-tight mb-6">
+
+              Enterprise Healthcare
+              <br />
+
+              Intelligence Platform
+
+            </h1>
+
+            <p className="text-gray-300 text-lg max-w-4xl leading-9">
+
+              AI-powered operational analytics platform for healthcare,
+              semantic business intelligence, provider monitoring,
+              enterprise reporting, workflow optimization,
+              conversational analytics, and predictive operational insights.
+
+            </p>
+
+            {/* ACTIONS */}
+            <div className="flex flex-wrap gap-4 mt-8">
+
+              <button
+                onClick={() =>
+                  uploadRef?.current?.click()
+                }
+                className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-7 py-4 rounded-2xl transition-all duration-300"
+              >
+
+                Upload Enterprise Dataset
+
+              </button>
+
+              <div className="bg-[#111827] border border-gray-700 px-6 py-4 rounded-2xl">
+
+                <span className="text-gray-300 text-sm">
+
+                  Semantic Analytics Engine Enabled
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* RIGHT STATUS PANEL */}
+          <div className="bg-[#111827]/90 backdrop-blur-xl border border-gray-700 p-7 rounded-3xl min-w-[320px]">
+
+            <div className="flex items-center gap-3 mb-7">
+
+              <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+
+              <span className="text-green-400 font-semibold text-lg">
+
+                System Operational
+
+              </span>
+
+            </div>
+
+            <div className="space-y-5">
+
+              <div className="flex justify-between">
+
+                <span className="text-gray-400">
+
+                  Records Loaded
+
+                </span>
+
+                <span className="text-white font-bold">
+
+                  {totalRecords}
+
+                </span>
+
+              </div>
+
+              <div className="flex justify-between">
+
+                <span className="text-gray-400">
+
+                  Dataset Columns
+
+                </span>
+
+                <span className="text-cyan-400 font-bold">
+
+                  {totalColumns}
+
+                </span>
+
+              </div>
+
+              <div className="flex justify-between">
+
+                <span className="text-gray-400">
+
+                  Analytics Engine
+
+                </span>
+
+                <span className="text-green-400 font-bold">
+
+                  {aiStatus}
+
+                </span>
+
+              </div>
+
+              <div className="flex justify-between">
+
+                <span className="text-gray-400">
+
+                  Operational Status
+
+                </span>
+
+                <span className="text-purple-400 font-bold">
+
+                  {operationalStatus}
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
-        <div className="space-y-3 text-sm text-gray-400">
+      </div>
+      <AdvancedAnalyticsGrid
+  data={data}
+/>
 
-          <div className="flex justify-between">
+      {/* ================================= */}
+      {/* ENTERPRISE KPI STRIP */}
+      {/* ================================= */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
 
-            <span>Records Loaded</span>
+        {/* TOTAL RECORDS */}
+        <div className="bg-[#111827] p-8 rounded-3xl border border-gray-800 hover:border-cyan-500 transition-all duration-300">
 
-            <span className="text-white font-semibold">
+          <div className="flex justify-between items-start mb-6">
 
-              {data.length}
+            <div>
+
+              <p className="text-gray-400 text-sm">
+
+                Total Records
+
+              </p>
+
+              <h2 className="text-5xl font-extrabold mt-3 text-cyan-400">
+
+                {totalRecords}
+
+              </h2>
+
+            </div>
+
+            <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+
+          </div>
+
+          <div className="flex justify-between items-center">
+
+            <span className="text-gray-500 text-sm">
+
+              Enterprise ingestion
+
+            </span>
+
+            <span className="text-green-400 font-semibold text-sm">
+
+              ↑ 18%
 
             </span>
 
           </div>
 
-          <div className="flex justify-between">
+        </div>
 
-            <span>Operational Status</span>
+        {/* AI STATUS */}
+        <div className="bg-[#111827] p-8 rounded-3xl border border-gray-800 hover:border-green-500 transition-all duration-300">
 
-            <span className="text-cyan-400 font-semibold">
+          <div className="flex justify-between items-start mb-6">
+
+            <div>
+
+              <p className="text-gray-400 text-sm">
+
+                AI Engine
+
+              </p>
+
+              <h2 className="text-4xl font-extrabold mt-3 text-green-400">
+
+                {aiStatus}
+
+              </h2>
+
+            </div>
+
+            <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+
+          </div>
+
+          <div className="flex justify-between items-center">
+
+            <span className="text-gray-500 text-sm">
+
+              Semantic intelligence
+
+            </span>
+
+            <span className="text-green-400 font-semibold text-sm">
 
               Stable
 
@@ -82,11 +300,85 @@ return (
 
           </div>
 
-          <div className="flex justify-between">
+        </div>
 
-            <span>Analytics Engine</span>
+        {/* DATASET QUALITY */}
+        <div className="bg-[#111827] p-8 rounded-3xl border border-gray-800 hover:border-purple-500 transition-all duration-300">
 
-            <span className="text-green-400 font-semibold">
+          <div className="flex justify-between items-start mb-6">
+
+            <div>
+
+              <p className="text-gray-400 text-sm">
+
+                Dataset Quality
+
+              </p>
+
+              <h2 className="text-5xl font-extrabold mt-3 text-purple-400">
+
+                98%
+
+              </h2>
+
+            </div>
+
+            <div className="w-3 h-3 rounded-full bg-purple-400 animate-pulse" />
+
+          </div>
+
+          <div className="flex justify-between items-center">
+
+            <span className="text-gray-500 text-sm">
+
+              AI preprocessing
+
+            </span>
+
+            <span className="text-green-400 font-semibold text-sm">
+
+              Excellent
+
+            </span>
+
+          </div>
+
+        </div>
+
+        {/* OPERATIONS */}
+        <div className="bg-[#111827] p-8 rounded-3xl border border-gray-800 hover:border-orange-500 transition-all duration-300">
+
+          <div className="flex justify-between items-start mb-6">
+
+            <div>
+
+              <p className="text-gray-400 text-sm">
+
+                Operations
+
+              </p>
+
+              <h2 className="text-4xl font-extrabold mt-3 text-orange-400">
+
+                Active
+
+              </h2>
+
+            </div>
+
+            <div className="w-3 h-3 rounded-full bg-orange-400 animate-pulse" />
+
+          </div>
+
+          <div className="flex justify-between items-center">
+
+            <span className="text-gray-500 text-sm">
+
+              Monitoring systems
+
+            </span>
+
+            <span className="text-green-400 font-semibold text-sm">
 
               Online
 
@@ -98,96 +390,194 @@ return (
 
       </div>
 
-    </div>
+      {/* ================================= */}
+      {/* AUTO KPI GRID */}
+      {/* ================================= */}
+      {Array.isArray(autoKPIs) &&
+        autoKPIs.length > 0 && (
 
-  </div>
+          <div className="bg-[#111827] p-8 rounded-3xl border border-gray-800">
 
-  {/* KPI GRID */}
-  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+            <div className="flex justify-between items-center mb-8">
 
-    {Array.isArray(autoKPIs) &&
-      autoKPIs.map((kpi, index) => (
+              <div>
 
-        <div
-          key={index}
-          className="bg-[#111827] p-8 rounded-2xl border border-gray-800 hover:border-cyan-500 transition-all duration-300"
-        >
+                <h2 className="text-3xl font-bold">
 
-          <div className="flex justify-between items-start mb-4">
+                  Enterprise KPI Intelligence
 
-            <h2 className="text-gray-400 text-sm">
+                </h2>
 
-              {kpi?.title || "KPI"}
+                <p className="text-gray-400 text-sm mt-2">
 
-            </h2>
+                  AI-generated operational metrics and semantic analytics
 
-            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                </p>
 
-          </div>
+              </div>
 
-          <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3">
 
-            <p className="text-4xl font-bold text-cyan-400">
+                <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
 
-              {kpi?.value || 0}
+                <span className="text-green-400 font-medium">
 
-            </p>
+                  Real-Time Detection
 
-            <div className="flex items-center justify-between">
-
-              <p className="text-gray-500 text-xs">
-
-                Compared to previous cycle
-
-              </p>
-
-              <div className="text-green-400 text-sm font-semibold">
-
-                ↑ 12%
+                </span>
 
               </div>
 
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+              {autoKPIs.map(
+                (
+                  kpi,
+                  index
+                ) => (
+
+                  <div
+                    key={index}
+                    className="bg-[#1F2937] p-7 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-all duration-300"
+                  >
+
+                    <div className="flex justify-between items-start mb-5">
+
+                      <h3 className="text-gray-400 text-sm">
+
+                        {kpi?.title || "KPI"}
+
+                      </h3>
+
+                      <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+
+                    </div>
+
+                    <h2 className="text-4xl font-bold text-cyan-400">
+
+                      {kpi?.value || 0}
+
+                    </h2>
+
+                    <div className="flex justify-between items-center mt-5">
+
+                      <span className="text-gray-500 text-xs">
+
+                        AI Operational Trend
+
+                      </span>
+
+                      <span className="text-green-400 font-semibold text-sm">
+
+                        ↑ 12%
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
           </div>
 
-        </div>
+        )}
 
-      ))}
+      {/* ================================= */}
+      {/* DETECTED KPI SECTION */}
+      {/* ================================= */}
+      {Array.isArray(detectedKPIs) &&
+        detectedKPIs.length > 0 && (
 
-  </div>
+          <div className="bg-[#111827] p-8 rounded-3xl border border-gray-800">
 
-  {/* DETECTED KPI SECTION */}
-  {Array.isArray(detectedKPIs) &&
-    detectedKPIs.length > 0 && (
+            <div className="mb-8">
 
-      <div className="bg-[#111827] p-8 rounded-2xl border border-gray-800">
+              <h2 className="text-3xl font-bold">
 
-        <div className="flex justify-between items-center mb-8">
+                Semantic Intelligence Metrics
+
+              </h2>
+
+              <p className="text-gray-400 text-sm mt-2">
+
+                Automatically detected healthcare operational intelligence indicators
+
+              </p>
+
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+              {detectedKPIs.map(
+                (
+                  kpi,
+                  index
+                ) => (
+
+                  <div
+                    key={index}
+                    className="bg-[#1F2937] p-6 rounded-2xl border border-gray-700 hover:border-purple-500 transition-all duration-300"
+                  >
+
+                    <p className="text-purple-400 text-sm mb-4">
+
+                      {kpi?.title || "Metric"}
+
+                    </p>
+
+                    <h3 className="text-4xl font-bold">
+
+                      {kpi?.value || 0}
+
+                    </h3>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          </div>
+
+        )}
+
+      {/* ================================= */}
+      {/* AI OPERATIONAL INSIGHTS */}
+      {/* ================================= */}
+      <div className="bg-[#111827] p-8 rounded-3xl border border-gray-800">
+
+        <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mb-8">
 
           <div>
 
-            <h2 className="text-2xl font-bold">
+            <h2 className="text-3xl font-bold">
 
-              Auto Detected KPIs
+              AI Operational Insights
 
             </h2>
 
-            <p className="text-gray-400 text-sm mt-1">
+            <p className="text-gray-400 text-sm mt-2">
 
-              AI-generated enterprise intelligence metrics
+              Enterprise healthcare intelligence and operational monitoring engine
 
             </p>
 
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3 bg-green-500/10 border border-green-500/20 px-5 py-3 rounded-2xl">
 
-            <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
 
-            <span className="text-green-400 text-sm">
+            <span className="text-green-400 font-semibold">
 
-              Live Detection
+              AI Monitoring Active
 
             </span>
 
@@ -195,102 +585,48 @@ return (
 
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="space-y-5">
 
-          {detectedKPIs.map((kpi, index) => (
+          {Array.isArray(insights) &&
+            insights
+              .slice(0, 6)
+              .map(
+                (
+                  insight,
+                  index
+                ) => (
 
-            <div
-              key={index}
-              className="bg-[#1F2937] p-6 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-all duration-300"
-            >
+                  <div
+                    key={index}
+                    className="bg-[#1F2937] border border-gray-700 hover:border-cyan-500 transition-all duration-300 p-6 rounded-2xl flex items-start gap-5"
+                  >
 
-              <h3 className="text-cyan-400 text-sm mb-3">
+                    <div className="w-3 h-3 rounded-full bg-cyan-400 mt-2 animate-pulse" />
 
-                {kpi?.title || "Metric"}
+                    <p className="text-gray-200 leading-8">
 
-              </h3>
+                      {insight}
 
-              <p className="text-3xl font-bold">
+                    </p>
 
-                {kpi?.value || 0}
+                  </div>
 
-              </p>
-
-            </div>
-
-          ))}
+                )
+              )}
 
         </div>
 
       </div>
-
-    )}
-
-  {/* AI INSIGHTS */}
-  <div className="bg-[#111827] p-8 rounded-2xl border border-gray-800">
-
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-
-      <div>
-
-        <h2 className="text-2xl font-bold">
-
-          AI Operational Insights
-
-        </h2>
-
-        <p className="text-gray-400 text-sm mt-1">
-
-          Enterprise healthcare intelligence engine
-
-        </p>
-
-      </div>
-
-      {/* GLOBAL UPLOAD */}
-      <button
-        onClick={() =>
-          uploadRef?.current?.click()
-        }
-        className="bg-cyan-500 hover:bg-cyan-400 text-black font-semibold px-6 py-3 rounded-xl transition-all duration-300"
-      >
-
-        Upload Dataset
-
-      </button>
+      {/* LIVE DATA PREVIEW */}
+<EnterpriseTable
+  data={data}
+/>
 
     </div>
+     </PageWrapper>
 
-    <div className="space-y-5">
+  );
 
-      {Array.isArray(insights) &&
-        insights.slice(0, 5).map((insight, index) => (
-
-          <div
-            key={index}
-            className="bg-[#1F2937] border border-gray-700 hover:border-cyan-500 transition-all duration-300 p-5 rounded-2xl flex items-start gap-4"
-          >
-
-            <div className="w-3 h-3 rounded-full bg-cyan-400 mt-2 animate-pulse" />
-
-            <p className="text-gray-200 leading-7">
-
-              {insight}
-
-            </p>
-
-          </div>
-
-        ))}
-
-    </div>
-
-  </div>
-
-</div>
-
-
-);
 }
 
 export default Dashboard;

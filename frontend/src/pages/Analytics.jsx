@@ -1,9 +1,9 @@
 import { useState } from "react";
-
+import AdvancedAnalyticsGrid from "../components/AdvancedAnalyticsGrid";
 import DDLUpload from "../components/DDLUpload";
 import SchemaViewer from "../components/SchemaViewer";
 import SyntheticDataGenerator from "../components/SyntheticDataGenerator";
-
+import EnterpriseTable from "../components/EnterpriseTable";
 import DiseasePieChart from "../components/DiseasePieChart";
 import AnalyticsChart from "../components/AnalyticsChart";
 import BarAnalyticsChart from "../components/BarAnalyticsChart";
@@ -116,6 +116,9 @@ return (
     </p>
 
   </div>
+  <AdvancedAnalyticsGrid
+  data={data}
+/>
 
   {/* ================================= */}
   {/* KPI STRIP */}
@@ -235,6 +238,10 @@ return (
     </div>
 
   </div>
+  {/* ANALYTICS DATA TABLE */}
+<EnterpriseTable
+  data={data}
+/>
 
 </div>
 
