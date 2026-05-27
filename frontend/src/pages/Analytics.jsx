@@ -129,7 +129,7 @@ function Analytics({
         const response =
           await fetch(
 
-            "http://localhost:5000/api/generate-dataset",
+            "https://insightflow-backend-cqbu.onrender.com/api/generate-dataset",
 
             {
 
