@@ -38,7 +38,19 @@ function App() {
   // MAIN DATASET
   // =========================
   const [data, setData] =
-    useState([]);
+  useState([]);
+
+const [schema, setSchema] =
+  useState([]);
+
+const [semanticModel, setSemanticModel] =
+  useState([]);
+
+const [processingSummary, setProcessingSummary] =
+  useState([]);
+
+const [sourceType, setSourceType] =
+  useState("Unknown");
 
   // =========================
   // GLOBAL UPLOAD REF
@@ -173,9 +185,17 @@ function App() {
             path="/analytics"
             element={
               <Analytics
-                data={data}
-                setData={setData}
-              />
+  data={data}
+  setData={setData}
+  schema={schema}
+  setSchema={setSchema}
+  semanticModel={semanticModel}
+  setSemanticModel={setSemanticModel}
+  processingSummary={processingSummary}
+  setProcessingSummary={setProcessingSummary}
+  sourceType={sourceType}
+  setSourceType={setSourceType}
+/>
             }
           />
 

@@ -6,7 +6,10 @@ import {
 
 import SuggestedQuestions from "./SuggestedQuestions";
 
-function AIChatPanel({ data }) {
+function AIChatPanel({
+  data,
+  schema,
+}) {
 
   const [question, setQuestion] =
     useState("");
@@ -65,13 +68,10 @@ function AIChatPanel({ data }) {
             },
 
             body: JSON.stringify({
-
-              question:
-                userQuestion,
-
-              data,
-
-            }),
+  question: userQuestion,
+  data,
+  schema,
+}),
 
           }
         );
