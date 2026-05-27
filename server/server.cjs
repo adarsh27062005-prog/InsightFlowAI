@@ -51,7 +51,6 @@ app.post("/api/preprocess", (req, res) => {
       Object.keys(row).forEach((key) => {
         let value = row[key];
 
-        // NULL HANDLING
         if (
           value === null ||
           value === undefined ||
@@ -60,7 +59,6 @@ app.post("/api/preprocess", (req, res) => {
           value = "N/A";
         }
 
-        // STRING CLEANUP
         if (typeof value === "string") {
           value = value.trim();
         }
@@ -75,13 +73,16 @@ app.post("/api/preprocess", (req, res) => {
       success: true,
       data: cleanedData,
     });
+
   } catch (error) {
+
     console.log(error);
 
     res.status(500).json({
       success: false,
       message: "Preprocess failed",
     });
+
   }
 });
 
@@ -89,14 +90,18 @@ app.post("/api/preprocess", (req, res) => {
 // SYNTHETIC DATA GENERATOR
 // =========================
 app.post("/api/generate-dataset", (req, res) => {
+
   try {
+
     const { columns, rows } = req.body;
 
     if (!columns || columns.length === 0) {
+
       return res.status(400).json({
         success: false,
         message: "No columns received",
       });
+
     }
 
     const totalRows = rows || 100;
@@ -109,140 +114,195 @@ app.post("/api/generate-dataset", (req, res) => {
     const randomItem = (arr) =>
       arr[Math.floor(Math.random() * arr.length)];
 
-    const firstNames = [
-      "John",
-      "David",
-      "Michael",
-      "Sarah",
-      "Emily",
-      "Daniel",
-      "Sophia",
-      "Olivia",
+    // =========================
+    // SEMANTIC BUSINESS DATA
+    // =========================
+    const distributors = [
+      "Cardinal Health",
+      "McKesson",
+      "AmerisourceBergen",
+      "Medline",
+      "Walgreens Distribution",
     ];
 
-    const lastNames = [
-      "Smith",
-      "Johnson",
-      "Brown",
-      "Williams",
-      "Miller",
-      "Wilson",
+    const products = [
+      "Insulin Kit",
+      "Heart Monitor",
+      "Surgical Mask",
+      "Blood Pressure Device",
+      "Glucose Meter",
+      "Ventilator",
+      "IV Pump",
     ];
 
-    const diseases = [
-      "Diabetes",
-      "Hypertension",
-      "Asthma",
-      "Cancer",
-      "Heart Disease",
-      "Flu",
+    const regions = [
+      "Texas",
+      "California",
+      "Florida",
+      "New York",
+      "Illinois",
     ];
 
-    const providers = [
-      "United Healthcare",
-      "Aetna",
-      "Cigna",
-      "Blue Cross",
+    const statuses = [
+      "Completed",
+      "Pending",
+      "Returned",
+      "Cancelled",
+    ];
+
+    const customers = [
+      "City Hospital",
+      "CareOne Clinic",
+      "Apollo Healthcare",
+      "Metro Medical",
+      "Sunrise Hospital",
     ];
 
     // =========================
     // ROW GENERATION
     // =========================
     for (let i = 0; i < totalRows; i++) {
+
       const row = {};
 
       columns.forEach((column) => {
+
         const lower = column.toLowerCase();
 
-        // NAME
-        if (lower.includes("name")) {
-          row[column] =
-            `${randomItem(firstNames)} ${randomItem(lastNames)}`;
-        }
-
-        // AGE
-        else if (lower.includes("age")) {
-          row[column] =
-            Math.floor(Math.random() * 60) + 18;
-        }
-
-        // GENDER
-        else if (lower.includes("gender")) {
-          row[column] = randomItem([
-            "Male",
-            "Female",
-          ]);
-        }
-
-        // DIAGNOSIS
-        else if (
-          lower.includes("diagnosis") ||
-          lower.includes("disease")
+        // DISTRIBUTOR
+        if (
+          lower.includes("distributor") ||
+          lower.includes("vendor") ||
+          lower.includes("supplier")
         ) {
-          row[column] = randomItem(diseases);
+
+          row[column] =
+            randomItem(distributors);
+
         }
 
-        // PROVIDER
-        else if (lower.includes("provider")) {
-          row[column] = randomItem(providers);
-        }
-
-        // DATE
-        else if (lower.includes("date")) {
-          row[column] = new Date()
-            .toISOString()
-            .split("T")[0];
-        }
-
-        // PAYMENT
+        // PRODUCT
         else if (
-          lower.includes("amount") ||
-          lower.includes("payment") ||
-          lower.includes("billing")
+          lower.includes("product") ||
+          lower.includes("item") ||
+          lower.includes("sku")
         ) {
-          row[column] = (
-            Math.random() * 5000
-          ).toFixed(2);
+
+          row[column] =
+            randomItem(products);
+
+        }
+
+        // CUSTOMER
+        else if (
+          lower.includes("customer") ||
+          lower.includes("client")
+        ) {
+
+          row[column] =
+            randomItem(customers);
+
+        }
+
+        // REGION
+        else if (
+          lower.includes("region") ||
+          lower.includes("state") ||
+          lower.includes("city")
+        ) {
+
+          row[column] =
+            randomItem(regions);
+
+        }
+
+        // QUANTITY
+        else if (
+          lower.includes("qty") ||
+          lower.includes("quantity") ||
+          lower.includes("units")
+        ) {
+
+          row[column] =
+            Math.floor(Math.random() * 500) + 1;
+
+        }
+
+        // REVENUE
+        else if (
+          lower.includes("sales") ||
+          lower.includes("revenue") ||
+          lower.includes("amount")
+        ) {
+
+          row[column] =
+            (
+              Math.random() * 50000
+            ).toFixed(2);
+
         }
 
         // STATUS
-        else if (lower.includes("status")) {
-          row[column] = randomItem([
-            "Approved",
-            "Pending",
-            "Rejected",
-          ]);
+        else if (
+          lower.includes("status")
+        ) {
+
+          row[column] =
+            randomItem(statuses);
+
         }
 
-        // SLA
-        else if (lower.includes("sla")) {
-          row[column] = randomItem([
-            "Within SLA",
-            "Breach",
-          ]);
+        // DATE
+        else if (
+          lower.includes("date") ||
+          lower.includes("month") ||
+          lower.includes("time")
+        ) {
+
+          const randomDate =
+            new Date(
+              2025,
+              Math.floor(Math.random() * 12),
+              Math.floor(Math.random() * 28) + 1
+            );
+
+          row[column] =
+            randomDate
+              .toISOString()
+              .split("T")[0];
+
         }
 
         // DEFAULT
         else {
-          row[column] = `Value_${i + 1}`;
+
+          row[column] =
+            `Value_${i + 1}`;
+
         }
+
       });
 
       generatedData.push(row);
+
     }
 
     res.json({
       success: true,
       data: generatedData,
     });
+
   } catch (error) {
+
     console.log(error);
 
     res.status(500).json({
       success: false,
       message: "Dataset generation failed",
     });
+
   }
+
 });
 
 // =========================
@@ -270,7 +330,7 @@ app.post("/api/ai-chat", (req, res) => {
       Object.keys(data[0]);
 
     // =========================
-    // COLUMN FINDER
+    // FIND COLUMN
     // =========================
     const findColumn = (keywords) => {
 
@@ -287,9 +347,6 @@ app.post("/api/ai-chat", (req, res) => {
 
     };
 
-    // =========================
-    // SEMANTIC COLUMN MAPPING
-    // =========================
     const distributorColumn =
       findColumn([
         "distributor",
@@ -300,14 +357,14 @@ app.post("/api/ai-chat", (req, res) => {
     const productColumn =
       findColumn([
         "product",
-        "sku",
         "item",
+        "sku",
       ]);
 
     const revenueColumn =
       findColumn([
-        "sales",
         "revenue",
+        "sales",
         "amount",
       ]);
 
@@ -322,84 +379,68 @@ app.post("/api/ai-chat", (req, res) => {
       findColumn([
         "region",
         "state",
-        "country",
-      ]);
-
-    const customerColumn =
-      findColumn([
-        "customer",
-        "client",
+        "city",
       ]);
 
     // =========================
     // TOTAL RECORDS
     // =========================
     if (
-      lower.includes("total") ||
-      lower.includes("records")
+      lower.includes("total") &&
+      lower.includes("record")
     ) {
 
       return res.json({
         answer:
-          `Dataset contains ${data.length} records.`,
+          `Total dataset records: ${data.length}`,
       });
 
     }
 
     // =========================
-    // TOP DISTRIBUTOR BY SALES
+    // TOP DISTRIBUTOR
     // =========================
     if (
-
-      lower.includes("distributor") &&
-      lower.includes("sales")
-
+      lower.includes("top distributor")
     ) {
 
       if (
-        !distributorColumn ||
-        !revenueColumn
+        distributorColumn &&
+        quantityColumn
       ) {
+
+        const totals = {};
+
+        data.forEach((row) => {
+
+          const distributor =
+            row[distributorColumn];
+
+          const qty =
+            Number(
+              row[quantityColumn]
+            ) || 0;
+
+          totals[distributor] =
+            (totals[distributor] || 0)
+            + qty;
+
+        });
+
+        const best =
+          Object.keys(totals).reduce(
+            (a, b) =>
+              totals[a] > totals[b]
+                ? a
+                : b
+          );
 
         return res.json({
           answer:
-            "Distributor or revenue column not found.",
+            `Top distributor is ${best} with quantity ${totals[best]}`,
         });
 
       }
-
-      const totals = {};
-
-      data.forEach((row) => {
-
-        const distributor =
-          row[distributorColumn];
-
-        const revenue =
-          Number(
-            row[revenueColumn]
-          ) || 0;
-
-        totals[distributor] =
-          (totals[distributor] || 0) +
-          revenue;
-
-      });
-
-      const topDistributor =
-        Object.keys(totals).reduce(
-          (a, b) =>
-            totals[a] > totals[b]
-              ? a
-              : b
-        );
-
-      return res.json({
-
-        answer:
-          `${topDistributor} generated the highest sales revenue of $${totals[topDistributor].toLocaleString()}.`,
-
-      });
 
     }
 
@@ -407,200 +448,115 @@ app.post("/api/ai-chat", (req, res) => {
     // TOP PRODUCT
     // =========================
     if (
-
-      lower.includes("top product") ||
-      lower.includes("best selling")
-
+      lower.includes("top product")
     ) {
 
       if (
-        !productColumn ||
-        !quantityColumn
+        productColumn &&
+        quantityColumn
       ) {
+
+        const totals = {};
+
+        data.forEach((row) => {
+
+          const product =
+            row[productColumn];
+
+          const qty =
+            Number(
+              row[quantityColumn]
+            ) || 0;
+
+          totals[product] =
+            (totals[product] || 0)
+            + qty;
+
+        });
+
+        const best =
+          Object.keys(totals).reduce(
+            (a, b) =>
+              totals[a] > totals[b]
+                ? a
+                : b
+          );
 
         return res.json({
           answer:
-            "Product or quantity column not found.",
+            `Top product is ${best} with quantity ${totals[best]}`,
         });
 
       }
 
-      const totals = {};
-
-      data.forEach((row) => {
-
-        const product =
-          row[productColumn];
-
-        const qty =
-          Number(
-            row[quantityColumn]
-          ) || 0;
-
-        totals[product] =
-          (totals[product] || 0) + qty;
-
-      });
-
-      const topProduct =
-        Object.keys(totals).reduce(
-          (a, b) =>
-            totals[a] > totals[b]
-              ? a
-              : b
-        );
-
-      return res.json({
-
-        answer:
-          `${topProduct} is the best selling product with ${totals[topProduct]} total units sold.`,
-
-      });
-
     }
 
     // =========================
-    // TOP REGION
-    // =========================
-    if (
-      lower.includes("region")
-    ) {
-
-      if (
-        !regionColumn ||
-        !revenueColumn
-      ) {
-
-        return res.json({
-          answer:
-            "Region or revenue column not found.",
-        });
-
-      }
-
-      const totals = {};
-
-      data.forEach((row) => {
-
-        const region =
-          row[regionColumn];
-
-        const revenue =
-          Number(
-            row[revenueColumn]
-          ) || 0;
-
-        totals[region] =
-          (totals[region] || 0) +
-          revenue;
-
-      });
-
-      const topRegion =
-        Object.keys(totals).reduce(
-          (a, b) =>
-            totals[a] > totals[b]
-              ? a
-              : b
-        );
-
-      return res.json({
-
-        answer:
-          `${topRegion} generated the highest regional revenue of $${totals[topRegion].toLocaleString()}.`,
-
-      });
-
-    }
-
-    // =========================
-    // TOP CUSTOMER
-    // =========================
-    if (
-      lower.includes("customer")
-    ) {
-
-      if (
-        !customerColumn ||
-        !quantityColumn
-      ) {
-
-        return res.json({
-          answer:
-            "Customer or quantity column not found.",
-        });
-
-      }
-
-      const totals = {};
-
-      data.forEach((row) => {
-
-        const customer =
-          row[customerColumn];
-
-        const qty =
-          Number(
-            row[quantityColumn]
-          ) || 0;
-
-        totals[customer] =
-          (totals[customer] || 0) +
-          qty;
-
-      });
-
-      const topCustomer =
-        Object.keys(totals).reduce(
-          (a, b) =>
-            totals[a] > totals[b]
-              ? a
-              : b
-        );
-
-      return res.json({
-
-        answer:
-          `${topCustomer} purchased the highest quantity with ${totals[topCustomer]} units.`,
-
-      });
-
-    }
-
-    // =========================
-    // TOTAL REVENUE
+    // REVENUE
     // =========================
     if (
       lower.includes("revenue") ||
       lower.includes("sales")
     ) {
 
-      if (!revenueColumn) {
+      if (revenueColumn) {
+
+        let total = 0;
+
+        data.forEach((row) => {
+
+          total +=
+            Number(
+              row[revenueColumn]
+            ) || 0;
+
+        });
 
         return res.json({
           answer:
-            "Revenue column not found.",
+            `Total revenue generated is $${total.toLocaleString()}`,
         });
 
       }
 
-      let totalRevenue = 0;
+    }
 
-      data.forEach((row) => {
+    // =========================
+    // REGION
+    // =========================
+    if (
+      lower.includes("region")
+    ) {
 
-        totalRevenue +=
-          Number(
-            row[revenueColumn]
-          ) || 0;
+      if (regionColumn) {
 
-      });
+        const counts = {};
 
-      return res.json({
+        data.forEach((row) => {
 
-        answer:
-          `Total revenue generated is $${totalRevenue.toLocaleString()}.`,
+          const region =
+            row[regionColumn];
 
-      });
+          counts[region] =
+            (counts[region] || 0)
+            + 1;
+
+        });
+
+        const summary =
+          Object.entries(counts)
+            .map(
+              ([key, value]) =>
+                `${key}: ${value}`
+            )
+            .join("\n");
+
+        return res.json({
+          answer:
+            `Regional distribution:\n${summary}`,
+        });
+
+      }
 
     }
 
@@ -613,23 +569,24 @@ app.post("/api/ai-chat", (req, res) => {
     ) {
 
       return res.json({
-
-        answer: `
+        answer:
+`
 Executive Summary
 
 • Total Records: ${data.length}
 
 • Total Columns: ${columns.length}
 
-• Semantic Intelligence Engine: Active
+• Semantic AI Engine: Active
 
-• Distributor Analytics: Enabled
+• Distributor Intelligence: Enabled
+
+• Product Intelligence: Enabled
 
 • Revenue Analytics: Enabled
 
-• Operational Monitoring: Running
+• Regional Analytics: Enabled
 `,
-
       });
 
     }
@@ -638,10 +595,8 @@ Executive Summary
     // DEFAULT
     // =========================
     return res.json({
-
       answer:
-        "Semantic analytics engine active. Ask about distributors, revenue, products, customers, quantity, regions or executive summaries.",
-
+        "I can analyze distributors, products, revenue, quantity, regions and executive summaries.",
     });
 
   } catch (error) {
@@ -656,44 +611,60 @@ Executive Summary
   }
 
 });
+
 // =========================
 // AI INSIGHTS API
 // =========================
 app.post("/api/ai-insights", (req, res) => {
+
   try {
+
     const { data } = req.body;
 
     if (!data) {
+
       return res.status(400).json({
         success: false,
         message: "No data received",
       });
+
     }
 
     const insights = [
-      `Dataset contains ${data.length} healthcare records.`,
+
+      `Dataset contains ${data.length} records.`,
+
       "AI preprocessing completed successfully.",
-      "Synthetic healthcare intelligence active.",
+
+      "Synthetic intelligence active.",
+
       "Operational monitoring engine running.",
+
     ];
 
     res.json({
       success: true,
       insights,
     });
+
   } catch (error) {
+
     console.log(error);
 
     res.status(500).json({
       success: false,
       message: "AI insights failed",
     });
+
   }
+
 });
 
 // =========================
 // SERVER START
 // =========================
 app.listen(5000, () => {
+
   console.log("Server running on port 5000");
+
 });
