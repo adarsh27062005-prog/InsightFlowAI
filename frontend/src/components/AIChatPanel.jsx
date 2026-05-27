@@ -279,14 +279,14 @@ function AIChatPanel({ data }) {
       <div className="flex flex-wrap gap-3 mt-5">
 
         {[
-          "Total records",
-          "Average age",
-          "Top diagnosis",
-          "Provider count",
-          "Executive summary",
-          "Top rejection reasons",
-          "SLA breaches",
-        ].map((item) => (
+  "Which distributor generated the highest sales?",
+  "Top selling products by revenue",
+  "Which region has maximum sales?",
+  "Show distributor performance summary",
+  "Which products are underperforming?",
+  "Executive business summary",
+  "Top customers by revenue",
+].map((item) => (
 
           <button
             key={item}
@@ -309,7 +309,7 @@ function AIChatPanel({ data }) {
 
         <input
           type="text"
-          placeholder="Ask a healthcare analytics question..."
+          placeholder="Ask semantic business questions about distributors, products, sales, customers or regions..."
           value={question}
           onChange={(e) =>
             setQuestion(

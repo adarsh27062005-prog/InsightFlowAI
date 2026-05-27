@@ -1,7 +1,15 @@
+import { useState } from "react";
+
 function SyntheticDataGenerator({
   selectedColumns,
   setData,
 }) {
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [summary, setSummary] =
+    useState([]);
 
   // =========================
   // GENERATE DATASET
@@ -22,6 +30,8 @@ function SyntheticDataGenerator({
           return;
         }
 
+        setLoading(true);
+
         // =========================
         // COLUMN NAMES
         // =========================
@@ -36,6 +46,24 @@ function SyntheticDataGenerator({
 
             }
           );
+
+        // =========================
+        // GENERATION SUMMARY
+        // =========================
+        const processSummary =
+          [];
+
+        processSummary.push(
+          `Detected ${columnNames.length} semantic business columns from uploaded DDL schema.`
+        );
+
+        processSummary.push(
+          "AI semantic engine mapped business entities and operational fields."
+        );
+
+        processSummary.push(
+          "Synthetic EDI-style dataset generation initiated."
+        );
 
         // =========================
         // GENERATE DATASET
@@ -82,8 +110,14 @@ function SyntheticDataGenerator({
             "Dataset generation failed."
           );
 
+          setLoading(false);
+
           return;
         }
+
+        processSummary.push(
+          `Successfully generated ${result.data.length} synthetic business transaction records.`
+        );
 
         // =========================
         // AUTO PREPROCESS
@@ -128,9 +162,25 @@ function SyntheticDataGenerator({
             preprocessResult.data
           );
 
+          processSummary.push(
+            "AI preprocessing engine cleaned null values and standardized operational records."
+          );
+
+          processSummary.push(
+            "Semantic normalization completed successfully."
+          );
+
+          processSummary.push(
+            "Dataset is now ready for conversational analytics and semantic querying."
+          );
+
+          setSummary(
+            processSummary
+          );
+
           alert(
 
-            "Synthetic healthcare dataset generated and preprocessed successfully."
+            "Semantic synthetic dataset generated successfully."
 
           );
 
@@ -152,6 +202,10 @@ function SyntheticDataGenerator({
           "Backend connection failed."
         );
 
+      } finally {
+
+        setLoading(false);
+
       }
 
     };
@@ -165,13 +219,13 @@ function SyntheticDataGenerator({
 
         <h2 className="text-2xl font-bold">
 
-          Synthetic Dataset Generator
+          Semantic Synthetic Dataset Engine
 
         </h2>
 
         <p className="text-gray-400 text-sm mt-1">
 
-          AI-powered healthcare dataset generation engine
+          AI-powered EDI semantic transaction generation and preprocessing workflow
 
         </p>
 
@@ -200,13 +254,13 @@ function SyntheticDataGenerator({
 
           <p className="text-gray-400 text-sm">
 
-            Dataset Size
+            Generated Records
 
           </p>
 
           <h3 className="text-3xl font-bold mt-2 text-green-400">
 
-            500 Rows
+            500
 
           </h3>
 
@@ -216,11 +270,11 @@ function SyntheticDataGenerator({
 
           <p className="text-gray-400 text-sm">
 
-            AI Engine
+            AI Semantic Engine
 
           </p>
 
-          <h3 className="text-3xl font-bold mt-2 text-cyan-400">
+          <h3 className="text-3xl font-bold mt-2 text-purple-400">
 
             Active
 
@@ -235,15 +289,83 @@ function SyntheticDataGenerator({
         onClick={
           generateDataset
         }
-        className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-4 rounded-2xl transition-all duration-300"
+        disabled={loading}
+        className="bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black font-bold px-8 py-4 rounded-2xl transition-all duration-300"
       >
 
-        Generate Synthetic Dataset
+        {loading
+          ? "Generating Semantic Dataset..."
+          : "Generate Semantic Dataset"}
 
       </button>
 
+      {/* AI SUMMARY */}
+      {summary.length > 0 && (
+
+        <div className="mt-8 bg-[#0B1120] border border-gray-700 rounded-2xl p-6">
+
+          <div className="flex items-center justify-between mb-5">
+
+            <div>
+
+              <h3 className="text-xl font-bold text-cyan-400">
+
+                AI Processing Summary
+
+              </h3>
+
+              <p className="text-gray-400 text-sm mt-1">
+
+                Transparent preprocessing and semantic workflow reasoning
+
+              </p>
+
+            </div>
+
+            <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+
+          </div>
+
+          <div className="space-y-4">
+
+            {summary.map(
+              (
+                item,
+                index
+              ) => (
+
+                <div
+                  key={index}
+                  className="bg-[#111827] border border-gray-800 rounded-xl p-4"
+                >
+
+                  <div className="flex gap-3">
+
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2" />
+
+                    <p className="text-gray-300 leading-7">
+
+                      {item}
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              )
+            )}
+
+          </div>
+
+        </div>
+
+      )}
+
     </div>
+
   );
+
 }
 
 export default SyntheticDataGenerator;

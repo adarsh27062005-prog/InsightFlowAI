@@ -249,178 +249,359 @@ app.post("/api/generate-dataset", (req, res) => {
 // AI CHAT ENGINE
 // =========================
 app.post("/api/ai-chat", (req, res) => {
+
   try {
+
     const { question, data } = req.body;
 
     if (!data || data.length === 0) {
+
       return res.json({
         answer:
           "Please upload or generate a dataset first.",
       });
+
     }
 
-    const lower = question.toLowerCase();
+    const lower =
+      question.toLowerCase();
 
-    const columns = Object.keys(data[0]);
+    const columns =
+      Object.keys(data[0]);
 
     // =========================
-    // SAFE COLUMN FINDER
+    // COLUMN FINDER
     // =========================
     const findColumn = (keywords) => {
+
       return columns.find((col) => {
-        const lowerCol = col.toLowerCase();
+
+        const lowerCol =
+          col.toLowerCase();
 
         return keywords.some((key) =>
           lowerCol.includes(key)
         );
+
       });
+
     };
+
+    // =========================
+    // SEMANTIC COLUMN MAPPING
+    // =========================
+    const distributorColumn =
+      findColumn([
+        "distributor",
+        "vendor",
+        "supplier",
+      ]);
+
+    const productColumn =
+      findColumn([
+        "product",
+        "sku",
+        "item",
+      ]);
+
+    const revenueColumn =
+      findColumn([
+        "sales",
+        "revenue",
+        "amount",
+      ]);
+
+    const quantityColumn =
+      findColumn([
+        "quantity",
+        "qty",
+        "units",
+      ]);
+
+    const regionColumn =
+      findColumn([
+        "region",
+        "state",
+        "country",
+      ]);
+
+    const customerColumn =
+      findColumn([
+        "customer",
+        "client",
+      ]);
 
     // =========================
     // TOTAL RECORDS
     // =========================
     if (
       lower.includes("total") ||
-      lower.includes("records") ||
-      lower.includes("patients")
+      lower.includes("records")
     ) {
-      return res.json({
-        answer: `Total records in dataset: ${data.length}`,
-      });
-    }
-
-    // =========================
-    // AVG AGE
-    // =========================
-    const ageColumn = findColumn(["age"]);
-
-    if (
-      lower.includes("average age") &&
-      ageColumn
-    ) {
-      const avgAge = (
-        data.reduce((sum, row) => {
-          return (
-            sum +
-            Number(row[ageColumn] || 0)
-          );
-        }, 0) / data.length
-      ).toFixed(1);
 
       return res.json({
-        answer: `Average patient age is ${avgAge}`,
+        answer:
+          `Dataset contains ${data.length} records.`,
       });
+
     }
 
     // =========================
-    // TOP DIAGNOSIS
+    // TOP DISTRIBUTOR BY SALES
     // =========================
     if (
-      lower.includes("diagnosis") ||
-      lower.includes("disease")
+
+      lower.includes("distributor") &&
+      lower.includes("sales")
+
     ) {
-      const diseaseColumn = findColumn([
-        "diagnosis",
-        "disease",
-      ]);
 
-      if (diseaseColumn) {
-        const counts = {};
-
-        data.forEach((row) => {
-          const value =
-            row[diseaseColumn] || "Unknown";
-
-          counts[value] =
-            (counts[value] || 0) + 1;
-        });
-
-        const topDisease = Object.keys(
-          counts
-        ).reduce((a, b) =>
-          counts[a] > counts[b] ? a : b
-        );
+      if (
+        !distributorColumn ||
+        !revenueColumn
+      ) {
 
         return res.json({
-          answer: `Most common diagnosis is ${topDisease}`,
+          answer:
+            "Distributor or revenue column not found.",
         });
+
       }
+
+      const totals = {};
+
+      data.forEach((row) => {
+
+        const distributor =
+          row[distributorColumn];
+
+        const revenue =
+          Number(
+            row[revenueColumn]
+          ) || 0;
+
+        totals[distributor] =
+          (totals[distributor] || 0) +
+          revenue;
+
+      });
+
+      const topDistributor =
+        Object.keys(totals).reduce(
+          (a, b) =>
+            totals[a] > totals[b]
+              ? a
+              : b
+        );
+
+      return res.json({
+
+        answer:
+          `${topDistributor} generated the highest sales revenue of $${totals[topDistributor].toLocaleString()}.`,
+
+      });
+
     }
 
     // =========================
-    // PROVIDER ANALYSIS
-    // =========================
-    if (lower.includes("provider")) {
-      const providerColumn = findColumn([
-        "provider",
-      ]);
-
-      if (providerColumn) {
-        const unique = new Set(
-          data.map(
-            (row) => row[providerColumn]
-          )
-        );
-
-        return res.json({
-          answer: `Total providers detected: ${unique.size}`,
-        });
-      }
-    }
-
-    // =========================
-    // FINANCIAL
+    // TOP PRODUCT
     // =========================
     if (
-      lower.includes("payment") ||
-      lower.includes("billing") ||
-      lower.includes("revenue")
+
+      lower.includes("top product") ||
+      lower.includes("best selling")
+
     ) {
-      const amountColumn = findColumn([
-        "payment",
-        "billing",
-        "amount",
-      ]);
 
-      if (amountColumn) {
-        let total = 0;
-
-        data.forEach((row) => {
-          total +=
-            Number(row[amountColumn]) || 0;
-        });
+      if (
+        !productColumn ||
+        !quantityColumn
+      ) {
 
         return res.json({
-          answer: `Total financial amount is $${total.toLocaleString()}`,
+          answer:
+            "Product or quantity column not found.",
         });
+
       }
+
+      const totals = {};
+
+      data.forEach((row) => {
+
+        const product =
+          row[productColumn];
+
+        const qty =
+          Number(
+            row[quantityColumn]
+          ) || 0;
+
+        totals[product] =
+          (totals[product] || 0) + qty;
+
+      });
+
+      const topProduct =
+        Object.keys(totals).reduce(
+          (a, b) =>
+            totals[a] > totals[b]
+              ? a
+              : b
+        );
+
+      return res.json({
+
+        answer:
+          `${topProduct} is the best selling product with ${totals[topProduct]} total units sold.`,
+
+      });
+
     }
 
     // =========================
-    // SLA
+    // TOP REGION
     // =========================
-    if (lower.includes("sla")) {
-      const slaColumn = findColumn([
-        "sla",
-      ]);
+    if (
+      lower.includes("region")
+    ) {
 
-      if (slaColumn) {
-        let breaches = 0;
-
-        data.forEach((row) => {
-          const value = String(
-            row[slaColumn]
-          ).toLowerCase();
-
-          if (value.includes("breach")) {
-            breaches++;
-          }
-        });
+      if (
+        !regionColumn ||
+        !revenueColumn
+      ) {
 
         return res.json({
-          answer: `Total SLA breaches detected: ${breaches}`,
+          answer:
+            "Region or revenue column not found.",
         });
+
       }
+
+      const totals = {};
+
+      data.forEach((row) => {
+
+        const region =
+          row[regionColumn];
+
+        const revenue =
+          Number(
+            row[revenueColumn]
+          ) || 0;
+
+        totals[region] =
+          (totals[region] || 0) +
+          revenue;
+
+      });
+
+      const topRegion =
+        Object.keys(totals).reduce(
+          (a, b) =>
+            totals[a] > totals[b]
+              ? a
+              : b
+        );
+
+      return res.json({
+
+        answer:
+          `${topRegion} generated the highest regional revenue of $${totals[topRegion].toLocaleString()}.`,
+
+      });
+
+    }
+
+    // =========================
+    // TOP CUSTOMER
+    // =========================
+    if (
+      lower.includes("customer")
+    ) {
+
+      if (
+        !customerColumn ||
+        !quantityColumn
+      ) {
+
+        return res.json({
+          answer:
+            "Customer or quantity column not found.",
+        });
+
+      }
+
+      const totals = {};
+
+      data.forEach((row) => {
+
+        const customer =
+          row[customerColumn];
+
+        const qty =
+          Number(
+            row[quantityColumn]
+          ) || 0;
+
+        totals[customer] =
+          (totals[customer] || 0) +
+          qty;
+
+      });
+
+      const topCustomer =
+        Object.keys(totals).reduce(
+          (a, b) =>
+            totals[a] > totals[b]
+              ? a
+              : b
+        );
+
+      return res.json({
+
+        answer:
+          `${topCustomer} purchased the highest quantity with ${totals[topCustomer]} units.`,
+
+      });
+
+    }
+
+    // =========================
+    // TOTAL REVENUE
+    // =========================
+    if (
+      lower.includes("revenue") ||
+      lower.includes("sales")
+    ) {
+
+      if (!revenueColumn) {
+
+        return res.json({
+          answer:
+            "Revenue column not found.",
+        });
+
+      }
+
+      let totalRevenue = 0;
+
+      data.forEach((row) => {
+
+        totalRevenue +=
+          Number(
+            row[revenueColumn]
+          ) || 0;
+
+      });
+
+      return res.json({
+
+        answer:
+          `Total revenue generated is $${totalRevenue.toLocaleString()}.`,
+
+      });
+
     }
 
     // =========================
@@ -430,39 +611,51 @@ app.post("/api/ai-chat", (req, res) => {
       lower.includes("summary") ||
       lower.includes("executive")
     ) {
+
       return res.json({
+
         answer: `
 Executive Summary
 
 • Total Records: ${data.length}
 
-• Dataset Columns: ${columns.length}
+• Total Columns: ${columns.length}
 
-• AI Analytics Engine: Active
+• Semantic Intelligence Engine: Active
 
-• Healthcare Intelligence: Running
+• Distributor Analytics: Enabled
 
-• Operational Monitoring: Enabled
+• Revenue Analytics: Enabled
+
+• Operational Monitoring: Running
 `,
+
       });
+
     }
 
     // =========================
     // DEFAULT
     // =========================
     return res.json({
+
       answer:
-        "I can analyze records, diagnosis, providers, payments, SLA, rejections, workload and executive summaries.",
+        "Semantic analytics engine active. Ask about distributors, revenue, products, customers, quantity, regions or executive summaries.",
+
     });
+
   } catch (error) {
+
     console.log(error);
 
     res.status(500).json({
-      answer: "AI processing failed.",
+      answer:
+        "AI semantic processing failed.",
     });
-  }
-});
 
+  }
+
+});
 // =========================
 // AI INSIGHTS API
 // =========================
