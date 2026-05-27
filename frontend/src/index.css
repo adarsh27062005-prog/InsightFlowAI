@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+
+  background: #0B1120;
+
+  color: white;
+
+  font-family:
+    Inter,
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+/* =========================
+   SMOOTH SCROLL
+========================= */
+html {
+
+  scroll-behavior: smooth;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+::-webkit-scrollbar {
+
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+
+  background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+
+  background: #22d3ee;
+
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background: #06b6d4;
+}
+
+/* =========================
+   TABLE STYLING
+========================= */
+table {
+
+  border-collapse: collapse;
+
+  width: 100%;
+}
+
+th,
+td {
+
+  transition: 0.2s ease;
+}
+
+tr:hover td {
+
+  background-color:
+    rgba(34, 211, 238, 0.05);
+}
+
+/* =========================
+   INPUTS
+========================= */
+input,
+button,
+textarea {
+
+  outline: none;
+}
+
+/* =========================
+   BUTTON TRANSITIONS
+========================= */
+button {
+
+  transition:
+    all 0.25s ease;
+}
+
+/* =========================
+   CARD EFFECTS
+========================= */
+.enterprise-card {
+
+  background: #111827;
+
+  border: 1px solid #1F2937;
+
+  border-radius: 1rem;
+
+  transition:
+    all 0.3s ease;
+}
+
+.enterprise-card:hover {
+
+  transform: translateY(-2px);
+
+  border-color: #22d3ee;
+
+  box-shadow:
+    0 0 25px rgba(34, 211, 238, 0.08);
+}
+
+/* =========================
+   KPI GLOW EFFECT
+========================= */
+.kpi-glow {
+
+  box-shadow:
+    0 0 25px rgba(34, 211, 238, 0.15);
+}
+
+/* =========================
+   DASHBOARD FADE ANIMATION
+========================= */
+.fade-in {
+
+  animation:
+    fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(10px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+/* =========================
+   LOADING SHIMMER
+========================= */
+.shimmer {
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.shimmer::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: -150px;
+
+  width: 150px;
+
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.08),
+      transparent
+    );
+
+  animation:
+    shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+
+  100% {
+
+    left: 100%;
+  }
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 768px) {
+
+  body {
+
+    font-size: 14px;
+  }
+
+  table {
+
+    font-size: 12px;
+  }
+
+  .mobile-stack {
+
+    flex-direction: column !important;
+  }
+}
+
+/* =========================
+   CHART CONTAINER
+========================= */
+.chart-container {
+
+  position: relative;
+
+  width: 100%;
+
+  min-height: 350px;
+}
+
+/* =========================
+   GLASS EFFECT
+========================= */
+.glass {
+
+  background:
+    rgba(255, 255, 255, 0.03);
+
+  backdrop-filter:
+    blur(12px);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+}
