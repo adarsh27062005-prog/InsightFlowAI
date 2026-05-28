@@ -1,0 +1,501 @@
+Patient_ID,Patient_Name,Age,Gender,Diagnosis,Provider,Admission_Date,Billing_Amount,Claim_Status,SLA_Status,Turnaround_Hours,Rejection_Reason
+PAT-1000,Andrew Olsen,18,Male,Diabetes,Blue Cross,2026-02-01,2971.27,Pending,Within SLA,25,Duplicate Claim
+PAT-1001,Stacy Hughes,29,Female,Diabetes,Aetna,2026-04-11,667.94,Approved,Breach,15,Invalid Insurance
+PAT-1002,Michael Taylor,29,Female,Heart Disease,United Healthcare,2025-09-09,12803.58,Rejected,Breach,47,N/A
+PAT-1003,Adrian Brooks,52,Female,Arthritis,United Healthcare,2025-08-25,12717.14,Rejected,Breach,40,Invalid Insurance
+PAT-1004,Laurie Hayes,76,Male,Cancer,Aetna,2025-08-19,12052.14,Rejected,Within SLA,4,Authorization Pending
+PAT-1005,Steven Lee,63,Female,Arthritis,Cigna,2025-10-10,630.65,Pending,Within SLA,2,N/A
+PAT-1006,Melvin Smith,81,Female,Cancer,Cigna,2025-10-09,8406.25,Approved,Breach,20,N/A
+PAT-1007,Jennifer Kennedy,64,Male,Heart Disease,United Healthcare,2026-02-14,12516.13,Pending,Breach,37,Duplicate Claim
+PAT-1008,Christine Terrell,22,Male,Cancer,Humana,2025-07-01,13954.52,Approved,Within SLA,4,Coding Error
+PAT-1009,Tina Dillon,34,Male,Arthritis,Humana,2026-05-06,9070.79,Rejected,Breach,9,Duplicate Claim
+PAT-1010,James Henderson,81,Female,Diabetes,United Healthcare,2026-03-23,11244.45,Rejected,Breach,67,Invalid Insurance
+PAT-1011,Alan Martin,18,Male,Heart Disease,Cigna,2026-05-18,12885.34,Approved,Breach,54,Missing Documents
+PAT-1012,Danielle Curry,48,Male,Asthma,United Healthcare,2026-04-19,6073.09,Approved,Breach,32,Invalid Insurance
+PAT-1013,Eric Wolf,19,Male,Flu,United Healthcare,2025-09-05,13157.44,Approved,Breach,17,Authorization Pending
+PAT-1014,Brian Pearson,38,Female,Arthritis,Cigna,2026-05-09,9142.35,Approved,Breach,31,Authorization Pending
+PAT-1015,David Ferguson,47,Female,Diabetes,Blue Cross,2025-06-02,6357.62,Pending,Breach,9,N/A
+PAT-1016,Wesley Harris,76,Female,Heart Disease,Blue Cross,2025-11-27,4188.07,Pending,Breach,71,Invalid Insurance
+PAT-1017,Anthony Phillips,74,Male,Heart Disease,Cigna,2026-01-23,5935.48,Pending,Within SLA,53,Duplicate Claim
+PAT-1018,Dylan Harris,63,Female,Heart Disease,Aetna,2025-12-13,7143.77,Pending,Breach,8,Duplicate Claim
+PAT-1019,Deborah Grant,30,Female,Hypertension,Cigna,2025-09-19,14358.32,Pending,Breach,38,Coding Error
+PAT-1020,Erica Carrillo,77,Male,Hypertension,Humana,2025-10-17,2001.75,Pending,Breach,27,N/A
+PAT-1021,Stephen Young,38,Female,Heart Disease,Aetna,2025-07-15,9643.54,Approved,Breach,32,Duplicate Claim
+PAT-1022,Daniel Hayes,46,Male,Migraine,Blue Cross,2026-03-29,13665.15,Pending,Within SLA,64,Missing Documents
+PAT-1023,Tammy Castillo,59,Female,Asthma,Cigna,2026-02-21,14627.27,Rejected,Within SLA,49,Duplicate Claim
+PAT-1024,David Rogers,76,Male,Flu,Blue Cross,2025-07-07,8431.53,Pending,Breach,49,Authorization Pending
+PAT-1025,Robert Ellis,62,Male,Asthma,Aetna,2025-11-01,6403.03,Approved,Breach,71,N/A
+PAT-1026,Erin Hernandez,82,Female,Hypertension,Blue Cross,2026-01-26,13859.02,Rejected,Within SLA,20,N/A
+PAT-1027,Zachary Wang,41,Male,Migraine,United Healthcare,2026-02-04,7065.12,Pending,Within SLA,53,Missing Documents
+PAT-1028,Andrew Green,23,Male,Flu,United Healthcare,2026-02-14,2997.02,Pending,Breach,25,N/A
+PAT-1029,Brandon Vazquez,51,Female,Heart Disease,United Healthcare,2026-03-28,11486.26,Pending,Breach,12,Duplicate Claim
+PAT-1030,Brittany Avila,70,Female,Hypertension,United Healthcare,2025-08-02,13354.56,Rejected,Breach,8,Missing Documents
+PAT-1031,Benjamin Chase,62,Female,Migraine,Humana,2025-06-13,8347.29,Pending,Breach,29,Authorization Pending
+PAT-1032,David Garcia,50,Female,Diabetes,Blue Cross,2025-06-18,8430.01,Approved,Within SLA,69,Missing Documents
+PAT-1033,Amy Fisher,37,Male,Cancer,United Healthcare,2025-06-27,8298.31,Pending,Within SLA,54,Duplicate Claim
+PAT-1034,Jesus Curtis,59,Female,Flu,Humana,2026-02-17,11453.19,Pending,Within SLA,9,Coding Error
+PAT-1035,Richard Drake,38,Male,Asthma,Aetna,2025-12-27,7376.35,Approved,Breach,45,N/A
+PAT-1036,Kaitlyn Barber,19,Male,Arthritis,Humana,2025-09-23,3052.45,Rejected,Breach,28,Invalid Insurance
+PAT-1037,Michelle Price,67,Male,Migraine,Blue Cross,2026-01-01,2965.71,Approved,Within SLA,63,Duplicate Claim
+PAT-1038,Amy Hunt,37,Male,Heart Disease,Humana,2025-05-27,8487.79,Approved,Breach,17,Invalid Insurance
+PAT-1039,Taylor Gibbs,26,Female,Heart Disease,Cigna,2025-12-31,855.16,Rejected,Breach,59,Missing Documents
+PAT-1040,Matthew Hernandez,43,Male,Cancer,United Healthcare,2026-01-10,14483.08,Approved,Within SLA,23,Invalid Insurance
+PAT-1041,Tiffany Suarez,38,Female,Asthma,Humana,2025-12-04,14655.09,Pending,Breach,5,Missing Documents
+PAT-1042,Rhonda Smith,47,Male,Hypertension,Blue Cross,2026-05-18,14299.43,Rejected,Breach,72,Invalid Insurance
+PAT-1043,Tiffany Cochran,35,Female,Migraine,Cigna,2026-04-23,8048.05,Approved,Breach,72,N/A
+PAT-1044,Jacob Foster,50,Female,Migraine,United Healthcare,2026-03-19,9256.85,Rejected,Within SLA,46,N/A
+PAT-1045,Amanda Lang,84,Female,Arthritis,Humana,2025-06-04,13502.16,Rejected,Breach,30,Missing Documents
+PAT-1046,Lindsey Adams MD,47,Male,Migraine,Cigna,2025-12-01,14630.8,Pending,Breach,14,Missing Documents
+PAT-1047,Brandy Hicks,41,Female,Hypertension,Blue Cross,2026-04-27,11259.12,Approved,Breach,63,Authorization Pending
+PAT-1048,Melissa Young,38,Female,Arthritis,Cigna,2025-08-08,4591.65,Rejected,Within SLA,35,Missing Documents
+PAT-1049,Christopher Cooper,83,Male,Diabetes,Cigna,2025-08-26,12062.3,Rejected,Breach,64,Invalid Insurance
+PAT-1050,James Hansen,45,Female,Arthritis,United Healthcare,2026-02-21,10137.91,Pending,Breach,51,N/A
+PAT-1051,Deborah Bush,79,Male,Migraine,Blue Cross,2026-01-12,2193.03,Pending,Within SLA,65,Missing Documents
+PAT-1052,Jennifer Liu,53,Female,Migraine,Aetna,2025-09-07,8859.39,Approved,Within SLA,17,N/A
+PAT-1053,Emma Townsend,19,Female,Asthma,Blue Cross,2025-08-03,3936.57,Rejected,Within SLA,23,Missing Documents
+PAT-1054,Michael Clark,41,Female,Migraine,Aetna,2025-12-19,5604.36,Rejected,Breach,30,N/A
+PAT-1055,Richard Aguilar,42,Female,Arthritis,United Healthcare,2025-09-13,5372.05,Pending,Within SLA,38,Missing Documents
+PAT-1056,Tyler Carson,71,Male,Cancer,United Healthcare,2025-10-10,5646.33,Rejected,Breach,38,Coding Error
+PAT-1057,Max Mcintyre,52,Male,Hypertension,United Healthcare,2025-10-03,1374.59,Approved,Breach,26,N/A
+PAT-1058,Anthony Rivera,27,Male,Hypertension,Humana,2025-08-17,7766.96,Pending,Breach,48,Invalid Insurance
+PAT-1059,Joshua Oliver,35,Female,Arthritis,United Healthcare,2026-04-22,2428.48,Pending,Breach,38,Duplicate Claim
+PAT-1060,Scott Lopez,24,Female,Heart Disease,United Healthcare,2025-06-01,10963.02,Rejected,Within SLA,15,Authorization Pending
+PAT-1061,Laura Miller,25,Male,Flu,Humana,2025-08-31,14728.16,Pending,Breach,36,Invalid Insurance
+PAT-1062,Melissa Garrett DDS,31,Female,Arthritis,Cigna,2025-05-31,5309.93,Rejected,Within SLA,34,Missing Documents
+PAT-1063,Harry Larson,70,Female,Flu,United Healthcare,2025-11-19,5772.43,Rejected,Breach,32,Authorization Pending
+PAT-1064,David Smith,30,Female,Hypertension,Humana,2026-03-07,2271.15,Pending,Within SLA,19,Coding Error
+PAT-1065,Phyllis Baker,72,Female,Cancer,Blue Cross,2026-03-17,3196.65,Pending,Within SLA,7,Invalid Insurance
+PAT-1066,Andrew Hernandez,33,Male,Hypertension,Cigna,2026-04-03,6017.48,Approved,Within SLA,68,Invalid Insurance
+PAT-1067,Mr. Shane Walker,83,Male,Cancer,Blue Cross,2026-05-13,4994.35,Approved,Breach,47,Missing Documents
+PAT-1068,Rachel Miller,21,Female,Asthma,United Healthcare,2025-07-06,14570.54,Pending,Within SLA,49,Duplicate Claim
+PAT-1069,Michelle Smith,73,Female,Flu,Cigna,2025-07-08,7876.95,Rejected,Within SLA,28,Duplicate Claim
+PAT-1070,Zachary Hays,77,Male,Hypertension,Aetna,2025-11-24,11905.01,Pending,Within SLA,30,N/A
+PAT-1071,Pamela Castaneda,25,Male,Diabetes,Blue Cross,2025-10-28,1727.19,Approved,Breach,28,N/A
+PAT-1072,Joshua Moore,52,Male,Hypertension,Blue Cross,2026-01-03,7077.66,Approved,Breach,24,N/A
+PAT-1073,Rebekah Acosta,66,Female,Asthma,United Healthcare,2025-09-02,4843.13,Rejected,Breach,50,Invalid Insurance
+PAT-1074,Phillip Valentine,39,Female,Flu,United Healthcare,2025-12-26,9656.35,Approved,Breach,2,Coding Error
+PAT-1075,Monica Woods,28,Male,Diabetes,Blue Cross,2025-11-30,4786.69,Pending,Breach,53,Missing Documents
+PAT-1076,Laurie Davis,51,Female,Flu,Humana,2026-01-09,9183.52,Rejected,Within SLA,37,Coding Error
+PAT-1077,Logan Sloan,40,Male,Asthma,Cigna,2025-07-14,7320.57,Rejected,Within SLA,41,Duplicate Claim
+PAT-1078,David Wright,29,Male,Heart Disease,Blue Cross,2026-05-11,13209.61,Pending,Within SLA,57,Invalid Insurance
+PAT-1079,Debra Flores,29,Male,Flu,Blue Cross,2026-05-02,9769.85,Rejected,Breach,70,Coding Error
+PAT-1080,Kimberly Tate,29,Male,Asthma,Humana,2025-06-18,7373.14,Approved,Within SLA,64,N/A
+PAT-1081,Lucas Holland,43,Male,Cancer,Blue Cross,2026-02-21,10104.99,Pending,Within SLA,32,Authorization Pending
+PAT-1082,Mark Mitchell,45,Female,Migraine,Blue Cross,2025-08-08,992.27,Approved,Within SLA,61,Duplicate Claim
+PAT-1083,Brandy Garcia,34,Female,Flu,United Healthcare,2025-06-07,1019.39,Approved,Within SLA,4,Duplicate Claim
+PAT-1084,Sean Williams,58,Male,Asthma,United Healthcare,2026-05-03,3611.01,Pending,Breach,14,Coding Error
+PAT-1085,Chelsea Perez,70,Female,Cancer,Aetna,2026-01-30,14402.18,Approved,Within SLA,42,Coding Error
+PAT-1086,Nathaniel Alvarez,18,Male,Heart Disease,Aetna,2026-01-31,12229.13,Rejected,Breach,51,Authorization Pending
+PAT-1087,Matthew Wilson,68,Male,Asthma,United Healthcare,2026-05-14,3469.59,Rejected,Breach,71,Authorization Pending
+PAT-1088,Michael Wong,42,Male,Arthritis,Blue Cross,2025-05-27,7142.6,Approved,Breach,40,Coding Error
+PAT-1089,Jimmy Aguilar,81,Female,Heart Disease,Aetna,2025-11-07,10633.86,Rejected,Breach,61,Duplicate Claim
+PAT-1090,Brandon Vaughn,44,Male,Asthma,Cigna,2026-02-26,13924.97,Approved,Within SLA,18,Missing Documents
+PAT-1091,Tim Watts,59,Female,Asthma,Aetna,2025-10-05,6309.96,Approved,Breach,35,N/A
+PAT-1092,Joseph Boyle,66,Male,Asthma,United Healthcare,2025-11-03,689.31,Pending,Within SLA,35,Invalid Insurance
+PAT-1093,Randall Potter,74,Female,Cancer,Humana,2025-09-14,6411.5,Rejected,Within SLA,6,Missing Documents
+PAT-1094,Elizabeth Johnson,76,Male,Diabetes,Aetna,2026-04-10,2711.56,Pending,Breach,61,Coding Error
+PAT-1095,Juan Steele,46,Female,Flu,Aetna,2026-04-05,7448.02,Pending,Within SLA,43,Missing Documents
+PAT-1096,Kristi Wood,49,Female,Diabetes,Cigna,2025-06-23,5457.59,Pending,Breach,59,Coding Error
+PAT-1097,Jeffrey Lucas,57,Male,Asthma,Humana,2026-01-21,6414.65,Rejected,Breach,15,Authorization Pending
+PAT-1098,Matthew Grant,72,Male,Flu,Aetna,2026-02-15,2238.04,Approved,Within SLA,47,Coding Error
+PAT-1099,Sara Porter,43,Female,Heart Disease,Aetna,2025-08-04,2739.91,Rejected,Within SLA,61,Missing Documents
+PAT-1100,Jose Williams,73,Male,Cancer,Blue Cross,2025-06-21,3188.39,Approved,Within SLA,43,N/A
+PAT-1101,Christian Cook,25,Female,Cancer,Aetna,2026-04-28,14523.53,Rejected,Breach,71,Invalid Insurance
+PAT-1102,Lisa Bates,83,Male,Flu,Blue Cross,2026-03-27,5474.21,Pending,Breach,18,N/A
+PAT-1103,Shawna Chase,36,Male,Hypertension,Humana,2025-06-21,13109.97,Pending,Breach,5,Duplicate Claim
+PAT-1104,Katie Marshall,32,Male,Diabetes,Cigna,2026-05-15,5583.03,Pending,Breach,8,Duplicate Claim
+PAT-1105,James Montoya MD,45,Female,Flu,Blue Cross,2025-12-12,5757.92,Pending,Breach,42,Coding Error
+PAT-1106,Stephanie Olson,85,Male,Heart Disease,Blue Cross,2025-08-02,5586.89,Pending,Within SLA,43,Missing Documents
+PAT-1107,Jay Walker,35,Female,Arthritis,Aetna,2026-04-06,13283.29,Rejected,Within SLA,10,Invalid Insurance
+PAT-1108,Calvin Reid,47,Male,Asthma,Cigna,2025-12-02,13462.25,Approved,Within SLA,19,Coding Error
+PAT-1109,Kendra Jones,45,Female,Hypertension,United Healthcare,2026-05-16,9761.63,Approved,Within SLA,7,N/A
+PAT-1110,Lindsey Fernandez,77,Female,Diabetes,Blue Cross,2025-10-06,7973.06,Pending,Within SLA,65,Invalid Insurance
+PAT-1111,Juan Cruz,69,Male,Migraine,Humana,2025-10-28,8990.25,Rejected,Within SLA,3,Invalid Insurance
+PAT-1112,Amy Flowers,32,Male,Migraine,United Healthcare,2025-11-23,2401.67,Pending,Breach,65,Invalid Insurance
+PAT-1113,Bradley Palmer,73,Female,Migraine,Cigna,2025-08-06,5518.14,Pending,Breach,54,Authorization Pending
+PAT-1114,Robert Perez,57,Male,Heart Disease,Aetna,2026-01-19,1508.37,Rejected,Within SLA,23,Authorization Pending
+PAT-1115,Kimberly Moon,28,Female,Diabetes,Humana,2026-05-09,9520.66,Pending,Within SLA,44,Authorization Pending
+PAT-1116,Ms. Rachael Moore,68,Female,Heart Disease,Aetna,2025-08-15,2280.92,Pending,Within SLA,37,Duplicate Claim
+PAT-1117,Kayla Valencia,38,Male,Flu,Blue Cross,2025-09-05,5741.75,Approved,Breach,7,Duplicate Claim
+PAT-1118,Jennifer Moore,24,Female,Diabetes,United Healthcare,2025-10-31,5337.97,Approved,Breach,57,Invalid Insurance
+PAT-1119,Erin Ryan,23,Male,Migraine,United Healthcare,2026-04-04,8124.41,Approved,Within SLA,21,Missing Documents
+PAT-1120,Erin Bailey,53,Male,Diabetes,Humana,2026-04-27,7831.83,Approved,Within SLA,63,Invalid Insurance
+PAT-1121,Travis Jackson,36,Male,Diabetes,Humana,2026-04-02,1601.65,Rejected,Breach,44,Duplicate Claim
+PAT-1122,Melissa Anderson,69,Female,Cancer,United Healthcare,2026-03-29,13174.38,Rejected,Within SLA,23,Authorization Pending
+PAT-1123,Jessica Gonzalez,68,Female,Arthritis,Cigna,2025-06-18,11676.09,Rejected,Within SLA,28,N/A
+PAT-1124,Russell Blake,78,Female,Diabetes,Blue Cross,2025-09-28,6402.06,Pending,Breach,26,Duplicate Claim
+PAT-1125,Vincent Schaefer,77,Male,Hypertension,United Healthcare,2025-08-03,7101.0,Pending,Within SLA,5,N/A
+PAT-1126,Caleb Taylor,43,Male,Hypertension,Humana,2025-11-23,5282.56,Rejected,Breach,22,Duplicate Claim
+PAT-1127,Emily Jarvis,76,Female,Cancer,United Healthcare,2025-08-11,7516.3,Pending,Breach,6,Invalid Insurance
+PAT-1128,Angela Baker,76,Male,Flu,United Healthcare,2025-11-05,11182.55,Rejected,Within SLA,34,Coding Error
+PAT-1129,Kevin Lane,54,Male,Cancer,Aetna,2025-11-16,5398.92,Approved,Breach,20,Invalid Insurance
+PAT-1130,Clinton Gonzalez,43,Female,Asthma,Cigna,2026-02-24,8660.96,Approved,Within SLA,48,Missing Documents
+PAT-1131,Robert Jennings,61,Female,Hypertension,Humana,2026-03-07,8644.62,Pending,Within SLA,5,Duplicate Claim
+PAT-1132,Jackie Cooper,84,Male,Cancer,Aetna,2026-04-27,13060.84,Rejected,Breach,25,Missing Documents
+PAT-1133,Melinda Robinson DVM,27,Female,Diabetes,Blue Cross,2025-08-14,10835.75,Approved,Breach,38,Authorization Pending
+PAT-1134,Ms. Susan Guzman,45,Female,Arthritis,Cigna,2025-06-27,13324.84,Pending,Breach,26,Missing Documents
+PAT-1135,Emily Fisher,29,Male,Flu,Cigna,2026-04-07,7417.32,Approved,Breach,43,Authorization Pending
+PAT-1136,Teresa Patel,63,Female,Migraine,Aetna,2026-02-20,14346.87,Approved,Within SLA,14,Duplicate Claim
+PAT-1137,Kelsey French,41,Male,Arthritis,Cigna,2026-05-25,1291.32,Approved,Within SLA,43,Coding Error
+PAT-1138,Bryan Cox,85,Female,Hypertension,Cigna,2025-09-18,14159.28,Pending,Breach,9,Authorization Pending
+PAT-1139,Juan Wilson,67,Female,Heart Disease,United Healthcare,2026-03-13,11561.91,Pending,Within SLA,37,Invalid Insurance
+PAT-1140,Erica Bass,18,Male,Migraine,Humana,2025-10-12,3596.68,Approved,Within SLA,64,N/A
+PAT-1141,Jessica Jacobson,84,Male,Diabetes,Cigna,2026-04-22,11447.98,Approved,Breach,49,Coding Error
+PAT-1142,Derek Perez,82,Female,Migraine,Humana,2026-01-07,9191.11,Rejected,Within SLA,32,Missing Documents
+PAT-1143,Charles Hunt,67,Male,Hypertension,Aetna,2025-08-09,6384.73,Approved,Within SLA,52,Coding Error
+PAT-1144,Donald Harrison,51,Female,Cancer,Aetna,2025-06-16,2749.15,Rejected,Breach,51,Missing Documents
+PAT-1145,John Rios,73,Female,Arthritis,Blue Cross,2026-04-11,13867.15,Approved,Within SLA,62,Duplicate Claim
+PAT-1146,Jennifer Glass,25,Female,Diabetes,United Healthcare,2026-01-08,12867.72,Rejected,Breach,57,N/A
+PAT-1147,Maria Huffman,70,Female,Hypertension,Aetna,2025-08-01,13152.19,Pending,Breach,22,Duplicate Claim
+PAT-1148,Brian Santos,59,Male,Diabetes,Cigna,2025-07-02,6683.68,Rejected,Breach,44,N/A
+PAT-1149,Michael Gonzalez,85,Female,Diabetes,Humana,2026-02-17,5784.47,Approved,Within SLA,46,Duplicate Claim
+PAT-1150,Sheila Collins,51,Female,Flu,Aetna,2026-03-21,8820.66,Pending,Within SLA,18,N/A
+PAT-1151,Cindy Fuentes,70,Male,Heart Disease,Aetna,2025-09-04,7742.4,Rejected,Within SLA,33,N/A
+PAT-1152,Emily Snyder,47,Male,Migraine,Humana,2025-07-08,6054.99,Pending,Within SLA,70,Duplicate Claim
+PAT-1153,Claudia Farrell,18,Male,Asthma,Aetna,2025-12-08,9496.87,Pending,Breach,35,Coding Error
+PAT-1154,Jason Barrett,18,Male,Heart Disease,Aetna,2025-06-08,769.14,Pending,Breach,43,Authorization Pending
+PAT-1155,Todd Ramos,77,Male,Arthritis,Blue Cross,2025-08-30,6554.0,Pending,Breach,58,Duplicate Claim
+PAT-1156,Michael Garcia,62,Male,Cancer,United Healthcare,2025-10-12,13707.94,Pending,Within SLA,65,Authorization Pending
+PAT-1157,Whitney Collins,65,Male,Heart Disease,Aetna,2025-07-23,3052.11,Approved,Within SLA,47,N/A
+PAT-1158,Kyle Bates Jr.,78,Male,Migraine,Humana,2026-05-14,4257.86,Pending,Breach,8,N/A
+PAT-1159,Stephanie Oliver,66,Female,Flu,United Healthcare,2025-06-27,12089.38,Approved,Within SLA,61,N/A
+PAT-1160,Troy Townsend,56,Female,Cancer,Humana,2025-09-23,9660.46,Approved,Within SLA,50,Duplicate Claim
+PAT-1161,Ryan Martin,84,Male,Cancer,Humana,2025-09-30,4218.05,Pending,Breach,70,Missing Documents
+PAT-1162,Donald Price,72,Female,Arthritis,Cigna,2025-07-13,12035.8,Pending,Breach,32,Missing Documents
+PAT-1163,James Hernandez,36,Male,Diabetes,Blue Cross,2026-02-23,771.48,Pending,Breach,71,Invalid Insurance
+PAT-1164,Lisa Huff,50,Female,Diabetes,Cigna,2026-03-14,4541.91,Rejected,Within SLA,46,Missing Documents
+PAT-1165,Alan Ramirez,40,Female,Heart Disease,Blue Cross,2026-01-04,13583.73,Pending,Within SLA,39,Authorization Pending
+PAT-1166,Joel Turner,36,Male,Cancer,Cigna,2026-01-23,4965.97,Approved,Within SLA,6,Invalid Insurance
+PAT-1167,Jennifer Johnson,35,Male,Hypertension,Cigna,2025-07-31,1840.07,Pending,Breach,47,Duplicate Claim
+PAT-1168,Kristin Fletcher,69,Female,Diabetes,Aetna,2025-10-21,3916.38,Pending,Within SLA,55,N/A
+PAT-1169,Derrick Hall,25,Female,Cancer,Aetna,2026-01-16,13515.03,Approved,Within SLA,52,Missing Documents
+PAT-1170,Christopher Lyons,20,Male,Asthma,Humana,2026-02-20,2796.86,Approved,Breach,55,Authorization Pending
+PAT-1171,Jeremy Padilla,54,Male,Asthma,Aetna,2026-03-16,6915.9,Pending,Breach,8,Invalid Insurance
+PAT-1172,Christy Hunter,83,Female,Flu,United Healthcare,2026-04-18,10046.39,Pending,Breach,23,Invalid Insurance
+PAT-1173,Tonya Hawkins,41,Male,Asthma,Blue Cross,2025-12-12,3174.94,Approved,Within SLA,49,Duplicate Claim
+PAT-1174,Scott King,76,Male,Migraine,Aetna,2025-06-07,6028.61,Pending,Breach,68,Coding Error
+PAT-1175,Adam Schmidt,60,Female,Asthma,Blue Cross,2026-05-02,7351.37,Approved,Within SLA,37,Invalid Insurance
+PAT-1176,Mary Brown,18,Female,Flu,Humana,2026-02-08,2586.54,Rejected,Breach,22,Duplicate Claim
+PAT-1177,Brian Miller,66,Female,Heart Disease,Blue Cross,2025-09-12,10728.19,Approved,Within SLA,54,Duplicate Claim
+PAT-1178,Andrew Scott,50,Male,Hypertension,Blue Cross,2025-06-28,518.51,Approved,Within SLA,19,N/A
+PAT-1179,Bryan Davis,77,Female,Arthritis,Blue Cross,2026-04-19,6731.45,Pending,Breach,19,Invalid Insurance
+PAT-1180,Paul Yang,81,Female,Diabetes,Humana,2026-03-15,7060.86,Approved,Within SLA,39,Invalid Insurance
+PAT-1181,Francisco Clark,72,Female,Migraine,Cigna,2026-03-08,2688.0,Approved,Within SLA,11,Authorization Pending
+PAT-1182,Allen Blake,71,Female,Heart Disease,United Healthcare,2025-09-18,13150.87,Approved,Within SLA,31,Missing Documents
+PAT-1183,Corey Mcpherson,80,Male,Migraine,Blue Cross,2026-01-26,12815.13,Rejected,Within SLA,13,N/A
+PAT-1184,Amanda Olson,52,Male,Flu,Humana,2026-02-18,2662.82,Rejected,Breach,51,N/A
+PAT-1185,Stephanie Olson DDS,62,Male,Arthritis,United Healthcare,2026-02-01,5499.41,Rejected,Breach,50,Invalid Insurance
+PAT-1186,Anna Blake,75,Male,Flu,Cigna,2025-06-18,3129.74,Approved,Within SLA,71,Missing Documents
+PAT-1187,Brian Rosario,25,Female,Heart Disease,Aetna,2025-07-11,9855.45,Approved,Breach,59,Authorization Pending
+PAT-1188,Jason Bautista,33,Male,Cancer,Aetna,2025-11-28,1081.34,Pending,Breach,37,Authorization Pending
+PAT-1189,Michael Ray,29,Male,Heart Disease,Cigna,2025-08-25,10252.3,Approved,Breach,33,N/A
+PAT-1190,Nicholas Galloway,18,Female,Arthritis,Aetna,2025-12-21,1401.41,Rejected,Within SLA,19,Coding Error
+PAT-1191,Phillip Valenzuela,63,Male,Hypertension,Aetna,2026-03-31,13371.58,Rejected,Within SLA,26,Coding Error
+PAT-1192,Jessica Figueroa,49,Female,Asthma,Blue Cross,2025-07-20,13476.62,Rejected,Breach,53,Duplicate Claim
+PAT-1193,Heather Brown,80,Male,Migraine,Cigna,2025-06-04,904.91,Approved,Within SLA,37,Authorization Pending
+PAT-1194,Angela Greene,49,Female,Migraine,United Healthcare,2025-12-12,11723.26,Rejected,Breach,38,Invalid Insurance
+PAT-1195,Danielle Hicks,81,Female,Cancer,Aetna,2025-11-03,865.14,Rejected,Breach,8,Invalid Insurance
+PAT-1196,Lindsey Mann,38,Female,Hypertension,Humana,2025-09-11,5824.38,Approved,Breach,22,Missing Documents
+PAT-1197,Kari Rios,42,Female,Flu,United Healthcare,2026-02-17,9669.43,Rejected,Within SLA,22,Missing Documents
+PAT-1198,Ann Flores,26,Female,Migraine,Aetna,2026-01-23,1142.07,Rejected,Breach,53,N/A
+PAT-1199,Kristine Tran,36,Male,Asthma,Cigna,2025-08-28,8482.61,Approved,Within SLA,51,N/A
+PAT-1200,Michelle Coleman,30,Male,Hypertension,Blue Cross,2025-09-04,12049.46,Rejected,Breach,71,Duplicate Claim
+PAT-1201,Richard Crawford,38,Male,Hypertension,Blue Cross,2025-06-03,7390.11,Approved,Breach,43,Authorization Pending
+PAT-1202,Margaret Hampton,61,Female,Heart Disease,Blue Cross,2026-01-02,13677.11,Pending,Breach,31,Coding Error
+PAT-1203,Cody Flores,67,Male,Flu,United Healthcare,2025-12-28,13560.15,Pending,Within SLA,72,Invalid Insurance
+PAT-1204,Michael Roberts,84,Male,Heart Disease,United Healthcare,2025-11-07,9424.74,Rejected,Within SLA,62,Duplicate Claim
+PAT-1205,Laura Schwartz,32,Female,Hypertension,Humana,2025-11-05,6525.1,Pending,Within SLA,24,Authorization Pending
+PAT-1206,Joseph Phillips,68,Female,Hypertension,United Healthcare,2025-10-29,12990.89,Pending,Breach,7,Authorization Pending
+PAT-1207,Sarah White,58,Female,Asthma,United Healthcare,2026-03-22,13243.1,Pending,Breach,39,Coding Error
+PAT-1208,Sara Burke,42,Male,Flu,Cigna,2025-09-13,9277.89,Rejected,Within SLA,49,N/A
+PAT-1209,Kelly Roberts,58,Male,Heart Disease,Cigna,2025-12-24,2625.28,Pending,Breach,31,Missing Documents
+PAT-1210,Judy Blackwell,49,Female,Flu,United Healthcare,2026-05-15,8414.28,Approved,Breach,11,Authorization Pending
+PAT-1211,Preston Reynolds,66,Female,Heart Disease,Blue Cross,2026-05-08,11382.69,Approved,Within SLA,57,Authorization Pending
+PAT-1212,Miranda Grant,33,Male,Heart Disease,Cigna,2025-06-05,1111.99,Approved,Within SLA,36,Duplicate Claim
+PAT-1213,Mark Harrell,77,Female,Flu,United Healthcare,2026-03-17,5582.87,Rejected,Within SLA,12,Authorization Pending
+PAT-1214,Jeffrey Jones,52,Female,Asthma,Humana,2025-09-22,2074.75,Rejected,Within SLA,5,Coding Error
+PAT-1215,Dr. Alyssa Murphy,51,Female,Migraine,United Healthcare,2026-04-14,12230.29,Pending,Breach,60,Missing Documents
+PAT-1216,Lindsey Sexton,48,Female,Asthma,United Healthcare,2026-02-13,7942.77,Approved,Breach,40,N/A
+PAT-1217,John Anderson,48,Female,Asthma,Blue Cross,2025-09-29,12399.79,Pending,Breach,19,Invalid Insurance
+PAT-1218,Daniel Anderson,73,Female,Asthma,Cigna,2025-11-05,11616.44,Pending,Within SLA,71,N/A
+PAT-1219,Jenna Luna,69,Female,Asthma,Aetna,2025-11-08,10491.79,Pending,Breach,34,Invalid Insurance
+PAT-1220,Michelle Hamilton,22,Male,Flu,Blue Cross,2025-06-08,2610.38,Approved,Within SLA,17,N/A
+PAT-1221,Rodney Gibson,84,Female,Asthma,Humana,2025-08-13,8198.04,Rejected,Breach,7,Authorization Pending
+PAT-1222,Daniel Lynch,41,Female,Migraine,Aetna,2026-02-20,6325.42,Rejected,Breach,63,Duplicate Claim
+PAT-1223,Javier Galvan,31,Female,Asthma,Blue Cross,2026-04-01,5955.58,Pending,Within SLA,72,Missing Documents
+PAT-1224,Howard Gray,50,Male,Migraine,Humana,2026-04-14,5220.58,Approved,Breach,56,Authorization Pending
+PAT-1225,Ronald Jackson,75,Male,Cancer,United Healthcare,2026-02-03,2913.89,Approved,Breach,66,Authorization Pending
+PAT-1226,Jeffrey Blankenship,72,Male,Asthma,Aetna,2026-04-17,14317.41,Approved,Within SLA,3,Authorization Pending
+PAT-1227,Zachary Matthews,48,Male,Arthritis,Aetna,2025-08-07,4471.79,Pending,Within SLA,33,N/A
+PAT-1228,Samantha Osborne,59,Male,Cancer,Aetna,2025-12-25,10095.5,Pending,Breach,49,Missing Documents
+PAT-1229,Mr. Paul Jimenez DDS,31,Male,Cancer,Humana,2025-08-27,9077.55,Pending,Breach,66,N/A
+PAT-1230,Daniel Macias,39,Female,Diabetes,United Healthcare,2025-07-25,6690.08,Rejected,Within SLA,63,Duplicate Claim
+PAT-1231,Lisa Smith,23,Male,Hypertension,Aetna,2025-05-28,3310.06,Rejected,Breach,36,Coding Error
+PAT-1232,Amy Porter,29,Male,Migraine,United Healthcare,2025-12-20,3032.99,Pending,Breach,23,Authorization Pending
+PAT-1233,David Smith,69,Female,Hypertension,Blue Cross,2025-11-07,10505.31,Approved,Within SLA,66,Authorization Pending
+PAT-1234,Angela Hood,40,Male,Arthritis,Blue Cross,2026-04-04,11858.9,Pending,Breach,16,Coding Error
+PAT-1235,Samantha Davis,43,Female,Flu,United Healthcare,2026-05-14,4572.73,Pending,Breach,41,Invalid Insurance
+PAT-1236,Michael Frazier,70,Female,Migraine,Humana,2025-12-17,3060.35,Pending,Within SLA,63,Coding Error
+PAT-1237,Ivan Gordon,85,Female,Flu,Humana,2025-09-10,6194.0,Pending,Breach,60,Invalid Insurance
+PAT-1238,Lindsey Michael,30,Male,Flu,Aetna,2025-09-14,7020.59,Rejected,Breach,65,Missing Documents
+PAT-1239,David Garrett,62,Female,Diabetes,Aetna,2025-09-19,13527.24,Approved,Breach,24,Coding Error
+PAT-1240,Joseph Calderon,83,Male,Migraine,Cigna,2025-10-30,10835.46,Rejected,Breach,42,Missing Documents
+PAT-1241,Dawn Blake,71,Female,Hypertension,Cigna,2025-12-28,6365.49,Pending,Breach,24,Authorization Pending
+PAT-1242,Tracy Knight,78,Female,Asthma,United Healthcare,2025-05-30,13576.01,Approved,Within SLA,22,Duplicate Claim
+PAT-1243,Michelle Jones,70,Male,Arthritis,Cigna,2026-04-02,3157.47,Rejected,Breach,47,Missing Documents
+PAT-1244,Michael Duarte,58,Male,Hypertension,United Healthcare,2026-05-24,5137.91,Rejected,Within SLA,50,Authorization Pending
+PAT-1245,John Hicks,67,Male,Cancer,Aetna,2025-11-27,8120.53,Pending,Breach,61,Coding Error
+PAT-1246,Harold Moore,71,Female,Diabetes,Cigna,2026-01-22,12377.77,Rejected,Within SLA,18,Coding Error
+PAT-1247,Nicholas Coleman DDS,41,Male,Flu,Aetna,2025-08-13,5649.91,Pending,Within SLA,33,Authorization Pending
+PAT-1248,Todd Brewer DVM,37,Male,Cancer,Aetna,2025-12-13,10047.72,Rejected,Within SLA,54,Coding Error
+PAT-1249,Jeffery Miller,84,Male,Hypertension,Aetna,2025-07-01,10809.03,Approved,Within SLA,39,Missing Documents
+PAT-1250,Daisy Sanchez,34,Female,Heart Disease,Blue Cross,2025-05-28,11537.94,Pending,Breach,29,Missing Documents
+PAT-1251,John Bartlett,61,Female,Diabetes,United Healthcare,2025-11-22,12033.52,Pending,Breach,30,Duplicate Claim
+PAT-1252,Evelyn Chambers,44,Male,Arthritis,United Healthcare,2026-05-05,3893.07,Pending,Breach,54,Duplicate Claim
+PAT-1253,April Osborne,34,Female,Heart Disease,Cigna,2025-10-18,2056.34,Pending,Within SLA,16,N/A
+PAT-1254,Kimberly Haas,70,Male,Heart Disease,Blue Cross,2025-07-15,5539.99,Pending,Within SLA,56,Missing Documents
+PAT-1255,Denise Carrillo,77,Male,Cancer,Aetna,2025-06-23,3717.7,Rejected,Breach,36,Invalid Insurance
+PAT-1256,Stephanie Hill,24,Female,Asthma,Blue Cross,2025-12-05,7159.04,Pending,Within SLA,18,Duplicate Claim
+PAT-1257,Michael Flores,66,Male,Asthma,Humana,2026-02-11,2507.23,Rejected,Breach,35,Duplicate Claim
+PAT-1258,Jamie Yates,19,Female,Flu,Blue Cross,2025-12-30,6315.03,Pending,Breach,33,N/A
+PAT-1259,Kelly Carter,69,Female,Cancer,Aetna,2025-12-02,3857.54,Approved,Within SLA,20,Coding Error
+PAT-1260,Tracy Miller,66,Male,Diabetes,Cigna,2025-09-22,3933.24,Rejected,Breach,8,Duplicate Claim
+PAT-1261,David Perez,64,Female,Asthma,Cigna,2025-11-16,14901.73,Pending,Within SLA,68,Invalid Insurance
+PAT-1262,Thomas Cunningham Jr.,32,Male,Heart Disease,Aetna,2025-07-06,11318.63,Rejected,Breach,59,Missing Documents
+PAT-1263,Charles Wells,41,Female,Asthma,Cigna,2025-10-23,8294.24,Approved,Breach,46,Missing Documents
+PAT-1264,Mr. David Weaver,66,Male,Hypertension,Humana,2025-11-01,4771.0,Pending,Breach,56,Invalid Insurance
+PAT-1265,Rachel Knight,69,Female,Diabetes,Cigna,2025-12-10,3909.27,Approved,Breach,33,Duplicate Claim
+PAT-1266,Richard Hanson,85,Female,Arthritis,Aetna,2025-09-01,9686.77,Rejected,Within SLA,61,Coding Error
+PAT-1267,Brandon Schultz,73,Male,Arthritis,United Healthcare,2025-10-29,9425.66,Rejected,Within SLA,66,Missing Documents
+PAT-1268,Adrian Zimmerman,71,Male,Diabetes,Aetna,2026-02-02,10729.37,Approved,Within SLA,32,Duplicate Claim
+PAT-1269,Jose James,76,Male,Hypertension,Blue Cross,2025-06-30,4149.64,Rejected,Within SLA,52,Missing Documents
+PAT-1270,Karen Schmidt,42,Male,Cancer,Aetna,2025-10-10,649.16,Approved,Breach,41,Coding Error
+PAT-1271,Michael Spencer,19,Female,Asthma,United Healthcare,2025-09-13,7653.05,Approved,Within SLA,5,Missing Documents
+PAT-1272,Adam Perry,59,Female,Flu,United Healthcare,2026-05-25,6954.78,Approved,Within SLA,33,Authorization Pending
+PAT-1273,Dawn Lopez,77,Female,Arthritis,Humana,2026-04-02,7004.27,Rejected,Breach,56,Duplicate Claim
+PAT-1274,Ryan Cortez DVM,19,Male,Flu,Blue Cross,2025-10-28,11165.33,Rejected,Within SLA,48,Authorization Pending
+PAT-1275,Travis Thompson,22,Male,Cancer,Humana,2025-12-05,4066.31,Pending,Breach,44,Missing Documents
+PAT-1276,Zachary Clark,36,Female,Asthma,Cigna,2025-11-24,11980.82,Approved,Breach,60,Coding Error
+PAT-1277,Judy Gray,85,Male,Asthma,Blue Cross,2025-11-23,11169.44,Approved,Within SLA,41,Authorization Pending
+PAT-1278,Megan Hayes,29,Female,Flu,Aetna,2026-05-07,962.58,Pending,Breach,61,Missing Documents
+PAT-1279,William Erickson,27,Female,Arthritis,Cigna,2025-08-09,5460.16,Rejected,Within SLA,7,Invalid Insurance
+PAT-1280,Lori Weaver,22,Male,Asthma,Aetna,2025-10-02,1729.26,Pending,Within SLA,61,Authorization Pending
+PAT-1281,James Vasquez,69,Female,Heart Disease,United Healthcare,2025-10-19,14771.4,Approved,Breach,5,Authorization Pending
+PAT-1282,Bobby Dunn,53,Female,Flu,Aetna,2025-11-07,10881.75,Rejected,Breach,59,Missing Documents
+PAT-1283,Lisa White,48,Female,Asthma,Aetna,2025-09-08,14215.88,Rejected,Within SLA,38,Coding Error
+PAT-1284,Jordan Burton,20,Male,Cancer,United Healthcare,2025-11-23,11336.54,Rejected,Breach,59,N/A
+PAT-1285,Lindsey Henderson,68,Male,Heart Disease,Blue Cross,2025-06-14,14418.59,Approved,Breach,68,Missing Documents
+PAT-1286,John Richards,52,Female,Hypertension,Cigna,2026-03-19,3986.68,Rejected,Breach,2,Authorization Pending
+PAT-1287,Kari Smith,32,Male,Arthritis,Aetna,2025-06-16,8960.64,Pending,Breach,66,Authorization Pending
+PAT-1288,Leon White,62,Male,Migraine,Aetna,2025-07-10,12643.89,Approved,Breach,2,Invalid Insurance
+PAT-1289,Jeffrey Reid,33,Female,Flu,Humana,2025-07-25,7379.69,Approved,Within SLA,47,N/A
+PAT-1290,Daniel Ramirez,70,Female,Asthma,Aetna,2026-05-21,14423.48,Pending,Within SLA,18,Invalid Insurance
+PAT-1291,Phillip Smith,26,Female,Heart Disease,Humana,2026-02-17,505.96,Approved,Breach,51,Authorization Pending
+PAT-1292,Norman May,40,Female,Heart Disease,Cigna,2025-11-02,5711.28,Approved,Breach,31,Invalid Insurance
+PAT-1293,Kevin Wilson,65,Male,Diabetes,Cigna,2025-06-12,3454.52,Rejected,Within SLA,64,Duplicate Claim
+PAT-1294,Nicole Smith,69,Male,Hypertension,Aetna,2025-06-12,9894.87,Approved,Breach,46,Coding Error
+PAT-1295,Rebecca Phillips,19,Male,Migraine,Blue Cross,2025-08-14,13668.31,Approved,Within SLA,55,Coding Error
+PAT-1296,Jason Rivera,67,Male,Heart Disease,Aetna,2025-07-19,5710.23,Rejected,Within SLA,62,Invalid Insurance
+PAT-1297,Ashley Nash,72,Male,Hypertension,United Healthcare,2025-12-17,12213.63,Rejected,Breach,5,Coding Error
+PAT-1298,Barbara Higgins,37,Female,Hypertension,United Healthcare,2026-01-14,14586.07,Pending,Within SLA,14,Coding Error
+PAT-1299,Gail Vasquez,49,Female,Cancer,Humana,2026-02-17,8113.56,Rejected,Within SLA,69,Authorization Pending
+PAT-1300,Connor Randolph,74,Male,Cancer,United Healthcare,2025-06-11,7991.67,Pending,Breach,35,Coding Error
+PAT-1301,Bridget Boyd,46,Male,Arthritis,Humana,2026-02-03,8288.9,Rejected,Breach,7,N/A
+PAT-1302,Katherine Barron,26,Male,Cancer,Cigna,2025-08-02,507.64,Approved,Breach,36,Duplicate Claim
+PAT-1303,Tammy Patterson DDS,32,Male,Flu,United Healthcare,2025-12-28,1446.81,Pending,Within SLA,18,Invalid Insurance
+PAT-1304,Robert Wilson,28,Female,Flu,Aetna,2025-09-02,1512.0,Rejected,Breach,5,Authorization Pending
+PAT-1305,Mary Nelson,76,Male,Migraine,Humana,2026-05-21,8355.82,Pending,Breach,28,N/A
+PAT-1306,Candace Stanley,19,Female,Flu,Humana,2025-06-02,1187.62,Pending,Breach,62,Duplicate Claim
+PAT-1307,Dean Neal,80,Female,Cancer,United Healthcare,2025-08-16,9167.4,Rejected,Breach,47,Coding Error
+PAT-1308,Gary Fox,19,Male,Migraine,Blue Cross,2025-06-13,1706.22,Pending,Breach,72,Duplicate Claim
+PAT-1309,Jodi Harris,50,Male,Asthma,Humana,2025-09-04,13899.41,Pending,Breach,27,Invalid Insurance
+PAT-1310,David Tucker,28,Female,Flu,Aetna,2026-04-14,10791.34,Approved,Within SLA,4,Coding Error
+PAT-1311,Shannon Alexander,55,Male,Heart Disease,Cigna,2025-08-20,11543.91,Pending,Within SLA,65,Missing Documents
+PAT-1312,Jackson Hicks,66,Female,Asthma,Aetna,2026-03-13,6158.6,Rejected,Breach,70,Duplicate Claim
+PAT-1313,Rhonda Crawford,19,Female,Heart Disease,Cigna,2026-04-07,1812.36,Approved,Within SLA,26,Invalid Insurance
+PAT-1314,Donna Parks,42,Male,Arthritis,Aetna,2025-08-05,3800.16,Rejected,Within SLA,31,Duplicate Claim
+PAT-1315,Veronica Smith,69,Male,Hypertension,United Healthcare,2025-08-14,3413.68,Rejected,Within SLA,33,Authorization Pending
+PAT-1316,Keith Gutierrez,27,Female,Hypertension,Humana,2025-07-19,4419.16,Pending,Breach,68,Coding Error
+PAT-1317,Jason Hurley,21,Female,Arthritis,Blue Cross,2025-07-29,10068.64,Rejected,Within SLA,11,Invalid Insurance
+PAT-1318,Lucas Houston,48,Male,Diabetes,United Healthcare,2025-07-06,14971.5,Pending,Breach,37,N/A
+PAT-1319,Keith Bailey,85,Female,Hypertension,Aetna,2026-02-15,1786.23,Rejected,Breach,35,Coding Error
+PAT-1320,Kathryn Garcia MD,58,Female,Asthma,Humana,2025-07-19,12499.66,Pending,Within SLA,57,Authorization Pending
+PAT-1321,Angela Williams,57,Female,Asthma,Cigna,2026-01-04,7525.21,Rejected,Within SLA,17,Missing Documents
+PAT-1322,Amanda Stein,26,Male,Cancer,Aetna,2025-09-04,9467.26,Pending,Within SLA,64,Missing Documents
+PAT-1323,Brian Newman,61,Female,Cancer,Aetna,2025-10-09,8842.11,Pending,Breach,4,Authorization Pending
+PAT-1324,Emily Lucas,72,Female,Cancer,Blue Cross,2025-09-11,9484.87,Pending,Within SLA,28,N/A
+PAT-1325,Jeremy Gray,76,Male,Flu,Cigna,2025-08-14,814.36,Pending,Within SLA,71,N/A
+PAT-1326,Erin Smith,67,Male,Arthritis,Cigna,2025-09-06,8293.68,Rejected,Breach,14,N/A
+PAT-1327,Desiree Anderson,85,Female,Arthritis,Blue Cross,2025-11-26,8275.74,Pending,Within SLA,32,Missing Documents
+PAT-1328,Alicia Oneal,73,Female,Migraine,Humana,2025-08-13,8238.18,Rejected,Within SLA,30,Coding Error
+PAT-1329,Jenna Gonzales,66,Male,Arthritis,Aetna,2025-09-29,12384.79,Rejected,Breach,30,Coding Error
+PAT-1330,Samantha Roberson,65,Male,Diabetes,Humana,2026-04-27,4380.31,Pending,Within SLA,9,Authorization Pending
+PAT-1331,Jonathan Ramos,60,Female,Flu,Aetna,2026-02-20,8239.23,Approved,Within SLA,8,Missing Documents
+PAT-1332,Brandon Hancock,36,Male,Diabetes,United Healthcare,2026-02-15,9024.77,Approved,Breach,58,Duplicate Claim
+PAT-1333,Melissa Leonard,54,Male,Arthritis,United Healthcare,2026-03-31,9321.92,Approved,Breach,72,Missing Documents
+PAT-1334,Holly Rogers,31,Male,Flu,Cigna,2025-08-21,14753.45,Approved,Within SLA,57,Missing Documents
+PAT-1335,Richard Wells,63,Female,Hypertension,Aetna,2025-12-20,10058.53,Rejected,Within SLA,66,Coding Error
+PAT-1336,Steven Carter,77,Male,Cancer,Humana,2025-06-26,5316.93,Pending,Breach,64,N/A
+PAT-1337,Robert Wright,33,Male,Migraine,Aetna,2025-06-30,9464.75,Pending,Within SLA,59,Authorization Pending
+PAT-1338,Sarah Hall,71,Female,Flu,Aetna,2025-08-10,11085.97,Rejected,Within SLA,62,Invalid Insurance
+PAT-1339,Joe Gordon,39,Female,Arthritis,United Healthcare,2026-01-19,12616.76,Approved,Breach,8,Missing Documents
+PAT-1340,Charles Villegas,22,Male,Arthritis,Humana,2026-03-16,10496.85,Approved,Breach,11,Duplicate Claim
+PAT-1341,Tiffany Mckenzie,29,Male,Migraine,Aetna,2025-12-10,1193.68,Rejected,Breach,34,Coding Error
+PAT-1342,Kelly Navarro,42,Male,Cancer,Aetna,2026-02-03,592.78,Approved,Breach,43,Duplicate Claim
+PAT-1343,Jessica Lambert,57,Male,Heart Disease,United Healthcare,2026-04-25,9110.16,Rejected,Breach,13,Coding Error
+PAT-1344,Daniel Collins,32,Male,Migraine,Cigna,2026-03-19,12067.14,Approved,Breach,16,Duplicate Claim
+PAT-1345,Jennifer Jacobs,41,Female,Migraine,Blue Cross,2026-04-27,655.81,Rejected,Within SLA,9,Duplicate Claim
+PAT-1346,Darrell Nelson,83,Female,Hypertension,Blue Cross,2025-07-12,2975.18,Approved,Within SLA,52,Duplicate Claim
+PAT-1347,Stacey Flowers,64,Female,Asthma,Aetna,2025-09-07,1312.18,Pending,Within SLA,61,N/A
+PAT-1348,William Cooper,55,Male,Cancer,Humana,2025-12-08,5719.81,Pending,Within SLA,65,Coding Error
+PAT-1349,Sharon Day,81,Male,Flu,Aetna,2025-08-29,935.51,Rejected,Within SLA,59,N/A
+PAT-1350,Stephanie Fox,29,Female,Diabetes,Aetna,2025-08-25,9975.95,Pending,Breach,6,Missing Documents
+PAT-1351,David Rodriguez Jr.,30,Male,Asthma,Humana,2025-08-11,11259.74,Rejected,Within SLA,34,Missing Documents
+PAT-1352,Brian Thomas,51,Male,Migraine,Humana,2025-06-14,5608.71,Rejected,Within SLA,20,Invalid Insurance
+PAT-1353,Beth Mclaughlin,23,Male,Cancer,Aetna,2025-11-10,3379.24,Approved,Within SLA,61,N/A
+PAT-1354,Christina Ramirez,40,Female,Arthritis,Humana,2025-08-24,9679.49,Pending,Breach,8,Coding Error
+PAT-1355,Caroline Melendez,59,Female,Flu,United Healthcare,2025-09-18,1185.87,Approved,Breach,38,N/A
+PAT-1356,Cynthia Campbell,40,Female,Cancer,Humana,2025-06-30,9305.88,Rejected,Breach,25,Authorization Pending
+PAT-1357,Thomas Schaefer,43,Female,Diabetes,Aetna,2026-04-19,3704.98,Approved,Within SLA,18,Coding Error
+PAT-1358,Brandi Castro,43,Male,Heart Disease,United Healthcare,2026-04-03,3906.1,Approved,Breach,60,Missing Documents
+PAT-1359,Joy Strong,71,Female,Asthma,Cigna,2025-08-05,3182.15,Pending,Breach,39,Missing Documents
+PAT-1360,Donna Rodriguez,82,Male,Flu,Blue Cross,2025-07-31,4732.15,Pending,Within SLA,18,Duplicate Claim
+PAT-1361,Cody Blair,65,Female,Heart Disease,Cigna,2026-04-16,2405.39,Approved,Within SLA,65,Duplicate Claim
+PAT-1362,Roberto Montgomery,53,Female,Diabetes,Aetna,2025-11-20,10155.04,Rejected,Within SLA,13,Invalid Insurance
+PAT-1363,Arthur Kirby,37,Female,Hypertension,Aetna,2026-04-14,11536.73,Pending,Breach,16,N/A
+PAT-1364,Amanda Green,43,Female,Heart Disease,Humana,2026-05-18,14695.56,Pending,Within SLA,45,Missing Documents
+PAT-1365,Deborah Moreno,69,Male,Heart Disease,United Healthcare,2026-05-18,13311.56,Pending,Within SLA,53,Missing Documents
+PAT-1366,Larry Williamson,18,Female,Cancer,United Healthcare,2025-09-30,13000.55,Rejected,Breach,67,Authorization Pending
+PAT-1367,Brandy Graves,58,Male,Hypertension,Blue Cross,2026-01-25,3764.46,Pending,Breach,19,Coding Error
+PAT-1368,Duane Taylor,80,Male,Arthritis,Aetna,2026-05-16,3821.3,Approved,Within SLA,14,Authorization Pending
+PAT-1369,John Walters,71,Male,Heart Disease,Cigna,2025-08-29,14412.58,Approved,Within SLA,57,Duplicate Claim
+PAT-1370,Brian Sullivan,36,Female,Cancer,United Healthcare,2025-10-30,1392.29,Approved,Within SLA,17,Duplicate Claim
+PAT-1371,Deborah Cross,83,Male,Flu,Humana,2025-08-01,5180.74,Approved,Breach,41,Invalid Insurance
+PAT-1372,Sheila Williams,78,Male,Cancer,Blue Cross,2025-09-02,10896.65,Rejected,Within SLA,41,Invalid Insurance
+PAT-1373,Ryan Weaver,63,Male,Heart Disease,Cigna,2025-08-06,2330.7,Approved,Within SLA,67,N/A
+PAT-1374,Christopher Johnson,26,Female,Cancer,Cigna,2025-12-20,4321.74,Rejected,Breach,71,Coding Error
+PAT-1375,Stephanie Wells,60,Female,Flu,Aetna,2025-07-09,13446.21,Pending,Within SLA,42,Duplicate Claim
+PAT-1376,David Hudson,52,Male,Cancer,Aetna,2026-03-22,13593.31,Pending,Within SLA,54,Coding Error
+PAT-1377,Caroline Andrade,84,Female,Hypertension,Aetna,2026-04-17,3697.41,Approved,Breach,17,Duplicate Claim
+PAT-1378,Emily Cook,49,Female,Arthritis,United Healthcare,2025-06-17,9154.83,Approved,Breach,12,Duplicate Claim
+PAT-1379,Mark Mills,55,Female,Arthritis,Aetna,2026-04-28,9667.22,Approved,Within SLA,65,Duplicate Claim
+PAT-1380,Cheryl Hodge,43,Female,Arthritis,Aetna,2025-07-21,2749.38,Approved,Within SLA,57,N/A
+PAT-1381,Joseph Moran,24,Male,Diabetes,United Healthcare,2026-05-24,3761.87,Rejected,Breach,57,Missing Documents
+PAT-1382,Michael Owen,41,Female,Arthritis,Blue Cross,2026-05-10,7381.46,Approved,Within SLA,35,Coding Error
+PAT-1383,Michael Ellis DDS,71,Female,Cancer,Aetna,2025-11-08,13775.57,Approved,Within SLA,26,Invalid Insurance
+PAT-1384,Brendan Perez,82,Male,Flu,Blue Cross,2026-03-08,8711.82,Rejected,Breach,24,Coding Error
+PAT-1385,Nicole Roman,23,Female,Hypertension,United Healthcare,2026-01-20,4164.02,Pending,Within SLA,23,N/A
+PAT-1386,Andrea Sullivan,61,Male,Flu,Blue Cross,2026-01-15,10790.57,Approved,Breach,25,Duplicate Claim
+PAT-1387,Heather Hale,42,Male,Hypertension,Humana,2025-09-17,11457.12,Approved,Breach,40,Coding Error
+PAT-1388,Kristin Lee,49,Male,Diabetes,Blue Cross,2025-12-14,11283.43,Pending,Within SLA,52,Duplicate Claim
+PAT-1389,Cathy Nelson,25,Female,Migraine,Aetna,2026-02-06,10803.84,Rejected,Breach,58,N/A
+PAT-1390,Michael Lindsey,69,Female,Cancer,Blue Cross,2026-04-22,8489.35,Approved,Breach,62,N/A
+PAT-1391,Teresa Huffman,30,Male,Flu,Aetna,2026-04-03,1581.41,Approved,Within SLA,52,Coding Error
+PAT-1392,Jonathan Sanchez,44,Female,Heart Disease,Humana,2025-11-27,5995.38,Pending,Breach,41,Duplicate Claim
+PAT-1393,Stacy Hernandez,35,Female,Arthritis,Blue Cross,2025-07-28,8960.81,Approved,Breach,17,Duplicate Claim
+PAT-1394,Melinda Yoder,28,Male,Flu,Humana,2025-05-31,13733.66,Approved,Within SLA,67,Invalid Insurance
+PAT-1395,Angelica Carr,25,Female,Arthritis,United Healthcare,2026-01-15,14317.68,Approved,Within SLA,10,Coding Error
+PAT-1396,David Fowler,61,Male,Flu,Blue Cross,2026-03-27,7091.79,Pending,Within SLA,6,N/A
+PAT-1397,Beth Wright,50,Female,Asthma,Cigna,2026-05-25,2919.47,Pending,Within SLA,52,N/A
+PAT-1398,Stephanie Gordon,61,Female,Flu,Aetna,2026-05-20,5659.96,Approved,Breach,54,Missing Documents
+PAT-1399,Joseph Burton,45,Female,Heart Disease,United Healthcare,2025-06-16,1587.78,Rejected,Breach,38,Invalid Insurance
+PAT-1400,Jennifer Miller,81,Female,Diabetes,Blue Cross,2025-12-11,5501.42,Rejected,Breach,42,Coding Error
+PAT-1401,Jacob Wilson,30,Male,Diabetes,Aetna,2025-09-23,11577.92,Approved,Breach,16,Duplicate Claim
+PAT-1402,Marc Torres,27,Female,Asthma,Humana,2026-01-26,14953.61,Pending,Breach,41,Coding Error
+PAT-1403,Brittany Rios,60,Female,Cancer,Cigna,2026-02-27,1822.69,Rejected,Breach,28,Coding Error
+PAT-1404,Diana Chapman,36,Female,Asthma,Blue Cross,2026-01-19,9627.61,Rejected,Breach,65,Duplicate Claim
+PAT-1405,Kelly Anderson,27,Female,Hypertension,Humana,2025-09-12,4751.54,Rejected,Breach,10,Coding Error
+PAT-1406,Joseph Brady,60,Male,Cancer,United Healthcare,2025-08-04,4476.55,Rejected,Within SLA,54,Missing Documents
+PAT-1407,Robert Miller,60,Male,Migraine,Blue Cross,2026-04-28,9572.78,Approved,Breach,62,Invalid Insurance
+PAT-1408,Andre Hardy DVM,74,Male,Diabetes,United Healthcare,2026-05-04,9592.54,Pending,Within SLA,8,Missing Documents
+PAT-1409,Andrew West,56,Female,Hypertension,Cigna,2025-12-15,11884.78,Pending,Breach,65,Duplicate Claim
+PAT-1410,Stephanie Spence,36,Male,Heart Disease,Aetna,2025-06-02,9777.44,Rejected,Within SLA,44,Missing Documents
+PAT-1411,Elizabeth Singh,78,Male,Migraine,Aetna,2026-03-29,13499.91,Approved,Breach,62,Duplicate Claim
+PAT-1412,Mary Gordon,52,Male,Migraine,Blue Cross,2025-05-30,8469.13,Approved,Within SLA,21,Duplicate Claim
+PAT-1413,Michael Flynn,20,Male,Flu,Humana,2025-06-05,8397.33,Approved,Within SLA,39,Authorization Pending
+PAT-1414,Darin Hicks,55,Female,Asthma,Cigna,2025-12-22,13974.28,Approved,Within SLA,39,Duplicate Claim
+PAT-1415,Debra Meyer,74,Male,Arthritis,Cigna,2025-09-20,1818.2,Rejected,Within SLA,36,Duplicate Claim
+PAT-1416,Clayton Benson,36,Female,Flu,Aetna,2026-03-07,1274.73,Pending,Breach,29,N/A
+PAT-1417,Matthew Ryan,84,Female,Heart Disease,Aetna,2025-07-08,4636.34,Approved,Within SLA,46,Duplicate Claim
+PAT-1418,Amanda Caldwell,32,Female,Cancer,Humana,2026-02-27,13799.4,Pending,Within SLA,41,Duplicate Claim
+PAT-1419,Gregory Jones,70,Male,Diabetes,Humana,2026-03-15,6218.18,Approved,Within SLA,54,Coding Error
+PAT-1420,Alexander Sherman MD,34,Male,Hypertension,Blue Cross,2025-12-26,9244.55,Rejected,Breach,40,N/A
+PAT-1421,Levi Martin,27,Female,Cancer,Aetna,2026-02-10,1403.56,Approved,Breach,29,N/A
+PAT-1422,Anna Walker MD,69,Female,Arthritis,Aetna,2025-12-25,2889.39,Pending,Breach,26,Coding Error
+PAT-1423,Patrick Holt,79,Male,Cancer,Aetna,2025-10-10,5778.86,Rejected,Within SLA,50,N/A
+PAT-1424,Phillip Rhodes,45,Male,Flu,Humana,2026-04-15,568.66,Approved,Within SLA,32,Missing Documents
+PAT-1425,Robert Patterson,24,Female,Migraine,Aetna,2025-09-23,622.19,Pending,Within SLA,21,N/A
+PAT-1426,Carol Olson,24,Female,Flu,Aetna,2025-11-11,8320.91,Approved,Within SLA,68,Duplicate Claim
+PAT-1427,Danielle Roman,84,Female,Cancer,Cigna,2025-08-10,5808.96,Approved,Breach,46,Invalid Insurance
+PAT-1428,Nancy Garrett,24,Female,Flu,Blue Cross,2026-02-20,11533.01,Rejected,Within SLA,26,N/A
+PAT-1429,Christopher Salazar,63,Female,Cancer,United Healthcare,2025-07-18,6161.29,Rejected,Within SLA,46,Authorization Pending
+PAT-1430,Mallory Jones,78,Female,Hypertension,Aetna,2025-07-08,4217.66,Rejected,Within SLA,4,Missing Documents
+PAT-1431,Jonathan Jones,31,Female,Cancer,Aetna,2025-10-29,11905.19,Pending,Within SLA,50,Missing Documents
+PAT-1432,Patricia Morse,38,Male,Migraine,Blue Cross,2025-07-04,7407.43,Rejected,Within SLA,15,Missing Documents
+PAT-1433,Sara Sanchez,29,Female,Flu,Cigna,2025-12-05,869.14,Rejected,Breach,31,Authorization Pending
+PAT-1434,Elizabeth Landry,56,Male,Asthma,Humana,2026-02-26,1762.11,Approved,Breach,49,N/A
+PAT-1435,Xavier Hill,48,Male,Hypertension,United Healthcare,2025-09-11,7711.79,Pending,Breach,72,Missing Documents
+PAT-1436,Kristen Everett,74,Male,Migraine,Cigna,2026-01-22,3205.09,Approved,Within SLA,5,Coding Error
+PAT-1437,Michael Harrell,74,Male,Flu,Blue Cross,2025-12-30,4690.58,Approved,Within SLA,58,Missing Documents
+PAT-1438,Alyssa Holden,65,Male,Hypertension,Blue Cross,2026-01-20,3382.67,Approved,Within SLA,20,Missing Documents
+PAT-1439,Janice Calderon,63,Female,Cancer,Cigna,2025-12-22,6257.0,Pending,Breach,24,N/A
+PAT-1440,Charles Smith,83,Male,Cancer,Aetna,2025-06-12,7303.44,Approved,Breach,66,Duplicate Claim
+PAT-1441,Cameron Weber,84,Male,Flu,Cigna,2025-08-09,9171.33,Pending,Breach,14,Invalid Insurance
+PAT-1442,Brian Cordova,66,Female,Cancer,Aetna,2025-08-29,2304.38,Rejected,Within SLA,8,Invalid Insurance
+PAT-1443,Darren Smith,40,Male,Migraine,Blue Cross,2026-05-13,9309.92,Rejected,Within SLA,12,Authorization Pending
+PAT-1444,Tracy Garrett,84,Female,Heart Disease,Aetna,2025-12-02,7117.52,Approved,Within SLA,64,Missing Documents
+PAT-1445,Danny Horton,29,Male,Hypertension,Humana,2025-08-09,4664.2,Approved,Within SLA,65,N/A
+PAT-1446,Katherine Parker,51,Female,Migraine,Cigna,2025-07-07,11643.97,Pending,Breach,59,Authorization Pending
+PAT-1447,Tammy Ochoa,61,Male,Diabetes,United Healthcare,2025-10-20,5066.54,Rejected,Breach,25,Missing Documents
+PAT-1448,Justin Miller,19,Female,Flu,Blue Cross,2025-07-28,3241.13,Pending,Within SLA,18,Invalid Insurance
+PAT-1449,Samuel Lawson,21,Male,Asthma,Humana,2025-09-13,10609.41,Rejected,Within SLA,56,Coding Error
+PAT-1450,Amy Mejia,40,Male,Flu,Blue Cross,2026-02-23,8441.21,Rejected,Within SLA,30,Missing Documents
+PAT-1451,Gina Jones,68,Female,Heart Disease,Blue Cross,2026-03-29,13569.9,Approved,Within SLA,28,Duplicate Claim
+PAT-1452,Julie Brown,50,Female,Hypertension,Cigna,2026-01-08,12703.07,Approved,Breach,50,Missing Documents
+PAT-1453,Angelica Maddox,51,Female,Diabetes,Humana,2025-06-25,2743.75,Pending,Within SLA,72,Invalid Insurance
+PAT-1454,Renee Mitchell,67,Male,Cancer,United Healthcare,2026-04-09,7140.32,Approved,Within SLA,22,Missing Documents
+PAT-1455,Brenda Brown,18,Male,Flu,United Healthcare,2025-07-12,10755.55,Pending,Within SLA,31,Duplicate Claim
+PAT-1456,Randy Reyes,85,Female,Migraine,Blue Cross,2025-07-13,14080.35,Pending,Within SLA,65,Authorization Pending
+PAT-1457,Olivia Olson,46,Male,Hypertension,Humana,2025-08-17,6478.6,Pending,Within SLA,30,Coding Error
+PAT-1458,Eric Lopez,76,Male,Migraine,Aetna,2025-05-27,1655.19,Pending,Within SLA,65,Authorization Pending
+PAT-1459,James Hopkins,63,Female,Heart Disease,Cigna,2025-09-28,14319.56,Pending,Within SLA,42,Coding Error
+PAT-1460,Michael Kim,69,Male,Asthma,Blue Cross,2026-04-02,14889.24,Rejected,Breach,45,Missing Documents
+PAT-1461,Joseph Turner,83,Female,Asthma,United Healthcare,2026-02-11,2657.33,Approved,Breach,66,N/A
+PAT-1462,Anthony Haley,18,Female,Asthma,Blue Cross,2025-08-02,2352.8,Pending,Breach,16,Invalid Insurance
+PAT-1463,Jared Blevins,63,Female,Hypertension,United Healthcare,2026-04-17,14381.23,Approved,Breach,63,Coding Error
+PAT-1464,John Owen,79,Female,Migraine,Blue Cross,2025-09-07,9014.49,Rejected,Within SLA,26,Invalid Insurance
+PAT-1465,Jessica Craig,70,Male,Diabetes,Cigna,2025-11-12,2182.15,Pending,Within SLA,58,Duplicate Claim
+PAT-1466,Calvin Franco,74,Male,Cancer,Blue Cross,2025-12-27,8533.59,Approved,Within SLA,7,Missing Documents
+PAT-1467,Michael Holland,32,Female,Arthritis,Humana,2026-01-10,6272.02,Pending,Within SLA,31,Invalid Insurance
+PAT-1468,Kevin Scott,26,Male,Arthritis,United Healthcare,2026-02-19,10707.75,Approved,Breach,29,Authorization Pending
+PAT-1469,Michael Harmon,51,Female,Heart Disease,Cigna,2025-12-15,11827.98,Rejected,Breach,29,Authorization Pending
+PAT-1470,Austin Arnold,52,Female,Hypertension,Aetna,2025-10-08,6804.05,Rejected,Breach,61,Authorization Pending
+PAT-1471,Elizabeth Meadows,35,Female,Hypertension,Aetna,2025-10-01,11364.53,Rejected,Breach,23,Duplicate Claim
+PAT-1472,Katherine Moran,80,Female,Migraine,United Healthcare,2025-05-28,10829.65,Pending,Breach,9,Coding Error
+PAT-1473,Melissa Hudson,21,Female,Asthma,Humana,2026-01-12,10892.19,Approved,Within SLA,30,Invalid Insurance
+PAT-1474,Suzanne Woodard,19,Male,Asthma,United Healthcare,2026-04-04,13565.36,Approved,Breach,71,Authorization Pending
+PAT-1475,William Petersen,24,Male,Asthma,Humana,2026-04-26,14692.17,Rejected,Within SLA,10,Authorization Pending
+PAT-1476,Blake Hall,80,Female,Hypertension,Blue Cross,2026-05-25,5683.23,Rejected,Within SLA,50,Invalid Insurance
+PAT-1477,Curtis Thompson,37,Male,Migraine,Humana,2026-04-08,8392.05,Pending,Breach,21,Invalid Insurance
+PAT-1478,Taylor Garcia,34,Male,Asthma,Humana,2025-09-18,10427.31,Rejected,Breach,58,Duplicate Claim
+PAT-1479,Jennifer Burgess,68,Male,Flu,Humana,2025-08-20,10399.84,Pending,Within SLA,67,Invalid Insurance
+PAT-1480,Amy Gibson,35,Male,Migraine,Cigna,2026-04-29,14073.29,Pending,Within SLA,25,Invalid Insurance
+PAT-1481,Kimberly Anderson,25,Female,Hypertension,Humana,2026-03-02,9642.08,Pending,Within SLA,66,N/A
+PAT-1482,Joshua Bishop,82,Female,Heart Disease,United Healthcare,2025-12-18,4164.44,Pending,Breach,26,Missing Documents
+PAT-1483,Sarah Macias,48,Female,Cancer,Cigna,2026-02-18,1667.8,Pending,Within SLA,59,Missing Documents
+PAT-1484,Gabriel Castaneda,67,Male,Arthritis,Blue Cross,2026-05-01,4138.97,Approved,Within SLA,19,Duplicate Claim
+PAT-1485,Keith Thomas,52,Female,Diabetes,Cigna,2026-02-10,9632.98,Pending,Breach,13,Coding Error
+PAT-1486,Jeffrey Lambert,72,Female,Asthma,United Healthcare,2025-07-31,11947.73,Pending,Breach,53,Authorization Pending
+PAT-1487,Pamela Harper,23,Male,Heart Disease,Humana,2025-08-05,9987.61,Rejected,Breach,3,Authorization Pending
+PAT-1488,Brittany Campos,70,Male,Diabetes,Humana,2025-08-15,1731.29,Approved,Breach,52,Invalid Insurance
+PAT-1489,Laura Morgan,43,Female,Migraine,Blue Cross,2025-10-09,13690.62,Rejected,Within SLA,22,Duplicate Claim
+PAT-1490,Brenda Nguyen,57,Male,Heart Disease,Humana,2025-12-15,13231.71,Pending,Breach,5,Invalid Insurance
+PAT-1491,Andrew Fowler,36,Male,Diabetes,Blue Cross,2026-04-25,8606.82,Pending,Breach,17,N/A
+PAT-1492,Joseph Sellers,26,Male,Migraine,Humana,2026-03-26,6745.88,Approved,Breach,32,Missing Documents
+PAT-1493,Pamela Smith,78,Male,Arthritis,Humana,2025-12-03,10758.97,Pending,Breach,4,Invalid Insurance
+PAT-1494,Carol Cox,46,Male,Cancer,Cigna,2025-07-07,8160.54,Pending,Breach,56,Duplicate Claim
+PAT-1495,Tracy Davis,35,Male,Cancer,Aetna,2026-01-08,7822.24,Pending,Within SLA,16,Authorization Pending
+PAT-1496,Wendy Fox,54,Male,Asthma,Aetna,2026-02-04,10562.24,Pending,Within SLA,47,N/A
+PAT-1497,Bianca Liu,24,Female,Arthritis,United Healthcare,2025-10-24,3003.02,Rejected,Breach,30,Duplicate Claim
+PAT-1498,Kristina Mccoy,79,Female,Migraine,Cigna,2026-02-17,6026.43,Rejected,Breach,66,N/A
+PAT-1499,Jean Crawford,60,Female,Diabetes,Cigna,2025-06-22,966.85,Rejected,Breach,26,Missing Documents

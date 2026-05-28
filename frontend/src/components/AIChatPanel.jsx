@@ -68,7 +68,7 @@ Ask enterprise business questions about your uploaded dataset.`,
       const response =
         await fetch(
 
-          "https://insightflow-backend-cqbu.onrender.com/api/ai-chat",
+          "http://127.0.0.1:8000/ai/chat",
 
           {
 
@@ -83,8 +83,8 @@ Ask enterprise business questions about your uploaded dataset.`,
 
             body: JSON.stringify({
 
-              question:
-                userQuestion,
+              prompt:
+userQuestion,
 
               data,
 
@@ -99,7 +99,7 @@ Ask enterprise business questions about your uploaded dataset.`,
         await response.json();
 
       return (
-        result.answer ||
+        result.response ||
         "No AI response generated."
       );
 

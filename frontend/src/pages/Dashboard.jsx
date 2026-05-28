@@ -1,3 +1,7 @@
+import {
+  useState,
+  useEffect,
+} from "react";
 import EmptyState from "../components/EmptyState";
 import PageWrapper from "../components/PageWrapper";
 import EnterpriseTable from "../components/EnterpriseTable";
@@ -32,6 +36,58 @@ function Dashboard({
     totalRecords > 0
       ? "Online"
       : "Idle";
+  // =========================
+// FETCH AI EXECUTIVE SUMMARY
+// =========================
+useEffect(() => {
+
+  const fetchExecutiveSummary =
+    async () => {
+
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      try {
+
+        setLoadingSummary(true);
+
+        const response =
+          await fetch(
+            "http://127.0.0.1:8000/insights/executive-summary"
+          );
+
+        const result =
+          await response.json();
+
+        if (result.summary) {
+
+          setExecutiveSummary(
+            result.summary
+          );
+
+        }
+
+      } catch (error) {
+
+        console.log(error);
+
+      } finally {
+
+        setLoadingSummary(false);
+
+      }
+
+    };
+
+  fetchExecutiveSummary();
+
+}, [data]);
+  const [executiveSummary, setExecutiveSummary] =
+  useState("");
+
+const [loadingSummary, setLoadingSummary] =
+  useState(false);
 
   return (
 
@@ -617,6 +673,86 @@ function Dashboard({
         </div>
 
       </div>
+      {/* ================================= */}
+{/* EXECUTIVE AI SUMMARY */}
+{/* ================================= */}
+<div className="bg-[#111827] p-8 rounded-3xl border border-cyan-500/20">
+
+  <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mb-8">
+
+    <div>
+
+      <div className="flex items-center gap-3 mb-4">
+
+        <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+
+        <span className="text-cyan-400 font-semibold">
+
+          AI Executive Intelligence
+
+        </span>
+
+      </div>
+
+      <h2 className="text-4xl font-black">
+
+        Automated Executive Summary
+
+      </h2>
+
+      <p className="text-gray-400 mt-3 leading-7 max-w-3xl">
+
+        AI-generated operational intelligence,
+        executive reporting,
+        anomaly detection,
+        business risks,
+        and strategic recommendations
+        based on uploaded enterprise datasets.
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <div className="bg-[#1F2937] border border-gray-700 rounded-3xl p-8">
+
+    {loadingSummary ? (
+
+      <div className="flex items-center gap-4">
+
+        <div className="flex gap-2">
+
+          <div className="w-3 h-3 rounded-full bg-cyan-400 animate-bounce" />
+
+          <div className="w-3 h-3 rounded-full bg-cyan-400 animate-bounce delay-100" />
+
+          <div className="w-3 h-3 rounded-full bg-cyan-400 animate-bounce delay-200" />
+
+        </div>
+
+        <span className="text-gray-300 text-lg">
+
+          AI generating executive operational insights...
+
+        </span>
+
+      </div>
+
+    ) : (
+
+      <div className="whitespace-pre-line text-gray-200 leading-9 text-[15px]">
+
+        {executiveSummary ||
+          "Upload dataset to generate AI executive intelligence."}
+
+      </div>
+
+    )}
+
+  </div>
+
+</div>
       {/* LIVE DATA PREVIEW */}
 <EnterpriseTable
   data={data}
