@@ -54,7 +54,7 @@ useEffect(() => {
 
         const response =
           await fetch(
-            "http://127.0.0.1:8000/insights/executive-summary"
+            "https://insightflowai-lkc3.onrender.com/insights/executive-summary"
           );
 
         const result =
