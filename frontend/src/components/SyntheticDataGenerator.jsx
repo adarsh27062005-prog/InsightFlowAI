@@ -81,7 +81,7 @@ function SyntheticDataGenerator({
         const response =
           await fetch(
 
-            "https://insightflow-backend-cqbu.onrender.com/api/generate-dataset",
+            "import.meta.env.VITE_API_URL/api/generate-dataset",
 
             {
 
@@ -140,7 +140,7 @@ function SyntheticDataGenerator({
         const preprocessResponse =
           await fetch(
 
-            "https://insightflow-backend-cqbu.onrender.com/api/preprocess",
+            "import.meta.env.VITE_API_URL/api/preprocess",
 
             {
 

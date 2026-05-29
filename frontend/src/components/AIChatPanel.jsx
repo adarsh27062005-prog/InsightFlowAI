@@ -44,6 +44,12 @@ Ask enterprise business questions about your uploaded dataset.`,
     useRef(null);
 
   // =========================
+  // API URL
+  // =========================
+  const API_URL =
+    import.meta.env.VITE_API_URL;
+
+  // =========================
   // AUTO SCROLL
   // =========================
   useEffect(() => {
@@ -68,7 +74,7 @@ Ask enterprise business questions about your uploaded dataset.`,
       const response =
         await fetch(
 
-          "http://127.0.0.1:8000/ai/chat",
+          `${API_URL}/ai/chat`,
 
           {
 
@@ -84,16 +90,23 @@ Ask enterprise business questions about your uploaded dataset.`,
             body: JSON.stringify({
 
               prompt:
-userQuestion,
-
-              data,
-
-              schema,
+                userQuestion,
 
             }),
 
           }
         );
+
+      // =========================
+      // RESPONSE VALIDATION
+      // =========================
+      if (!response.ok) {
+
+        throw new Error(
+          "Backend request failed"
+        );
+
+      }
 
       const result =
         await response.json();
@@ -182,7 +195,7 @@ userQuestion,
       setQuestion("");
 
       // =========================
-      // TEMP AI THINKING
+      // TEMP THINKING MESSAGE
       // =========================
       const thinkingMessage = {
 
@@ -202,7 +215,9 @@ userQuestion,
 
       ]);
 
+      // =========================
       // AI RESPONSE
+      // =========================
       const answer =
         await askAI(
           finalQuestion
@@ -216,6 +231,7 @@ userQuestion,
         )
       );
 
+      // AI MESSAGE
       const aiMessage = {
 
         role: "assistant",
@@ -370,8 +386,6 @@ userQuestion,
       {/* CHAT */}
       <div className="relative bg-[#0B1120] border border-gray-700 rounded-3xl h-[550px] overflow-y-auto p-6 mt-8">
 
-        <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-500/5 blur-3xl rounded-full" />
-
         <div className="relative z-10 space-y-6">
 
           {messages.map(
@@ -399,7 +413,6 @@ userQuestion,
                   }`}
                 >
 
-                  {/* ROLE */}
                   <div
                     className={`text-xs font-bold uppercase tracking-widest mb-3 ${
                       msg.role === "user"
@@ -414,7 +427,6 @@ userQuestion,
 
                   </div>
 
-                  {/* TEXT */}
                   <div className="text-[15px]">
 
                     {msg.text}
@@ -435,25 +447,11 @@ userQuestion,
 
               <div className="bg-[#1F2937] border border-gray-700 rounded-3xl px-6 py-5 max-w-[320px]">
 
-                <div className="flex items-center gap-4">
+                <span className="text-gray-300">
 
-                  <div className="flex gap-2">
+                  AI analyzing semantic intelligence...
 
-                    <div className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" />
-
-                    <div className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce delay-100" />
-
-                    <div className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce delay-200" />
-
-                  </div>
-
-                  <span className="text-gray-300">
-
-                    AI analyzing semantic intelligence...
-
-                  </span>
-
-                </div>
+                </span>
 
               </div>
 
@@ -462,47 +460,6 @@ userQuestion,
           )}
 
           <div ref={chatEndRef} />
-
-        </div>
-
-      </div>
-
-      {/* QUICK ACTIONS */}
-      <div className="mt-8">
-
-        <h3 className="text-lg font-bold mb-4 text-cyan-400">
-
-          Executive Quick Actions
-
-        </h3>
-
-        <div className="flex flex-wrap gap-4">
-
-          {[
-            "Which distributor generated the highest sales?",
-            "Top selling products by revenue",
-            "Which region has maximum sales?",
-            "Show distributor performance summary",
-            "Which products are underperforming?",
-            "Executive business summary",
-            "Top customers by revenue",
-            "Revenue trend analysis",
-            "Operational AI summary",
-          ].map((item) => (
-
-            <button
-              key={item}
-              onClick={() =>
-                handleSend(item)
-              }
-              className="bg-[#1F2937] hover:bg-cyan-500 hover:text-black border border-gray-700 hover:border-cyan-400 px-5 py-3 rounded-2xl text-sm transition-all duration-300"
-            >
-
-              {item}
-
-            </button>
-
-          ))}
 
         </div>
 

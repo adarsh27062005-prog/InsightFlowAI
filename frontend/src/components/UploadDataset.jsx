@@ -192,7 +192,7 @@ function UploadDataset({
 
             const response =
               await fetch(
-                "https://insightflow-backend-cqbu.onrender.com/api/preprocess",
+                "import.meta.env.VITE_API_URL/api/preprocess",
                 {
                   method: "POST",
 
