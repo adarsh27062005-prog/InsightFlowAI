@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, File
 import pandas as pd
 import os
+import traceback
 
 from app.ai.rag_engine import process_pdf
 from app.services.data_store import set_dataframe
@@ -28,26 +29,33 @@ async def upload_csv(
 
     try:
 
-        file_path = (
-            f"{UPLOAD_DIR}/{file.filename}"
+        # SAVE FILE
+        file_path = os.path.join(
+            UPLOAD_DIR,
+            file.filename
         )
+
+        contents = await file.read()
 
         with open(
             file_path,
             "wb"
         ) as f:
 
-            f.write(
-                await file.read()
-            )
+            f.write(contents)
 
         # READ CSV
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(
+            file_path,
+            encoding="utf-8"
+        )
 
         # STORE DATAFRAME
         set_dataframe(df)
 
         return {
+
+            "status": "success",
 
             "filename": file.filename,
 
@@ -57,17 +65,20 @@ async def upload_csv(
 
             "preview": df.head(5).to_dict(
                 orient="records"
-            ),
-
-            "status": "uploaded successfully"
+            )
 
         }
 
     except Exception as e:
 
+        print(traceback.format_exc())
+
         return {
+
             "status": "error",
+
             "message": str(e)
+
         }
 
 # =========================
@@ -81,24 +92,27 @@ async def upload_pdf(
 
     try:
 
-        file_path = (
-            f"{UPLOAD_DIR}/{file.filename}"
+        file_path = os.path.join(
+            UPLOAD_DIR,
+            file.filename
         )
+
+        contents = await file.read()
 
         with open(
             file_path,
             "wb"
         ) as f:
 
-            f.write(
-                await file.read()
-            )
+            f.write(contents)
 
         result = process_pdf(
             file_path
         )
 
         return {
+
+            "status": "success",
 
             "filename": file.filename,
 
@@ -108,7 +122,12 @@ async def upload_pdf(
 
     except Exception as e:
 
+        print(traceback.format_exc())
+
         return {
+
             "status": "error",
+
             "message": str(e)
+
         }
