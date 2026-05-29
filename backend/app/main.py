@@ -30,12 +30,18 @@ Base.metadata.create_all(
 )
 
 # =========================
-# CORS
+# CORS FIX
 # =========================
+
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://insight-flow-ai-psi.vercel.app",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -53,7 +59,7 @@ app.include_router(ml_router)
 app.include_router(export_router)
 
 # =========================
-# ROOT ROUTE
+# ROOT
 # =========================
 
 @app.get("/")
@@ -65,25 +71,13 @@ def root():
     }
 
 # =========================
-# HEALTH CHECK
+# HEALTH
 # =========================
 
 @app.get("/health")
-def health_check():
+def health():
 
     return {
-        "status": "healthy",
         "backend": "running",
-        "service": "InsightFlow AI"
-    }
-
-# =========================
-# TEST API ROUTE
-# =========================
-
-@app.get("/test")
-def test_route():
-
-    return {
-        "message": "API working successfully"
+        "status": "healthy"
     }
