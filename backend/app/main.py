@@ -11,38 +11,23 @@ from app.routes.export_routes import router as export_router
 from app.db.database import engine
 from app.db.models import Base
 
-# =========================
-# FASTAPI APP
-# =========================
-
 app = FastAPI(
     title="InsightFlow AI",
-    version="1.0.0",
-    description="Enterprise AI Analytics Platform"
+    version="1.0.0"
 )
-
-# =========================
-# DATABASE
-# =========================
 
 Base.metadata.create_all(
     bind=engine
 )
 
 # =========================
-# CORS FIX
+# CORS
 # =========================
-
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://insight-flow-ai-psi.vercel.app",
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -66,8 +51,7 @@ app.include_router(export_router)
 def root():
 
     return {
-        "message": "InsightFlow AI Backend Running",
-        "status": "active"
+        "message": "InsightFlow AI Backend Running"
     }
 
 # =========================
@@ -78,6 +62,16 @@ def root():
 def health():
 
     return {
-        "backend": "running",
         "status": "healthy"
+    }
+
+# =========================
+# TEST ROUTE
+# =========================
+
+@app.get("/test-route")
+def test_route():
+
+    return {
+        "working": True
     }
