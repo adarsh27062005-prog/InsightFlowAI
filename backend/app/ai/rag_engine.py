@@ -1,52 +1,59 @@
-from langchain_community.document_loaders import PyPDFLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+from pypdf import PdfReader
 
-CHROMA_PATH = "app/chroma_db"
+pdf_text_storage = ""
 
-embedding_model = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+# =========================
+# PROCESS PDF
+# =========================
 
-def process_pdf(pdf_path):
+def process_pdf(file_path):
 
-    loader = PyPDFLoader(pdf_path)
+    global pdf_text_storage
 
-    documents = loader.load()
+    try:
 
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=50
-    )
+        reader = PdfReader(file_path)
 
-    chunks = splitter.split_documents(documents)
+        text = ""
 
-    vectorstore = Chroma.from_documents(
-        documents=chunks,
-        embedding=embedding_model,
-        persist_directory=CHROMA_PATH
-    )
+        for page in reader.pages:
+            extracted = page.extract_text()
 
-    vectorstore.persist()
+            if extracted:
+                text += extracted + "\n"
 
-    return {
-        "chunks_created": len(chunks),
-        "status": "PDF processed successfully"
-    }
+        pdf_text_storage = text
+
+        return {
+            "status": "success",
+            "message": "PDF processed successfully",
+            "characters": len(text)
+        }
+
+    except Exception as e:
+
+        return {
+            "status": "error",
+            "message": str(e)
+        }
+
+# =========================
+# QUERY PDF
+# =========================
 
 def query_pdf(question):
 
-    vectorstore = Chroma(
-        persist_directory=CHROMA_PATH,
-        embedding_function=embedding_model
-    )
+    global pdf_text_storage
 
-    docs = vectorstore.similarity_search(question, k=3)
+    if not pdf_text_storage:
 
-    context = "\n".join([doc.page_content for doc in docs])
+        return {
+            "retrieved_context":
+            "No PDF document uploaded."
+        }
+
+    context = pdf_text_storage[:12000]
 
     return {
-        "question": question,
         "retrieved_context": context
     }
