@@ -5,9 +5,6 @@ import os
 from app.ai.rag_engine import process_pdf
 from app.services.data_store import set_dataframe
 
-from app.db.database import SessionLocal
-from app.db.models import UploadedFile
-
 router = APIRouter(
     prefix="/upload",
     tags=["Upload"]
@@ -15,123 +12,103 @@ router = APIRouter(
 
 UPLOAD_DIR = "app/uploads"
 
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(
+    UPLOAD_DIR,
+    exist_ok=True
+)
 
 # =========================
 # CSV UPLOAD
 # =========================
 
 @router.post("/csv")
-async def upload_csv(file: UploadFile = File(...)):
+async def upload_csv(
+    file: UploadFile = File(...)
+):
 
-    file_path = f"{UPLOAD_DIR}/{file.filename}"
+    try:
 
-    with open(file_path, "wb") as f:
-        f.write(await file.read())
+        file_path = (
+            f"{UPLOAD_DIR}/{file.filename}"
+        )
 
-    # =========================
-    # LOAD DATAFRAME
-    # =========================
-    df = pd.read_csv(file_path)
+        with open(
+            file_path,
+            "wb"
+        ) as f:
 
-    # =========================
-    # STORE DATAFRAME
-    # =========================
-    set_dataframe(df)
+            f.write(
+                await file.read()
+            )
 
-    # =========================
-    # SAVE TO DATABASE
-    # =========================
-    db = SessionLocal()
+        # READ CSV
+        df = pd.read_csv(file_path)
 
-    new_file = UploadedFile(
+        # STORE DATAFRAME
+        set_dataframe(df)
 
-        filename=file.filename,
+        return {
 
-        filetype="csv",
+            "filename": file.filename,
 
-        rows=len(df),
+            "rows": len(df),
 
-        columns=len(df.columns)
+            "columns": list(df.columns),
 
-    )
+            "preview": df.head(5).to_dict(
+                orient="records"
+            ),
 
-    db.add(new_file)
+            "status": "uploaded successfully"
 
-    db.commit()
+        }
 
-    db.close()
+    except Exception as e:
 
-    # =========================
-    # NUMERIC COLUMNS
-    # =========================
-    numeric_columns = list(
-        df.select_dtypes(
-            include=["number"]
-        ).columns
-    )
-
-    # =========================
-    # CATEGORICAL COLUMNS
-    # =========================
-    categorical_columns = list(
-        df.select_dtypes(
-            exclude=["number"]
-        ).columns
-    )
-
-    # =========================
-    # MISSING VALUES
-    # =========================
-    missing_values = int(
-        df.isnull()
-        .sum()
-        .sum()
-    )
-
-    # =========================
-    # RESPONSE
-    # =========================
-    return {
-
-        "filename": file.filename,
-
-        "rows": len(df),
-
-        "columns": list(df.columns),
-
-        "numeric_columns": numeric_columns,
-
-        "categorical_columns": categorical_columns,
-
-        "missing_values": missing_values,
-
-        "preview": df.head(5).to_dict(
-            orient="records"
-        ),
-
-        "status": "uploaded successfully"
-
-    }
+        return {
+            "status": "error",
+            "message": str(e)
+        }
 
 # =========================
 # PDF UPLOAD
 # =========================
 
 @router.post("/pdf")
-async def upload_pdf(file: UploadFile = File(...)):
+async def upload_pdf(
+    file: UploadFile = File(...)
+):
 
-    file_path = f"{UPLOAD_DIR}/{file.filename}"
+    try:
 
-    with open(file_path, "wb") as f:
-        f.write(await file.read())
+        file_path = (
+            f"{UPLOAD_DIR}/{file.filename}"
+        )
 
-    result = process_pdf(file_path)
+        with open(
+            file_path,
+            "wb"
+        ) as f:
 
-    return {
+            f.write(
+                await file.read()
+            )
 
-        "filename": file.filename,
+        result = process_pdf(
+            file_path
+        )
 
-        "result": result
+        return {
 
-    }
+            "filename": file.filename,
+
+            "result": result
+
+        }
+
+    except Exception as e:
+
+        return {
+            "status": "error",
+            "message": str(e)
+        }
