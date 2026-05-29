@@ -2,6 +2,7 @@ from fastapi import APIRouter, UploadFile, File
 import pandas as pd
 import os
 import traceback
+import numpy as np
 
 from app.ai.rag_engine import process_pdf
 from app.services.data_store import set_dataframe
@@ -46,12 +47,25 @@ async def upload_csv(
 
         # READ CSV
         df = pd.read_csv(
-            file_path,
-            encoding="utf-8"
+            file_path
+        )
+
+        # REPLACE NaN VALUES
+        df = df.replace(
+            [np.nan],
+            None
         )
 
         # STORE DATAFRAME
         set_dataframe(df)
+
+        # PREVIEW DATA
+        preview_data = (
+            df.head(5)
+            .to_dict(
+                orient="records"
+            )
+        )
 
         return {
 
@@ -63,15 +77,15 @@ async def upload_csv(
 
             "columns": list(df.columns),
 
-            "preview": df.head(5).to_dict(
-                orient="records"
-            )
+            "preview": preview_data
 
         }
 
     except Exception as e:
 
-        print(traceback.format_exc())
+        print(
+            traceback.format_exc()
+        )
 
         return {
 
@@ -122,7 +136,9 @@ async def upload_pdf(
 
     except Exception as e:
 
-        print(traceback.format_exc())
+        print(
+            traceback.format_exc()
+        )
 
         return {
 
