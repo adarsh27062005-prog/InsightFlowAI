@@ -15,13 +15,13 @@ import {
 function UploadDataset({
   data,
   setData,
-  insights,
   uploadRef,
 }) {
 
   // =========================
   // STATES
   // =========================
+
   const [fileInfo, setFileInfo] =
     useState(null);
 
@@ -42,6 +42,7 @@ function UploadDataset({
   // =========================
   // DATASET INTELLIGENCE
   // =========================
+
   const datasetIntelligence =
     useMemo(() => {
 
@@ -71,6 +72,7 @@ function UploadDataset({
 
         datasetType =
           "Healthcare Enrollment Dataset";
+
       }
 
       if (
@@ -84,6 +86,7 @@ function UploadDataset({
 
         datasetType =
           "Financial Analytics Dataset";
+
       }
 
       if (
@@ -94,6 +97,7 @@ function UploadDataset({
 
         datasetType =
           "Operational SLA Dataset";
+
       }
 
       return {
@@ -116,6 +120,7 @@ function UploadDataset({
   // =========================
   // SEARCH FILTER
   // =========================
+
   const filteredData =
     useMemo(() => {
 
@@ -135,6 +140,7 @@ function UploadDataset({
   // =========================
   // PAGINATION
   // =========================
+
   const totalPages =
     Math.max(
       1,
@@ -157,6 +163,7 @@ function UploadDataset({
   // =========================
   // FILE UPLOAD HANDLER
   // =========================
+
   const handleFileUpload =
     async (event) => {
 
@@ -167,11 +174,8 @@ function UploadDataset({
 
       setIsUploading(true);
 
-      const fileName =
-        file.name.toLowerCase();
-
       setUploadStatus(
-        "Processing dataset..."
+        "Uploading dataset..."
       );
 
       setFileInfo({
@@ -182,160 +186,85 @@ function UploadDataset({
         type: file.type,
       });
 
-      // =========================
-      // PREPROCESS
-      // =========================
-      const preprocessAndSetData =
-        async (rawData) => {
+      try {
 
-          try {
+        // =========================
+        // SEND FILE TO BACKEND
+        // =========================
 
-            const response =
-              await fetch(
-                "import.meta.env.VITE_API_URL/api/preprocess",
-                {
-                  method: "POST",
+        const formData =
+          new FormData();
 
-                  headers: {
-                    "Content-Type":
-                      "application/json",
-                  },
+        formData.append(
+          "file",
+          file
+        );
 
-                  body: JSON.stringify({
-                    data: rawData,
-                  }),
-                }
-              );
+        const response =
+          await fetch(
 
-            if (!response.ok) {
+            "https://insightflowai-krc3.onrender.com/upload/csv",
 
-              throw new Error(
-                "Server preprocessing failed"
-              );
+            {
+              method: "POST",
+              body: formData,
             }
-
-            const result =
-              await response.json();
-
-            setData(
-              result.data || []
-            );
-
-            setUploadStatus(
-              "Dataset uploaded successfully"
-            );
-
-          } catch (error) {
-
-            console.error(error);
-
-            setUploadStatus(
-              "Backend preprocessing failed"
-            );
-
-          } finally {
-
-            setIsUploading(false);
-
-          }
-        };
-
-      // CSV
-      if (
-        fileName.endsWith(".csv")
-      ) {
-
-        Papa.parse(file, {
-
-          header: true,
-
-          skipEmptyLines: true,
-
-          complete: async (
-            results
-          ) => {
-
-            await preprocessAndSetData(
-              results.data
-            );
-
-          },
-
-          error: () => {
-
-            setUploadStatus(
-              "CSV parsing failed"
-            );
-
-            setIsUploading(false);
-
-          },
-
-        });
-
-      }
-
-      // EXCEL
-      else if (
-        fileName.endsWith(".xlsx") ||
-        fileName.endsWith(".xls")
-      ) {
-
-        try {
-
-          const reader =
-            new FileReader();
-
-          reader.onload =
-            async (e) => {
-
-              const binaryStr =
-                e.target.result;
-
-              const workbook =
-                XLSX.read(binaryStr, {
-                  type: "binary",
-                });
-
-              const sheetName =
-                workbook.SheetNames[0];
-
-              const worksheet =
-                workbook.Sheets[sheetName];
-
-              const jsonData =
-                XLSX.utils.sheet_to_json(
-                  worksheet
-                );
-
-              await preprocessAndSetData(
-                jsonData
-              );
-
-            };
-
-          reader.readAsBinaryString(
-            file
           );
 
-        } catch {
+        if (!response.ok) {
 
-          setUploadStatus(
-            "Excel parsing failed"
+          throw new Error(
+            "Upload failed"
           );
-
-          setIsUploading(false);
 
         }
 
-      }
+        const result =
+          await response.json();
 
-      // UNSUPPORTED
-      else {
+        console.log(
+          "UPLOAD RESULT:",
+          result
+        );
+
+        // =========================
+        // IMPORTANT FIX
+        // =========================
+
+        if (
+          result.preview &&
+          Array.isArray(
+            result.preview
+          )
+        ) {
+
+          setData(
+            result.preview
+          );
+
+          setUploadStatus(
+            "Dataset uploaded successfully"
+          );
+
+        } else {
+
+          setData([]);
+
+          setUploadStatus(
+            "No preview data returned"
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
 
         setUploadStatus(
-          "Unsupported file format"
+          "Backend upload failed"
         );
+
+      } finally {
 
         setIsUploading(false);
 
@@ -348,6 +277,7 @@ function UploadDataset({
     <div className="bg-[#111827] border border-gray-800 rounded-3xl p-8 mt-8">
 
       {/* HEADER */}
+
       <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mb-8">
 
         <div>
@@ -392,7 +322,7 @@ function UploadDataset({
           <input
             ref={uploadRef}
             type="file"
-            accept=".csv,.xlsx,.xls,.txt,.sql"
+            accept=".csv,.xlsx,.xls"
             className="hidden"
             onChange={handleFileUpload}
           />
@@ -402,6 +332,7 @@ function UploadDataset({
       </div>
 
       {/* STATUS */}
+
       {(fileInfo || uploadStatus) && (
 
         <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6 mb-8">
@@ -417,6 +348,7 @@ function UploadDataset({
               <h3 className="font-semibold break-all">
 
                 {fileInfo?.name}
+
               </h3>
 
             </div>
@@ -430,6 +362,7 @@ function UploadDataset({
               <h3 className="font-semibold">
 
                 {fileInfo?.size} KB
+
               </h3>
 
             </div>
@@ -443,22 +376,28 @@ function UploadDataset({
               <div className="flex items-center gap-2">
 
                 {isUploading ? (
+
                   <Loader2
                     size={18}
                     className="animate-spin text-cyan-400"
                   />
+
                 ) : uploadStatus.includes(
                     "success"
                   ) ? (
+
                   <CheckCircle2
                     size={18}
                     className="text-green-400"
                   />
+
                 ) : (
+
                   <AlertCircle
                     size={18}
                     className="text-yellow-400"
                   />
+
                 )}
 
                 <span>
@@ -478,6 +417,7 @@ function UploadDataset({
               <h3 className="font-bold text-cyan-400 text-2xl">
 
                 {data.length}
+
               </h3>
 
             </div>
@@ -489,6 +429,7 @@ function UploadDataset({
       )}
 
       {/* INTELLIGENCE */}
+
       {datasetIntelligence && (
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
@@ -502,6 +443,7 @@ function UploadDataset({
             <h3 className="text-cyan-400 font-bold mt-3">
 
               {datasetIntelligence.datasetType}
+
             </h3>
 
           </div>
@@ -515,6 +457,7 @@ function UploadDataset({
             <h3 className="text-4xl font-black mt-3">
 
               {datasetIntelligence.rows}
+
             </h3>
 
           </div>
@@ -528,6 +471,7 @@ function UploadDataset({
             <h3 className="text-4xl font-black mt-3">
 
               {datasetIntelligence.columns}
+
             </h3>
 
           </div>
@@ -541,6 +485,7 @@ function UploadDataset({
             <h3 className="text-green-400 font-bold mt-3">
 
               Successful
+
             </h3>
 
           </div>
@@ -550,6 +495,7 @@ function UploadDataset({
       )}
 
       {/* SEARCH */}
+
       <div className="relative mb-8">
 
         <Search
@@ -576,6 +522,7 @@ function UploadDataset({
       </div>
 
       {/* TABLE */}
+
       {filteredData.length > 0 ? (
 
         <div className="overflow-auto rounded-2xl border border-gray-700">
@@ -666,65 +613,10 @@ function UploadDataset({
 
       )}
 
-      {/* PAGINATION */}
-      {filteredData.length > 0 && (
-
-        <div className="flex justify-between items-center mt-8">
-
-          <div className="text-sm text-gray-400">
-
-            Showing {paginatedData.length} of{" "}
-            {filteredData.length} records
-
-          </div>
-
-          <div className="flex items-center gap-4">
-
-            <button
-              onClick={() =>
-                setCurrentPage((prev) =>
-                  Math.max(prev - 1, 1)
-                )
-              }
-              className="bg-[#1F2937] border border-gray-700 hover:border-cyan-400 px-5 py-3 rounded-xl transition"
-            >
-
-              Previous
-
-            </button>
-
-            <div className="text-sm text-gray-400">
-
-              Page {currentPage} of{" "}
-              {totalPages}
-
-            </div>
-
-            <button
-              onClick={() =>
-                setCurrentPage((prev) =>
-                  Math.min(
-                    prev + 1,
-                    totalPages
-                  )
-                )
-              }
-              className="bg-cyan-500 hover:bg-cyan-400 text-black font-semibold px-5 py-3 rounded-xl transition"
-            >
-
-              Next
-
-            </button>
-
-          </div>
-
-        </div>
-
-      )}
-
     </div>
 
   );
+
 }
 
 export default UploadDataset;
