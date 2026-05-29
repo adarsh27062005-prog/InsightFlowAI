@@ -1,6 +1,4 @@
 import { useState, useMemo } from "react";
-import Papa from "papaparse";
-import * as XLSX from "xlsx";
 
 import {
   Upload,
@@ -53,53 +51,6 @@ function UploadDataset({
       const columns =
         Object.keys(data[0]);
 
-      const lowerColumns =
-        columns.map((col) =>
-          col.toLowerCase()
-        );
-
-      let datasetType =
-        "General Analytics Dataset";
-
-      if (
-        lowerColumns.some((col) =>
-          col.includes("provider")
-        ) &&
-        lowerColumns.some((col) =>
-          col.includes("patient")
-        )
-      ) {
-
-        datasetType =
-          "Healthcare Enrollment Dataset";
-
-      }
-
-      if (
-        lowerColumns.some((col) =>
-          col.includes("payment")
-        ) ||
-        lowerColumns.some((col) =>
-          col.includes("billing")
-        )
-      ) {
-
-        datasetType =
-          "Financial Analytics Dataset";
-
-      }
-
-      if (
-        lowerColumns.some((col) =>
-          col.includes("sla")
-        )
-      ) {
-
-        datasetType =
-          "Operational SLA Dataset";
-
-      }
-
       return {
 
         rows:
@@ -108,17 +59,15 @@ function UploadDataset({
         columns:
           columns.length,
 
-        datasetType,
-
-        ingestion:
-          "Successful",
+        datasetType:
+          "Enterprise Dataset",
 
       };
 
     }, [data]);
 
   // =========================
-  // SEARCH FILTER
+  // SEARCH
   // =========================
 
   const filteredData =
@@ -161,7 +110,7 @@ function UploadDataset({
     );
 
   // =========================
-  // FILE UPLOAD HANDLER
+  // FILE UPLOAD
   // =========================
 
   const handleFileUpload =
@@ -189,7 +138,7 @@ function UploadDataset({
       try {
 
         // =========================
-        // SEND FILE TO BACKEND
+        // CREATE FORM DATA
         // =========================
 
         const formData =
@@ -199,6 +148,10 @@ function UploadDataset({
           "file",
           file
         );
+
+        // =========================
+        // API CALL
+        // =========================
 
         const response =
           await fetch(
@@ -211,19 +164,20 @@ function UploadDataset({
             }
           );
 
-        if (!response.ok) {
+        // =========================
+        // DEBUG
+        // =========================
 
-          throw new Error(
-            "Upload failed"
-          );
-
-        }
+        console.log(
+          "RESPONSE STATUS:",
+          response.status
+        );
 
         const result =
           await response.json();
 
         console.log(
-          "UPLOAD RESULT:",
+          "BACKEND RESULT:",
           result
         );
 
@@ -232,15 +186,18 @@ function UploadDataset({
         // =========================
 
         if (
+          result &&
           result.preview &&
           Array.isArray(
             result.preview
           )
         ) {
 
-          setData(
-            result.preview
-          );
+          // THIS IS THE FIX
+
+          setData([
+            ...result.preview
+          ]);
 
           setUploadStatus(
             "Dataset uploaded successfully"
@@ -248,20 +205,18 @@ function UploadDataset({
 
         } else {
 
-          setData([]);
-
           setUploadStatus(
-            "No preview data returned"
+            "No dataset received"
           );
 
         }
 
       } catch (error) {
 
-        console.error(error);
+        console.log(error);
 
         setUploadStatus(
-          "Backend upload failed"
+          "Upload failed"
         );
 
       } finally {
@@ -302,14 +257,6 @@ function UploadDataset({
             Upload Intelligence Hub
 
           </h2>
-
-          <p className="text-gray-400 mt-3 max-w-3xl leading-7">
-
-            Upload enterprise healthcare, operational,
-            enrollment, revenue, provider, workflow,
-            or SLA datasets for AI-powered analytics.
-
-          </p>
 
         </div>
 
@@ -428,25 +375,11 @@ function UploadDataset({
 
       )}
 
-      {/* INTELLIGENCE */}
+      {/* DATASET INFO */}
 
       {datasetIntelligence && (
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
-
-          <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6">
-
-            <p className="text-gray-400 text-sm">
-              Dataset Type
-            </p>
-
-            <h3 className="text-cyan-400 font-bold mt-3">
-
-              {datasetIntelligence.datasetType}
-
-            </h3>
-
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
 
           <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6">
 
@@ -479,12 +412,12 @@ function UploadDataset({
           <div className="bg-[#1F2937] border border-gray-700 rounded-2xl p-6">
 
             <p className="text-gray-400 text-sm">
-              Ingestion
+              Status
             </p>
 
-            <h3 className="text-green-400 font-bold mt-3">
+            <h3 className="text-green-400 text-2xl font-bold mt-3">
 
-              Successful
+              Active
 
             </h3>
 
@@ -505,7 +438,7 @@ function UploadDataset({
 
         <input
           type="text"
-          placeholder="Search uploaded dataset..."
+          placeholder="Search dataset..."
           value={searchTerm}
           onChange={(e) => {
 
@@ -602,12 +535,6 @@ function UploadDataset({
             No Dataset Uploaded
 
           </h3>
-
-          <p className="text-gray-400">
-
-            Upload enterprise datasets to begin AI analytics
-
-          </p>
 
         </div>
 
